@@ -1,0 +1,83 @@
+﻿<Window x:Class="Thesis_SCADA.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Thesis_SCADA"
+        xmlns:uc="clr-namespace:Thesis_SCADA.UserControls"
+        mc:Ignorable="d"
+        Title="Đăng nhập" Height="250" Width="400"
+        Name="LogginWindow"
+        
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <uc:ucControlBar Grid.Row="0" Tag="{Binding Title, ElementName=LogginWindow}"/>
+
+        <materialDesign:Card Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="350" Height="200">
+            <Grid>
+                <Grid.Resources>
+                    <Style TargetType="Grid">
+                        <Setter Property="Margin" Value="15 0 15 0"/>
+                    </Style>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBox x:Name="LogginName" Grid.Row="0"  
+                         materialDesign:HintAssist.Hint="Tên đăng nhập"                           
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
+                         VerticalAlignment="Center"/>
+
+                <PasswordBox x:Name="LogginPassword" Grid.Row="1"
+                             materialDesign:HintAssist.Hint="Mật khẩu"  
+                             materialDesign:TextFieldAssist.HasClearButton="True" 
+                             materialDesign:HintAssist.HelperText="Ít nhất 8 ký tự"                                
+                             materialDesign:HintAssist.Foreground="Green"  
+                             materialDesign:TextFieldAssist.UnderlineBrush="Green"  
+                             Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                             VerticalAlignment="Center"/>
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button  Grid.Column="0"
+                        Style="{StaticResource MaterialDesignRaisedButton}" 
+                        Background="LawnGreen"
+                        Width="120" 
+                        ToolTip="Đăng nhập" 
+                        Content="ĐĂNG _NHẬP" />
+
+                    <Button Grid.Column="1" 
+                        Style="{StaticResource MaterialDesignRaisedButton}"
+                        Background="OrangeRed"
+                        Width="120"  
+                        ToolTip="Thoát" 
+                        Content="_THOÁT" />
+
+                </Grid>
+            </Grid>
+        </materialDesign:Card>
+    </Grid>
+</Window>
