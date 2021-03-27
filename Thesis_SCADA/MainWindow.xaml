@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Thesis_SCADA"
         xmlns:uc="clr-namespace:Thesis_SCADA.UserControls"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"  
+        Title="Giao diện chính" Height="450" Width="800"  
         
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -22,7 +23,14 @@
         WindowStartupLocation="CenterScreen"
         Name="mainWindow"
         DataContext="{StaticResource MainViewModel}">
-        
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding WindowLoadedCommand}"
+                                   CommandParameter="{Binding ElementName=mainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -78,17 +86,16 @@
                             <materialDesign:PackIcon Grid.Row="1" HorizontalAlignment="Center" Kind="Twitter"></materialDesign:PackIcon>
                         </Grid>
                     </Button>
-                    <Button ToolTip="Khách hàng" Style="{StaticResource BtnMenu}">
+                    <Button Command="{Binding UserManagementCommand}" ToolTip="Người dùng" Style="{StaticResource BtnMenu}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Khách hàng"></TextBlock>
+                            <TextBlock Grid.Row="0" Text="Nguời dùng"></TextBlock>
                             <materialDesign:PackIcon Grid.Row="1" HorizontalAlignment="Center" Kind="Twitter"></materialDesign:PackIcon>
                         </Grid>
                     </Button>
-
                 </StackPanel>
 
             </Grid>
@@ -102,7 +109,7 @@
 
                 <!--Filter-->
                 <Grid Grid.Row="0">
-                    <materialDesign:Card Margin="5">
+                    <materialDesign:Card Margin="6">
                         <Grid Margin="5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>

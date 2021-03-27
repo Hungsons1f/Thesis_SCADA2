@@ -4,24 +4,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
+using Thesis_SCADA.Model;
 
 namespace Thesis_SCADA.ViewModel
 {
     public class MainViewModel: BaseViewModel
     {
-        public MainViewModel()
-        {       
-            if (!GlobalVariable.Isloaded)
-            {
-                LoginWindow loginWindow = new LoginWindow();
-                loginWindow.ShowDialog();
-                GlobalVariable.Isloaded = true;
-            }
-        }
-    }
+        #region commands
+        public ICommand UserManagementCommand { get; set; }
+        public ICommand WindowLoadedCommand { get; set; }
+        #endregion
 
-    public static class GlobalVariable
-    {
-        public static bool Isloaded = false;
+        public MainViewModel()
+        {
+            WindowLoadedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {
+                if (p == null) return;
+
+                //p.Hide();
+                //LoginWindow login = new LoginWindow();
+                //login.ShowDialog();
+
+                //if (login.DataContext == null) return;
+
+                //var loginVM = login.DataContext as LoginViewModel;
+                //if (loginVM.isLogin)
+                //{
+                //    p.Show();
+                //}
+                //else
+                //{
+                //    p.Close();
+                //}
+            });
+
+
+            UserManagementCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                UserManagementWindow w = new UserManagementWindow();
+                w.ShowDialog();
+            });
+
+
+        }
     }
 }

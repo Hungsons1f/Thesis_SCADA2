@@ -3,4 +3,7 @@
                     xmlns:local="clr-namespace:Thesis_SCADA.Resources"
                     xmlns:viewmodel="clr-namespace:Thesis_SCADA.ViewModel">
     <viewmodel:MainViewModel x:Key="MainViewModel"></viewmodel:MainViewModel>
-</ResourceDictionary>
+    <viewmodel:LoginViewModel x:Key="LoginViewModel"></viewmodel:LoginViewModel>
+    <viewmodel:UserManagementViewModel x:Key="UserManagementViewModel"></viewmodel:UserManagementViewModel>
+
+</ResourceDictionary>   
