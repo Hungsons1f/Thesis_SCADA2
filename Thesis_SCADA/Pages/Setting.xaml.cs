@@ -13,18 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Thesis_SCADA
+namespace Thesis_SCADA.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Setting.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Setting : Page
     {
-        public MainWindow()
+        public Setting()
         {
             InitializeComponent();
-            //this.MaxHeight = SystemParameters.VirtualScreenHeight;
-            //this.MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
         }
     }
 }

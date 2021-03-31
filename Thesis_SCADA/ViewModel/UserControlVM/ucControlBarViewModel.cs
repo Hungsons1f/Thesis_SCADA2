@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace Thesis_SCADA.ViewModel
 {
-    public class ControlBarViewModel: BaseViewModel
+    public class ucControlBarViewModel: BaseViewModel
     {
         #region commands 
         public ICommand CloseWindowCommand { get; set; }
@@ -18,7 +18,7 @@ namespace Thesis_SCADA.ViewModel
         public ICommand MouseLeftDownCommand { get; set; }
         #endregion
 
-        public ControlBarViewModel ()
+        public ucControlBarViewModel ()
         {
             CloseWindowCommand = new RelayCommand<UserControl>((p) => { return p == null? false: true; }, (p) => {
                 //Sau khi lấy được window, cần ép kiểu nó thành window và kiểm tra xem window có tồn tại hay không

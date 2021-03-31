@@ -1,0 +1,130 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DataTemplate x:Key="Boiler">
+    <Viewbox  Stretch="Fill" >
+        <Viewbox.Tag>
+            <s:Int64>1452116358</s:Int64>
+        </Viewbox.Tag>
+        <Canvas UseLayoutRounding="False" Name="Group_Steam_generator_3" Tag="#00000000,#FFFD0202,Original,0,None" LayoutTransform="Identity" Width="73.533" Height="112.5" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Canvas Name="Group_Stand" Tag="#00000000,#FFFD0202,Original,0,None" Width="50.223" Height="28.828" Canvas.Left="6.419" Canvas.Top="83.17">
+                <Path Data="M6.419,83.17L8.896,83.17 8.896,111.998 6.419,111.998z" Stretch="Fill" Width="2.477" Height="28.828" Canvas.Left="0" Canvas.Top="0">
+                    <Path.Fill>
+                        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                            <LinearGradientBrush.GradientStops>
+                                <GradientStop Color="#FF76777A" Offset="0" />
+                                <GradientStop Color="#FFE2E3E4" Offset="0.5" />
+                                <GradientStop Color="#FF76777A" Offset="1" />
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Path.Fill>
+                </Path>
+                <Path Data="M54.39,83.17L56.642,83.17 56.642,111.998 54.39,111.998z" Stretch="Fill" Width="2.252" Height="28.828" Canvas.Left="47.971" Canvas.Top="0">
+                    <Path.Fill>
+                        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                            <LinearGradientBrush.GradientStops>
+                                <GradientStop Color="#FF76777A" Offset="0" />
+                                <GradientStop Color="#FFE2E3E4" Offset="0.5" />
+                                <GradientStop Color="#FF76777A" Offset="1" />
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Path.Fill>
+                </Path>
+            </Canvas>
+            <Canvas Name="Group_Generator_Vessel" Tag="#00000000,#FFFD0202,Original,0,None" Width="69.054" Height="98.443" Canvas.Left="-0.125" Canvas.Top="3.994">
+                <Path Data="F1M54.3897,4.11879999999999L54.3897,6.59779999999999 8.8957,13.8028 6.4187,16.2818 6.4187,77.7658 3.6037,80.9178 -0.000300000000002854,82.0438 -0.000300000000002854,88.5768 1.8017,88.5768 1.8017,83.3948 3.9417,82.7188 6.4197,80.2408 6.4197,85.6458 13.6257,102.3128 16.1037,102.3128 23.3107,85.6458 30.2927,102.3128 32.7697,102.3128 39.9767,85.6458 47.1847,102.3128 49.6617,102.3128 56.6437,85.6458 56.6437,73.7108 54.3917,71.2348 54.3917,49.6128 59.1197,52.0908 59.1197,66.5048 63.8487,73.7118 68.8037,66.5048 68.8037,4.11879999999999z" Stretch="Fill" Fill="#FF99CC99" Width="68.804" Height="98.194" Canvas.Left="0.125" Canvas.Top="0.125" />
+                <Path Data="M68.8037,4.1191L54.3897,4.1191 54.3897,6.5971 8.89570000000001,13.8031 6.41870000000001,16.2811 6.41870000000001,77.7651 3.6037,80.9181 -0.000299999999995748,82.0441 -0.000299999999995748,88.5761 1.80170000000001,88.5761 1.80170000000001,83.3941 3.94170000000001,82.7191 6.41970000000001,80.2411 6.41970000000001,85.6461 13.6257,102.3121 16.1037,102.3121 23.3107,85.6461 30.2927,102.3121 32.7697,102.3121 39.9777,85.6461 47.1847,102.3121 49.6617,102.3121 56.6437,85.6461 56.6437,73.7111 54.3917,71.2341 54.3917,49.6131 59.1197,52.0911 59.1197,66.5051 63.8487,73.7121 68.8037,66.5051 68.8037,4.1191z" Stretch="Fill" Stroke="#FF4C4C4C" StrokeThickness="0.25" Width="69.054" Height="98.443">
+                    <Path.Clip>
+                        <PathGeometry Figures="M0,-0.5L73.533,-0.5 73.533,112 0,112z" Transform="1,0,0,1,0.125300005078316,-3.99410009384155" />
+                    </Path.Clip>
+                </Path>
+            </Canvas>
+            <Canvas Name="Group_Generator_Inner_Part" Tag="#00000000,#FFFD0202,Original,0,None" Width="61.259" Height="75.448" Canvas.Left="7.545" Canvas.Top="5.47">
+                <Path Data="F1M7.545,80.918L53.038,73.711 53.038,30.469 67.452,30.469 67.452,5.47 55.517,5.47 55.517,7.72199999999999 9.459,14.929 7.545,16.731z" Stretch="Fill" Width="59.907" Height="75.448" Canvas.Left="0" Canvas.Top="0">
+                    <Path.Fill>
+                        <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
+                            <LinearGradientBrush.GradientStops>
+                                <GradientStop Color="#FF003200" Offset="0" />
+                                <GradientStop Color="#FF003B00" Offset="0.53" />
+                                <GradientStop Color="#FF006500" Offset="1" />
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Path.Fill>
+                </Path>
+                <Path Data="M7.5449,80.918L53.0379,73.711 53.0379,30.469 67.4519,30.469 67.4519,5.47000000000001 55.5169,5.47000000000001 55.5169,7.72200000000001 9.4589,14.929 7.5449,16.731 7.5449,80.918z" Stretch="Fill" Stroke="#FF4C4C4C" StrokeThickness="0.25" Width="60.157" Height="75.698" Canvas.Left="-0.125" Canvas.Top="-0.125" />
+                <Path Data="F1M53.038,43.082L68.804,43.082 68.804,42.407 53.038,42.407z" Stretch="Fill" Fill="#FF333333" Width="15.766" Height="0.675" Canvas.Left="45.493" Canvas.Top="36.937" />
+                <Path Data="F1M53.038,37.676L68.804,37.676 68.804,37.226 53.038,37.226z" Stretch="Fill" Fill="#FF333333" Width="15.766" Height="0.45" Canvas.Left="45.493" Canvas.Top="31.756" />
+            </Canvas>
+            <Canvas Name="Group_Blue_Pipes" Tag="#00000000,#FFFD0202,Original,0,None" Width="44.142" Height="67.565" Canvas.Left="8.896" Canvas.Top="14.479">
+                <Path Data="F1M8.896,16.281L10.135,16.281 10.135,82.044 8.896,82.044z" Stretch="Fill" Fill="#FF669999" Width="1.239" Height="65.763" Canvas.Left="0" Canvas.Top="1.802" />
+                <Path Data="F1M11.149,15.83L12.5,15.83 12.5,82.044 11.149,82.044z" Stretch="Fill" Fill="#FF669999" Width="1.351" Height="66.214" Canvas.Left="2.253" Canvas.Top="1.351" />
+                <Path Data="F1M13.625,15.38L14.752,15.38 14.752,82.044 13.625,82.044z" Stretch="Fill" Fill="#FF669999" Width="1.127" Height="66.664" Canvas.Left="4.729" Canvas.Top="0.901" />
+                <Path Data="F1M16.103,15.154L17.229,15.154 17.229,82.044 16.103,82.044z" Stretch="Fill" Fill="#FF669999" Width="1.126" Height="66.89" Canvas.Left="7.207" Canvas.Top="0.675" />
+                <Path Data="F1M18.468,14.704L19.706,14.704 19.706,82.044 18.468,82.044z" Stretch="Fill" Fill="#FF669999" Width="1.238" Height="67.34" Canvas.Left="9.572" Canvas.Top="0.225" />
+                <Path Data="F1M20.832,14.479L21.958,14.479 21.958,82.044 20.832,82.044z" Stretch="Fill" Fill="#FF669999" Width="1.126" Height="67.565" Canvas.Left="11.936" Canvas.Top="0" />
+                <Path Data="F1M23.31,34.974L24.436,34.974 24.436,82.044 23.31,82.044z" Stretch="Fill" Fill="#FF669999" Width="1.126" Height="47.07" Canvas.Left="14.414" Canvas.Top="20.495" />
+                <Path Data="F1M25.562,38.802L26.914,38.802 26.914,82.044 25.562,82.044z" Stretch="Fill" Fill="#FF669999" Width="1.352" Height="43.242" Canvas.Left="16.666" Canvas.Top="24.323" />
+                <Path Data="F1M28.039,39.478L29.165,39.478 29.165,82.044 28.039,82.044z" Stretch="Fill" Fill="#FF669999" Width="1.126" Height="42.566" Canvas.Left="19.143" Canvas.Top="24.999" />
+                <Path Data="F1M30.517,40.154L31.643,40.154 31.643,82.044 30.517,82.044z" Stretch="Fill" Fill="#FF669999" Width="1.126" Height="41.89" Canvas.Left="21.621" Canvas.Top="25.675" />
+                <Path Data="F1M32.769,40.604L33.896,40.604 33.896,82.044 32.769,82.044z" Stretch="Fill" Fill="#FF669999" Width="1.127" Height="41.44" Canvas.Left="23.873" Canvas.Top="26.125" />
+                <Path Data="F1M35.246,41.28L36.372,41.28 36.372,82.044 35.246,82.044z" Stretch="Fill" Fill="#FF669999" Width="1.126" Height="40.764" Canvas.Left="26.35" Canvas.Top="26.801" />
+                <Path Data="F1M37.498,41.73L38.851,41.73 38.851,82.043 37.498,82.043z" Stretch="Fill" Fill="#FF669999" Width="1.353" Height="40.313" Canvas.Left="28.602" Canvas.Top="27.251" />
+                <Path Data="F1M39.976,42.406L41.103,42.406 41.103,82.044 39.976,82.044z" Stretch="Fill" Fill="#FF669999" Width="1.127" Height="39.638" Canvas.Left="31.08" Canvas.Top="27.927" />
+                <Path Data="F1M42.453,42.856L43.579,42.856 43.579,82.044 42.453,82.044z" Stretch="Fill" Fill="#FF669999" Width="1.126" Height="39.188" Canvas.Left="33.557" Canvas.Top="28.377" />
+                <Path Data="F1M44.705,43.307L46.058,43.307 46.058,82.044 44.705,82.044z" Stretch="Fill" Fill="#FF669999" Width="1.353" Height="38.737" Canvas.Left="35.809" Canvas.Top="28.828" />
+                <Path Data="F1M47.183,43.982L48.31,43.982 48.31,82.044 47.183,82.044z" Stretch="Fill" Fill="#FF669999" Width="1.127" Height="38.062" Canvas.Left="38.287" Canvas.Top="29.503" />
+                <Path Data="F1M49.66,44.433L50.786,44.433 50.786,82.044 49.66,82.044z" Stretch="Fill" Fill="#FF669999" Width="1.126" Height="37.611" Canvas.Left="40.764" Canvas.Top="29.954" />
+                <Path Data="F1M51.912,44.883L53.038,44.883 53.038,82.044 51.912,82.044z" Stretch="Fill" Fill="#FF669999" Width="1.126" Height="37.161" Canvas.Left="43.016" Canvas.Top="30.404" />
+            </Canvas>
+            <Canvas Name="Group_Supply" Tag="#00000000,#FFFD0202,Original,0,None" Width="41.891" Height="36.037" Canvas.Left="25.561" Canvas.Top="7.722">
+                <Path Data="M56.417,9.0742L66.326,13.4662 66.326,21.0112 56.642,22.1372 25.561,34.0742 25.561,37.6782 53.038,43.7592 53.038,42.4072 26.913,36.7772 26.913,34.9752 57.093,23.2642 67.452,21.9132 67.452,12.7902 56.642,7.7222 56.417,9.0742z" Stretch="Fill" Fill="#FF336666" Stroke="#FF4C4C4C" StrokeThickness="0.25" Width="42.141" Height="36.287" Canvas.Left="-0.125" Canvas.Top="-0.125" />
+            </Canvas>
+            <Canvas Name="Group_Brown_Pipe" Tag="#00000000,#FFFD0202,Original,0,None" Width="22.748" Height="26.576" Canvas.Left="25.562" Canvas.Top="5.92">
+                <Path Data="F1M25.562,8.961L26.914,8.961 26.914,32.496 25.562,32.496z" Stretch="Fill" Fill="#FF996600" Width="1.352" Height="23.535" Canvas.Left="0" Canvas.Top="3.041" />
+                <Path Data="F1M28.039,13.465L29.165,13.465 29.165,31.595 28.039,31.595z" Stretch="Fill" Fill="#FF996600" Width="1.126" Height="18.13" Canvas.Left="2.477" Canvas.Top="7.545" />
+                <Path Data="F1M30.517,12.902L31.643,12.902 31.643,30.694 30.517,30.694z" Stretch="Fill" Fill="#FF996600" Width="1.126" Height="17.792" Canvas.Left="4.955" Canvas.Top="6.982" />
+                <Path Data="F1M32.769,7.72199999999999L33.896,7.72199999999999 33.896,29.794 32.769,29.794z" Stretch="Fill" Fill="#FF996600" Width="1.127" Height="22.072" Canvas.Left="7.207" Canvas.Top="1.802" />
+                <Path Data="F1M37.498,11.776L38.851,11.776 38.851,27.766 37.498,27.766z" Stretch="Fill" Fill="#FF996600" Width="1.353" Height="15.99" Canvas.Left="11.936" Canvas.Top="5.856" />
+                <Path Data="F1M39.976,11.551L41.103,11.551 41.103,26.866 39.976,26.866z" Stretch="Fill" Fill="#FF996600" Width="1.127" Height="15.315" Canvas.Left="14.414" Canvas.Top="5.631" />
+                <Path Data="F1M42.453,6.483L43.579,6.483 43.579,25.964 42.453,25.964z" Stretch="Fill" Fill="#FF996600" Width="1.126" Height="19.481" Canvas.Left="16.891" Canvas.Top="0.563" />
+                <Path Data="F1M44.705,5.92L46.058,5.92 46.058,25.064 44.705,25.064z" Stretch="Fill" Fill="#FF996600" Width="1.353" Height="19.144" Canvas.Left="19.143" Canvas.Top="0" />
+                <Path Data="F1M47.183,10.425L48.31,10.425 48.31,24.163 47.183,24.163z" Stretch="Fill" Fill="#FF996600" Width="1.127" Height="13.738" Canvas.Left="21.621" Canvas.Top="4.505" />
+            </Canvas>
+            <Canvas Name="Group_Steam_Control" Tag="#00000000,#FFFD0202,Original,0,None" Width="3.491" Height="8.559" Canvas.Left="2.928" Canvas.Top="83.17">
+                <Path Data="F1M2.928,83.17L6.419,83.17 6.419,91.729 2.928,91.729z" Stretch="Fill" Fill="#FF3D3D3D" Width="3.491" Height="8.559" Canvas.Left="0" Canvas.Top="0" />
+            </Canvas>
+            <Canvas Name="Group_Steam_Exhaust" Tag="#00000000,#FFFD0202,Original,0,None" Width="31.08" Height="4.28" Canvas.Left="25.562" Canvas.Top="4.794">
+                <Path Data="M25.562,9.074L26.914,9.074 26.914,7.72199999999999 25.562,7.72199999999999z" Stretch="Fill" Fill="#FFE5E5E5" Stroke="#FF4C4C4C" StrokeThickness="0.25" Width="1.602" Height="1.602" Canvas.Left="-0.125" Canvas.Top="2.803" />
+                <Path Data="M32.769,7.72199999999999L33.896,7.72199999999999 33.896,6.59599999999999 32.769,6.59599999999999z" Stretch="Fill" Fill="#FFE5E5E5" Stroke="#FF4C4C4C" StrokeThickness="0.25" Width="1.377" Height="1.376" Canvas.Left="7.082" Canvas.Top="1.677" />
+                <Path Data="M42.229,6.596L43.58,6.596 43.58,5.47 42.229,5.47z" Stretch="Fill" Fill="#FFE5E5E5" Stroke="#FF4C4C4C" StrokeThickness="0.25" Width="1.601" Height="1.376" Canvas.Left="16.542" Canvas.Top="0.551" />
+                <Path Data="M44.705,5.92L46.058,5.92 46.058,4.794 44.705,4.794z" Stretch="Fill" Fill="#FFE5E5E5" Stroke="#FF4C4C4C" StrokeThickness="0.25" Width="1.603" Height="1.376" Canvas.Left="19.018" Canvas.Top="-0.125" />
+                <Path Data="M55.517,9.074L56.642,9.074 56.642,7.72199999999999 55.517,7.72199999999999z" Stretch="Fill" Fill="#FF98B2E5" Stroke="#FF4C4C4C" StrokeThickness="0.25" Width="1.375" Height="1.602" Canvas.Left="29.83" Canvas.Top="2.803" />
+            </Canvas>
+            <Canvas Name="Group_Fire" Tag="#00000000,#FFFD0202,Original,0,None" Width="44.368" Height="27.026" Canvas.Left="8.22" Canvas.Top="53.892">
+                <Path Data="F1M8.22,80.918L52.588,80.918 52.588,60.424 50.11,65.828 47.858,56.369 47.183,57.496 44.254,53.892 41.776,58.621 38.851,56.82 37.048,62.225 35.696,56.369 33.444,58.171 30.967,62.9 28.715,57.496 27.363,60.424 26.237,56.82 25.111,59.973 23.759,65.377 22.633,58.17 21.508,61.1 19.03,54.568 17.904,63.577 16.553,67.632 14.751,58.172 12.498,62.227 10.81,60.425 8.22,67.18z" Stretch="Fill" Width="44.368" Height="27.026" Canvas.Left="0" Canvas.Top="0">
+                    <Path.Fill>
+                        <LinearGradientBrush StartPoint="0.555,1.129" EndPoint="0.43,-0.029">
+                            <LinearGradientBrush.GradientStops>
+                                <GradientStop Color="#FFFFFF00" Offset="0" />
+                                <GradientStop Color="#FFF4DD00" Offset="0.36" />
+                                <GradientStop Color="#FFDB9300" Offset="0.53" />
+                                <GradientStop Color="#FFCC6500" Offset="0.64" />
+                                <GradientStop Color="#FF851600" Offset="0.88" />
+                                <GradientStop Color="#FF6D0000" Offset="1" />
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Path.Fill>
+                </Path>
+            </Canvas>
+            <Canvas Name="Group_Fire_Bottom" Tag="#00000000,#FFFD0202,Original,0,None" Width="44.368" Height="8.784" Canvas.Left="8.22" Canvas.Top="72.585">
+                <Path Data="F1M8.2202,81.3691L8.2202,79.5661 52.5882,72.5851 52.5882,81.3691z" Stretch="Fill" Fill="#FF7F0000" Width="44.368" Height="8.784" Canvas.Left="0" Canvas.Top="0" />
+            </Canvas>
+            <Canvas Name="Group_Generator_Inner_Bottom" Tag="#00000000,#FFFD0202,Original,0,None" Width="50.223" Height="10.585" Canvas.Left="6.419" Canvas.Top="72.585">
+                <Path Data="M6.4189,80.918L55.5169,72.585 56.6419,73.711 56.6419,83.17 6.4189,83.17 6.4189,80.918z" Stretch="Fill" Fill="#FF007F00" Stroke="#FF4C4C4C" StrokeThickness="0.25" Width="50.473" Height="10.835" Canvas.Left="-0.125" Canvas.Top="-0.125" />
+            </Canvas>
+            <Canvas Name="Group_Level_Indicator" Tag="#00000000,#FFFD0202,Original,0,None" Width="10.81" Height="10.81" Canvas.Left="62.723" Canvas.Top="-0.498">
+                <Path Data="M68.1279,-0.498000000000005C71.1129,-0.498000000000005 73.5329,1.922 73.5329,4.907 73.5329,7.892 71.1129,10.312 68.1279,10.312 65.1439,10.312 62.7239,7.892 62.7239,4.907 62.7239,1.922 65.1439,-0.498000000000005 68.1279,-0.498000000000005z" Stretch="Fill" Fill="#FFFFFFFF" Stroke="#FF4C4C4C" StrokeThickness="0.25" Width="11.059" Height="11.06" Canvas.Left="-0.124" Canvas.Top="-0.125" />
+                <Path Data="F1M73.5332,4.6782C73.5332,7.6632 71.1132,10.0832 68.1282,10.0832 65.1432,10.0832 62.7232,7.6632 62.7232,4.6782" Stretch="Fill" Fill="#FF98B2E5" Width="10.81" Height="5.405" Canvas.Left="0" Canvas.Top="5.176" />
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+    </DataTemplate>
+</ResourceDictionary>

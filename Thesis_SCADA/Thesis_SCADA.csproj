@@ -35,6 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Petzold.Media2D">
+      <HintPath>_DLL\Petzold.Media2D.dll</HintPath>
+    </Reference>
+    <Reference Include="Petzold.Media3D">
+      <HintPath>_DLL\Petzold.Media3D.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
@@ -61,6 +67,46 @@
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\DataProvider.cs" />
+    <Compile Include="Model\GlobalVar.cs" />
+    <Compile Include="Pages\Alarm.xaml.cs">
+      <DependentUpon>Alarm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Calib.xaml.cs">
+      <DependentUpon>Calib.xaml</DependentUpon>
+    </Compile>
+    <Content Include="Pages\_pnid.txt" />
+    <Compile Include="Pages\Event.xaml.cs">
+      <DependentUpon>Event.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Overview.xaml.cs">
+      <DependentUpon>Overview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Report.xaml.cs">
+      <DependentUpon>Report.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Setting.xaml.cs">
+      <DependentUpon>Setting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Trend.xaml.cs">
+      <DependentUpon>Trend.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\User.xaml.cs">
+      <DependentUpon>User.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Zone1.xaml.cs">
+      <DependentUpon>Zone1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Zone2.xaml.cs">
+      <DependentUpon>Zone2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ucStatusBar.xaml.cs">
+      <DependentUpon>ucStatusBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ucTest.xaml.cs">
+      <DependentUpon>ucTest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\UserControlVM\ucStatusBarViewModel.cs" />
+    <Compile Include="ViewModel\UserControlVM\ucTestViewModel.cs" />
     <Compile Include="ViewModel\UtilityMethods.cs" />
     <Content Include="Model\ModifyModel.txt" />
     <Compile Include="Model\Scada_DB.Context.cs">
@@ -91,7 +137,7 @@
       <DependentUpon>UserManagementWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\BaseViewModel.cs" />
-    <Compile Include="ViewModel\ControlBarViewModel.cs" />
+    <Compile Include="ViewModel\UserControlVM\ucControlBarViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\UserManagementViewModel.cs" />
@@ -111,11 +157,127 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\Alarm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Calib.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Event.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Overview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Report.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Setting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Trend.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\User.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Zone1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Zone2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\MainResource.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Symbols\Boiler.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Symbols\Coal-feeder.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Symbols\Condenser.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Symbols\Cooling-tower.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Symbols\Deaerator.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Symbols\Fan-active.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Symbols\Fan-fault.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Symbols\Fan.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Symbols\Heater.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Symbols\Pump-active.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Symbols\Pump-fault.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Symbols\Pump.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Symbols\Turbine.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Symbols\Valve-active.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Symbols\Valve-fault.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Symbols\Valve.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Symbols\Water-tank.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControls\ucControlBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ucStatusBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ucTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -168,7 +330,9 @@
       <Version>2.0.20525</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ViewModel\PageVM\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Model\Scada_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

@@ -11,6 +11,26 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepOrange.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
                 <ResourceDictionary Source="/Resources/MainResource.xaml"/>
+
+                <ResourceDictionary x:Name="Turbine" Source="/Symbols/Turbine.xaml"/>
+                <ResourceDictionary x:Name="Heater" Source="/Symbols/Heater.xaml"/>
+                <ResourceDictionary x:Name="Deaerator" Source="/Symbols/Deaerator.xaml"/>
+                <ResourceDictionary x:Name="CoalFeeder" Source="/Symbols/Coal-feeder.xaml"/>
+                <ResourceDictionary x:Name="Condenser" Source="/Symbols/Condenser.xaml"/>
+                <ResourceDictionary x:Name="CoolingTower" Source="/Symbols/Cooling-tower.xaml"/>
+                <ResourceDictionary x:Name="WaterTank" Source="/Symbols/Water-tank.xaml"/>
+                <ResourceDictionary x:Name="Fan" Source="/Symbols/Fan.xaml"/>
+                <ResourceDictionary x:Name="Boiler" Source="/Symbols/Boiler.xaml"/>
+                <ResourceDictionary x:Name="FanActive" Source="/Symbols/Fan-active.xaml"/>
+                <ResourceDictionary x:Name="FanFault" Source="/Symbols/Fan-fault.xaml"/>
+                <ResourceDictionary x:Name="Pump" Source="/Symbols/Pump.xaml"/>
+                <ResourceDictionary x:Name="PumpActive" Source="/Symbols/Pump-active.xaml"/>
+                <ResourceDictionary x:Name="PumpFault" Source="/Symbols/Pump-fault.xaml"/>
+                <ResourceDictionary x:Name="Valve" Source="/Symbols/Valve.xaml"/>
+                <ResourceDictionary x:Name="ValveActive" Source="/Symbols/Valve-active.xaml"/>
+                <ResourceDictionary x:Name="ValveFault" Source="/Symbols/Valve-fault.xaml"/>
+
+
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

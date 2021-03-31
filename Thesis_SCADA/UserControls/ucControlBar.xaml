@@ -9,7 +9,11 @@
              Name="UcControlBar"
              
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"        
-             TextElement.Foreground="{DynamicResource MaterialDesignBody}"        
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"                     
+             TextElement.FontWeight="Regular"       
+             TextElement.FontSize="13"       
+             TextOptions.TextFormattingMode="Ideal"        
+             TextOptions.TextRenderingMode="Auto"
              Background="{DynamicResource MaterialDesignPaper}"       
              FontFamily="{DynamicResource MaterialDesignFont}">
     <i:Interaction.Triggers>
@@ -27,17 +31,17 @@
                     <!--Button không dùng event mà dùng command từ Viewmodel để bắt sự kiện. Closewindowcommand 
                     nằm trong viewmodel đã liên kết với app.xaml qua resourcedictionary. Command trong viewmodel đó 
                     cần truyền tham số là usercontrol, nên button có thêm thuộc tính commandparameter-->
-                    <Button Background="Green"
+                    <Button Background="{Binding Source={StaticResource GlobalColor}, Path=ClYellow, Mode=OneWay}"
                             ToolTip="Thu nhỏ"
                             Command="{Binding MinimizeWindowCommand}"
                             CommandParameter="{Binding ElementName=UcControlBar}"
-                            Content="{materialDesign:PackIcon Kind=WindowMinimize}" />                        
-                    <Button Background="Green"
+                            Content="{materialDesign:PackIcon Kind=WindowMinimize}" />
+                    <Button Background="{Binding Source={StaticResource GlobalColor}, Path=ClYellow, Mode=OneWay}"
                             ToolTip="Phóng to"                                                        
                             Command="{Binding MaximizeWindowCommand}"
                             CommandParameter="{Binding ElementName=UcControlBar}"
-                            Content="{materialDesign:PackIcon Kind=WindowMaximize}" />                        
-                    <Button Background="OrangeRed"    
+                            Content="{materialDesign:PackIcon Kind=WindowMaximize}" />
+                    <Button Background="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"    
                             ToolTip="Đóng"                                                            
                             Command="{Binding CloseWindowCommand}"
                             CommandParameter="{Binding ElementName=UcControlBar}"
@@ -45,8 +49,6 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">                                                         
-                    <ToggleButton       
-                        Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
                     <TextBlock        
                         VerticalAlignment="Center"     
                         Margin="16 0 0 0"       

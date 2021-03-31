@@ -1,0 +1,92 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Thesis_SCADA.Pages"
+      xmlns:UserControls="clr-namespace:Thesis_SCADA.UserControls" x:Class="Thesis_SCADA.Pages.Overview"
+      xmlns:ar="clr-namespace:Petzold.Media2D;assembly=Petzold.Media2D"
+      mc:Ignorable="d" 
+      d:DesignHeight="670" d:DesignWidth="1366"
+      Title="Overview">
+
+
+    <Grid>
+        <Canvas>
+            <!--Symbols-->
+            <ContentControl Height="99" Width="264" ContentTemplate="{StaticResource Turbine}" Canvas.Left="971" Canvas.Top="180" />
+            <ContentControl Height="50" Width="80" ContentTemplate="{StaticResource Deaerator}" Canvas.Left="288" Canvas.Top="205" />
+            <ContentControl Height="91" Width="125" ContentTemplate="{StaticResource Coal-feeder}" Canvas.Left="55" Canvas.Top="444" />
+            <ContentControl Height="74" Width="132" ContentTemplate="{StaticResource Condenser}" Canvas.Left="695" Canvas.Top="451" />
+            <ContentControl Height="90" Width="84" ContentTemplate="{StaticResource Cooling-tower}" Canvas.Left="1097" Canvas.Top="435" />
+            <ContentControl Height="78" Width="146" ContentTemplate="{StaticResource Water-tank}" Canvas.Left="1063" Canvas.Top="572" />
+            <ContentControl Height="239" Width="139" ContentTemplate="{StaticResource Boiler}" Canvas.Left="655" Canvas.Top="51" />
+            <ContentControl Height="50" Width="80" ContentTemplate="{StaticResource Heater}" Canvas.Left="485" Canvas.Top="65" />
+            <ContentControl Height="50" Width="80" ContentTemplate="{StaticResource Heater}" Canvas.Left="120" Canvas.Top="205" />
+            <ContentControl Height="45" Width="50" ContentTemplate="{StaticResource Pump}" Canvas.Left="900" Canvas.Top="545" RenderTransformOrigin="0.5,0.5" >
+                <ContentControl.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="1" ScaleX="-1"/>
+                        <SkewTransform AngleY="0" AngleX="0"/>
+                        <RotateTransform Angle="0"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </ContentControl.RenderTransform>
+            </ContentControl>
+            <ContentControl Height="45" Width="50" ContentTemplate="{StaticResource Pump}" Canvas.Left="365" Canvas.Top="115" />
+            <ContentControl Height="45" Width="50" ContentTemplate="{StaticResource Pump}" Canvas.Left="15" Canvas.Top="285" />
+            <ContentControl Height="45" Width="45" ContentTemplate="{StaticResource Fan}" Canvas.Left="288" Canvas.Top="605" />
+            <ContentControl Height="45" Width="45" ContentTemplate="{StaticResource Fan}" Canvas.Left="288" Canvas.Top="530" />
+            <ContentControl Height="45" Width="45" ContentTemplate="{StaticResource Fan}" Canvas.Left="288" Canvas.Top="455" />
+            <ContentControl Height="35" Width="35" ContentTemplate="{StaticResource Valve}" Canvas.Left="860" Canvas.Top="125" />
+            <ContentControl Height="35" Width="35" ContentTemplate="{StaticResource Valve}" Canvas.Left="410" Canvas.Top="10" />
+            <ContentControl Height="35" Width="35" ContentTemplate="{StaticResource Valve}" Canvas.Left="85" Canvas.Top="150" />
+            <ContentControl Height="35" Width="35" ContentTemplate="{StaticResource Valve}" Canvas.Left="245" Canvas.Top="150" />
+
+            <!--Arrows-->
+            <ar:ArrowPolyline Points="65 295 65 230 120 230" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="200 230 285 230" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="365 230 385 230 385 160" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="415 125 415 90 480 90" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="565 90 665 90" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
+
+            <ar:ArrowPolyline Points="785 150 855 150" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="895 150 920 150 920 225 975 225" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="1030 195 1030 100 790 100" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="795 65 1105 65 1105 200" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="1210 275 1210 390 760 390 760 450" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="1030 265 1030 310" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="1105 265 1105 310" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="1175 265 1175 310" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
+
+            <ar:ArrowPolyline Points="1060 615 930 615 930 590" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="900 555 900 515 830 515 " StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="830 475 1105 475 " StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="1165 475 1250 475 " StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="1250 615 1210 615 " StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
+
+            <ar:ArrowPolyline Points="40 100 40 175 80 175" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="120 175 145 175 145 200" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="210 100 210 175 240 175" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="280 175 325 175 325 200" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="320 35 405 35" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="445 35 510 35 510 60" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="445 35 510 35 510 60" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
+
+            <ar:ArrowPolyline Points="115 525 115 540 285 540" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlack, Mode=OneWay}" Canvas.Top="10"/>
+            <ar:ArrowPolyline Points="240 540 240 465 285 465" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlack, Mode=OneWay}" Canvas.Top="10"/>
+            <ar:ArrowPolyline Points="240 540 240 615 285 615" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlack, Mode=OneWay}" Canvas.Top="10"/>
+            <ar:ArrowPolyline Points="335 615 380 615 380 540 460 540" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlack, Mode=OneWay}" Canvas.Top="10"/>
+            <ar:ArrowPolyline Points="335 540 460 540" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlack, Mode=OneWay}" Canvas.Top="10"/>
+            <ar:ArrowPolyline Points="335 465 380 465 380 540 460 540" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlack, Mode=OneWay}" Canvas.Top="10"/>
+            <ar:ArrowPolyline Points="600 230 650 230" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlack, Mode=OneWay}"/>
+
+            <ar:ArrowPolyline Points="720 450 720 410 35 410 35 330" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="145 250 145 390 760 390 760 450" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="325 250 325 390 760 390 760 450" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="510 115 510 390 760 390 760 450" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
+
+
+        </Canvas>
+    </Grid>
+</Page>

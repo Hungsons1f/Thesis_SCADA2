@@ -25,11 +25,11 @@ namespace Thesis_SCADA.UserControls
         //thể tạo mới bằng móc nối với từng view được
         //Ý nghĩa: mỗi view sẽ được gắn với một viewmodel riêng, không dùng chung viewmodel. rất có ý nghĩa 
         //khi dùng usercontrol
-        public ControlBarViewModel ViewModel { get; set; }
+        public ucControlBarViewModel ViewModel { get; set; }
         public ucControlBar()
         {
             InitializeComponent();
-            this.DataContext = ViewModel = new ControlBarViewModel();
+            this.DataContext = ViewModel = new ucControlBarViewModel();
         }
     }
 }
