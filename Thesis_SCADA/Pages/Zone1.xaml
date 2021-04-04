@@ -4,12 +4,26 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Thesis_SCADA.Pages"
+      xmlns:uc="clr-namespace:Thesis_SCADA.UserControls"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="670" d:DesignWidth="800"
+      
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+
       Title="Zone1">
 
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="286,178,0,0" TextWrapping="Wrap" Text="Zone1" VerticalAlignment="Top"/>
 
+        <Canvas x:Name="MainCanvas">
+            <uc:ucPopupPump Tag="Main window" Height="300" Width="300"></uc:ucPopupPump>
+        </Canvas>
     </Grid>
 </Page>

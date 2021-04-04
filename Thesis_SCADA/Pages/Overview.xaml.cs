@@ -24,5 +24,6 @@ namespace Thesis_SCADA.Pages
         {
             InitializeComponent();
         }
+
     }
 }

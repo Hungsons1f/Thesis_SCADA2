@@ -6,14 +6,22 @@
       xmlns:local="clr-namespace:Thesis_SCADA.Pages"
       xmlns:UserControls="clr-namespace:Thesis_SCADA.UserControls" x:Class="Thesis_SCADA.Pages.Overview"
       xmlns:ar="clr-namespace:Petzold.Media2D;assembly=Petzold.Media2D"
+      xmlns:uc="clr-namespace:Thesis_SCADA.UserControls"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d" 
       d:DesignHeight="670" d:DesignWidth="1366"
       Title="Overview">
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding WindowLoadedCommand}"
+                                   CommandParameter="{Binding ElementName=mainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid>
         <Canvas>
-            <!--Symbols-->
+            <!--#region Symbols-->
             <ContentControl Height="99" Width="264" ContentTemplate="{StaticResource Turbine}" Canvas.Left="971" Canvas.Top="180" />
             <ContentControl Height="50" Width="80" ContentTemplate="{StaticResource Deaerator}" Canvas.Left="288" Canvas.Top="205" />
             <ContentControl Height="91" Width="125" ContentTemplate="{StaticResource Coal-feeder}" Canvas.Left="55" Canvas.Top="444" />
@@ -23,7 +31,10 @@
             <ContentControl Height="239" Width="139" ContentTemplate="{StaticResource Boiler}" Canvas.Left="655" Canvas.Top="51" />
             <ContentControl Height="50" Width="80" ContentTemplate="{StaticResource Heater}" Canvas.Left="485" Canvas.Top="65" />
             <ContentControl Height="50" Width="80" ContentTemplate="{StaticResource Heater}" Canvas.Left="120" Canvas.Top="205" />
-            <ContentControl Height="45" Width="50" ContentTemplate="{StaticResource Pump}" Canvas.Left="900" Canvas.Top="545" RenderTransformOrigin="0.5,0.5" >
+
+            <uc:ucComponent Height="55" Width="60" NormalSymbol="{StaticResource Pump}" RunSymbol="{StaticResource PumpActive}" FaultSymbol="{StaticResource PumpFault}" Faceplate="{Binding ElementName=SupplyPump}" Canvas.Left="360" Canvas.Top="110"/>
+            <uc:ucComponent Height="55" Width="60" NormalSymbol="{StaticResource Pump}" RunSymbol="{StaticResource PumpActive}" FaultSymbol="{StaticResource PumpFault}" Faceplate="{Binding ElementName=CondensePump}" Canvas.Left="10" Canvas.Top="280"/>
+            <uc:ucComponent Height="55" Width="60" NormalSymbol="{StaticResource Pump}" RunSymbol="{StaticResource PumpActive}" FaultSymbol="{StaticResource PumpFault}" Canvas.Left="895" Canvas.Top="540" RenderTransformOrigin="0.5,0.5">
                 <ContentControl.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleY="1" ScaleX="-1"/>
@@ -32,18 +43,17 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </ContentControl.RenderTransform>
-            </ContentControl>
-            <ContentControl Height="45" Width="50" ContentTemplate="{StaticResource Pump}" Canvas.Left="365" Canvas.Top="115" />
-            <ContentControl Height="45" Width="50" ContentTemplate="{StaticResource Pump}" Canvas.Left="15" Canvas.Top="285" />
-            <ContentControl Height="45" Width="45" ContentTemplate="{StaticResource Fan}" Canvas.Left="288" Canvas.Top="605" />
-            <ContentControl Height="45" Width="45" ContentTemplate="{StaticResource Fan}" Canvas.Left="288" Canvas.Top="530" />
-            <ContentControl Height="45" Width="45" ContentTemplate="{StaticResource Fan}" Canvas.Left="288" Canvas.Top="455" />
-            <ContentControl Height="35" Width="35" ContentTemplate="{StaticResource Valve}" Canvas.Left="860" Canvas.Top="125" />
-            <ContentControl Height="35" Width="35" ContentTemplate="{StaticResource Valve}" Canvas.Left="410" Canvas.Top="10" />
-            <ContentControl Height="35" Width="35" ContentTemplate="{StaticResource Valve}" Canvas.Left="85" Canvas.Top="150" />
-            <ContentControl Height="35" Width="35" ContentTemplate="{StaticResource Valve}" Canvas.Left="245" Canvas.Top="150" />
-
-            <!--Arrows-->
+            </uc:ucComponent>
+            <uc:ucComponent Height="55" Width="55" NormalSymbol="{StaticResource Fan}" RunSymbol="{StaticResource FanActive}" FaultSymbol="{StaticResource FanFault}" Canvas.Left="283" Canvas.Top="600"/>
+            <uc:ucComponent Height="55" Width="55" NormalSymbol="{StaticResource Fan}" RunSymbol="{StaticResource FanActive}" FaultSymbol="{StaticResource FanFault}" Canvas.Left="283" Canvas.Top="525"/>
+            <uc:ucComponent Height="55" Width="55" NormalSymbol="{StaticResource Fan}" RunSymbol="{StaticResource FanActive}" FaultSymbol="{StaticResource FanFault}" Canvas.Left="283" Canvas.Top="450"/>
+            <uc:ucComponent Height="45" Width="45" NormalSymbol="{StaticResource Valve}" RunSymbol="{StaticResource ValveActive}" FaultSymbol="{StaticResource ValveFault}" Canvas.Left="855" Canvas.Top="120"/>
+            <uc:ucComponent Height="45" Width="45" NormalSymbol="{StaticResource Valve}" RunSymbol="{StaticResource ValveActive}" FaultSymbol="{StaticResource ValveFault}" Canvas.Left="405" Canvas.Top="5"/>
+            <uc:ucComponent Height="45" Width="45" NormalSymbol="{StaticResource Valve}" RunSymbol="{StaticResource ValveActive}" FaultSymbol="{StaticResource ValveFault}" Canvas.Left="80" Canvas.Top="145"/>
+            <uc:ucComponent Height="45" Width="45" NormalSymbol="{StaticResource Valve}" RunSymbol="{StaticResource ValveActive}" FaultSymbol="{StaticResource ValveFault}" Canvas.Left="240" Canvas.Top="145"/>
+            <!--#endregion-->
+            
+            <!--#region Arrows-->
             <ar:ArrowPolyline Points="65 295 65 230 120 230" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
             <ar:ArrowPolyline Points="200 230 285 230" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
             <ar:ArrowPolyline Points="365 230 385 230 385 160" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
@@ -85,7 +95,12 @@
             <ar:ArrowPolyline Points="145 250 145 390 760 390 760 450" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
             <ar:ArrowPolyline Points="325 250 325 390 760 390 760 450" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
             <ar:ArrowPolyline Points="510 115 510 390 760 390 760 450" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
+            <!--#endregion-->
 
+            <!--Faceplate-->
+            <uc:ucPopupPump x:Name="SupplyPump" Tag="Bơm cấp"  Visibility="Collapsed" Canvas.Left="360" Canvas.Top="167"/>
+            <uc:ucPopupPump x:Name="CondensePump" Tag="Bơm ngưng"  Visibility="Collapsed" Canvas.Left="10" Canvas.Top="340"/>
+            <uc:ucPopupPump x:Name="CircularPump" Tag="Bơm tuần hoàn"  Visibility="Collapsed" Canvas.Left="953" Canvas.Top="370"/>
 
         </Canvas>
     </Grid>
