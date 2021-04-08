@@ -15,6 +15,10 @@ namespace Thesis_SCADA.ViewModel
 {
     public class MainViewModel: BaseViewModel
     {
+        #region properties
+        private AdsDataService ipcData;
+        #endregion
+
         #region commands
         public ICommand UserManagementCommand { get; set; }
         public ICommand WindowLoadedCommand { get; set; }
@@ -36,7 +40,9 @@ namespace Thesis_SCADA.ViewModel
 
         public MainViewModel()
         {
-
+            ipcData = new AdsDataService();
+            OnIpcDataRefreshed(null, null);
+            ipcData.ValuesRefreshed += OnIpcDataRefreshed;
 
             WindowLoadedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {
                 if (p == null) return;
@@ -134,6 +140,11 @@ namespace Thesis_SCADA.ViewModel
                 DrawerHost.CloseDrawerCommand.Execute(null, null);
             });
             #endregion
+        }
+
+        private void OnIpcDataRefreshed(object sender, EventArgs e)
+        {
+            GlobalVar.ipcData = ipcData.PlcData;
         }
     }
 }

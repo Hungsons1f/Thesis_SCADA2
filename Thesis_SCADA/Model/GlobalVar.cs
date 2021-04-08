@@ -9,7 +9,7 @@ namespace Thesis_SCADA.Model
 {
     public static class GlobalVar
     {
-        public static ConnectionStatus connectionStatus;
+        public static MainInterface ipcData;
     }
 
     public enum ConnectionStatus

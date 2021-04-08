@@ -54,6 +54,10 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="TwinCAT.Ads, Version=4.3.20.0, Culture=neutral, PublicKeyToken=180016cd49e5e8c3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\TwinCAT\AdsApi\.NET\v4.0.30319\TwinCAT.Ads.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -66,6 +70,7 @@
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\AdsDataService.cs" />
     <Compile Include="Model\DataProvider.cs" />
     <Compile Include="Model\GlobalVar.cs" />
     <Compile Include="Pages\Alarm.xaml.cs">
@@ -114,6 +119,7 @@
     <Compile Include="UserControls\ucTest.xaml.cs">
       <DependentUpon>ucTest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\PageVM\OverviewViewModel.cs" />
     <Compile Include="ViewModel\UserControlVM\ucComponentViewModel.cs" />
     <Compile Include="ViewModel\UserControlVM\ucPopupPumpViewModel.cs" />
     <Compile Include="ViewModel\UserControlVM\ucStatusBarViewModel.cs" />
@@ -356,9 +362,7 @@
       <Version>1.0.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\PageVM\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Model\Scada_DB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
