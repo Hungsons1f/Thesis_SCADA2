@@ -7,6 +7,7 @@
     <viewmodel:MainViewModel x:Key="MainViewModel"></viewmodel:MainViewModel>
     <viewmodel:LoginViewModel x:Key="LoginViewModel"></viewmodel:LoginViewModel>
     <viewmodel:UserManagementViewModel x:Key="UserManagementViewModel"></viewmodel:UserManagementViewModel>
+    <viewmodel:OverviewViewModel x:Key="OverviewViewModel"></viewmodel:OverviewViewModel>
 
     <globalvar:GlobalColor x:Key="GlobalColor"></globalvar:GlobalColor>
 </ResourceDictionary>   

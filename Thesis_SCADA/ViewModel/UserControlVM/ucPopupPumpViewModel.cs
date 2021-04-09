@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Thesis_SCADA.Model;
 using Thesis_SCADA.UserControls;
 
 namespace Thesis_SCADA.ViewModel
@@ -19,6 +20,7 @@ namespace Thesis_SCADA.ViewModel
 
         #region Commands
         public ICommand CloseCommand { get; set; }
+        public ICommand xxx { get; set; }
 
         #endregion
 
@@ -31,6 +33,13 @@ namespace Thesis_SCADA.ViewModel
                     p.Visibility = Visibility.Collapsed;
                 else
                     p.Visibility = Visibility.Visible;
+            });
+
+            xxx = new RelayCommand<object>((p) => { return true; }, (p) => {
+                if (p == null)
+                    return;
+                int i = 1;
+
             });
 
         }

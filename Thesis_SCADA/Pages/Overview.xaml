@@ -10,12 +10,15 @@
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d" 
       d:DesignHeight="670" d:DesignWidth="1366"
+    
+      Name="overviewPage"
+      DataContext="{StaticResource OverviewViewModel}"
       Title="Overview">
 
     <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding WindowLoadedCommand}"
-                                   CommandParameter="{Binding ElementName=mainWindow}"/>
+        <i:EventTrigger EventName="Unloaded">
+            <i:InvokeCommandAction Command="{Binding UnloadedCommand}"
+                                   CommandParameter="{Binding ElementName=overviewPage}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
@@ -34,7 +37,7 @@
 
             <uc:ucComponent Height="55" Width="60" NormalSymbol="{StaticResource Pump}" RunSymbol="{StaticResource PumpActive}" FaultSymbol="{StaticResource PumpFault}" Faceplate="{Binding ElementName=SupplyPump}" Canvas.Left="360" Canvas.Top="110"/>
             <uc:ucComponent Height="55" Width="60" NormalSymbol="{StaticResource Pump}" RunSymbol="{StaticResource PumpActive}" FaultSymbol="{StaticResource PumpFault}" Faceplate="{Binding ElementName=CondensePump}" Canvas.Left="10" Canvas.Top="280"/>
-            <uc:ucComponent Height="55" Width="60" NormalSymbol="{StaticResource Pump}" RunSymbol="{StaticResource PumpActive}" FaultSymbol="{StaticResource PumpFault}" Canvas.Left="895" Canvas.Top="540" RenderTransformOrigin="0.5,0.5">
+            <uc:ucComponent Height="55" Width="60" NormalSymbol="{StaticResource Pump}" RunSymbol="{StaticResource PumpActive}" FaultSymbol="{StaticResource PumpFault}" Faceplate="{Binding ElementName=CircularPump}" Canvas.Left="895" Canvas.Top="540" RenderTransformOrigin="0.5,0.5">
                 <ContentControl.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleY="1" ScaleX="-1"/>
@@ -98,9 +101,12 @@
             <!--#endregion-->
 
             <!--Faceplate-->
-            <uc:ucPopupPump x:Name="SupplyPump" Tag="Bơm cấp"  Visibility="Collapsed" Canvas.Left="360" Canvas.Top="167"/>
-            <uc:ucPopupPump x:Name="CondensePump" Tag="Bơm ngưng"  Visibility="Collapsed" Canvas.Left="10" Canvas.Top="340"/>
+            <uc:ucPopupPump x:Name="SupplyPump" Tag="Bơm cấp"  Visibility="Collapsed" Canvas.Left="360" Canvas.Top="167"
+                            />
+            <uc:ucPopupPump x:Name="CondensePump" Tag="Bơm ngưng"  Visibility="Visible" Canvas.Left="10" Canvas.Top="340"
+                            MotorObject="{Binding Source={StaticResource OverviewViewModel}, Path=CondensePumpObj, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             <uc:ucPopupPump x:Name="CircularPump" Tag="Bơm tuần hoàn"  Visibility="Collapsed" Canvas.Left="953" Canvas.Top="370"/>
+            <TextBlock Canvas.Left="172" TextWrapping="Wrap" Text="{Binding Test2}" Canvas.Top="150"/>
 
         </Canvas>
     </Grid>

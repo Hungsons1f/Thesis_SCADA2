@@ -29,11 +29,13 @@ namespace Thesis_SCADA.Model
         {
             try
             {
+                StateInfo state;
                 adsClient = new TcAdsClient();
                 adsClient.Connect(851);
-                if (!adsClient.IsConnected)
+                if (adsClient.TryReadState(out state) != AdsErrorCode.NoError)
                 {
-                    MessageBox.Show("Chưa kết nối được IPC", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Chưa kết nối được IPC.\n Lỗi: AdsState: " + state.AdsState + ", DeviceState: " + state.DeviceState, 
+                                    "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
             }
@@ -41,6 +43,7 @@ namespace Thesis_SCADA.Model
             {
                 Debug.WriteLine(e.ToString());
                 MessageBox.Show("Chưa kết nối được IPC", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
 
             PlcData = new MainInterface();
@@ -113,8 +116,9 @@ namespace Thesis_SCADA.Model
                     }
                     catch (Exception e)
                     {
-                        MessageBox.Show("Cannot Read IPC data cyclically", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         _timer.Stop();
+                        MessageBox.Show("Không đọc được dữ liệu tuần hoàn từ IPC" + e.ToString(), "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        
                     }
                 }
             });
@@ -163,78 +167,127 @@ namespace Thesis_SCADA.Model
     [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
     public class aFb_Motor
     {
-        public short Mode;
+        public short mode;
 	    //Manual
-	    public bool Start;
-        public bool Stop;
-        public float SetSpeed;
-        public bool Reset;
+	    public bool start;
+        public bool stop;
+        public float setSpeed;
+        public bool reset;
         //Auto
-        public bool RunCondition;
-        public bool StopCondition;
-        public float SpeedCondition;
+        public bool runCondition;
+        public bool stopCondition;
+        public float speedCondition;
         //Others
-        public bool RunFeedback;
-        public bool Interlock;
-        public float Maxspeed;
-        public float ActualSpeed;
+        public bool runFeedback;
+        public bool interlock;
+        public float maxspeed;
+        public float actualSpeed;
         //Output
-        public bool Cmd;
-        public bool Fault;
-        public short State;
-        public float Speed;
-        public uint Runtime;
-        public uint AccRuntime;
+        public bool cmd;
+        public bool fault;
+        public short state;
+        public float speed;
+        public uint runtime;
+        public uint accRuntime;
+
+        public short Mode { get => mode; set => mode = value; }
+        public bool Start { get => start; set => start = value; }
+        public bool Stop { get => stop; set => stop = value; }
+        public float SetSpeed { get => setSpeed; set => setSpeed = value; }
+        public bool Reset { get => reset; set => reset = value; }
+        public bool RunCondition { get => runCondition; set => runCondition = value; }
+        public bool StopCondition { get => stopCondition; set => stopCondition = value; }
+        public float SpeedCondition { get => speedCondition; set => speedCondition = value; }
+        public bool RunFeedback { get => runFeedback; set => runFeedback = value; }
+        public bool Interlock { get => interlock; set => interlock = value; }
+        public float Maxspeed { get => maxspeed; set => maxspeed = value; }
+        public float ActualSpeed { get => actualSpeed; set => actualSpeed = value; }
+        public bool Cmd { get => cmd; set => cmd = value; }
+        public bool Fault { get => fault; set => fault = value; }
+        public short State { get => state; set => state = value; }
+        public float Speed { get => speed; set => speed = value; }
+        public uint Runtime { get => runtime; set => runtime = value; }
+        public uint AccRuntime { get => accRuntime; set => accRuntime = value; }
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
     public class aFb_Valve
     {
-        public short Mode;
+        public short mode;
         //Manual
-        public bool Start;
-        public bool Stop;
-        public float SetPercent;
-        public bool Reset;
+        public bool start;
+        public bool stop;
+        public float setPercent;
+        public bool reset;
         //Auto
-        public bool RunCondition;
-        public bool StopCondition;
-        public float PercentCondition;
+        public bool runCondition;
+        public bool stopCondition;
+        public float percentCondition;
         //Others
-        public bool RunFeedback;
-        public bool Interlock;
+        public bool runFeedback;
+        public bool interlock;
         //Output
-        public bool Cmd;
-        public bool Fault;
-        public short State;
-        public float OpenPercent;
-        public uint Runtime;
-        public uint AccRuntime;
+        public bool cmd;
+        public bool fault;
+        public short state;
+        public float openPercent;
+        public uint runtime;
+        public uint accRuntime;
+
+        public short Mode { get => mode; set => mode = value; }
+        public bool Start { get => start; set => start = value; }
+        public bool Stop { get => stop; set => stop = value; }
+        public float SetPercent { get => setPercent; set => setPercent = value; }
+        public bool Reset { get => reset; set => reset = value; }
+        public bool RunCondition { get => runCondition; set => runCondition = value; }
+        public bool StopCondition { get => stopCondition; set => stopCondition = value; }
+        public float PercentCondition { get => percentCondition; set => percentCondition = value; }
+        public bool RunFeedback { get => runFeedback; set => runFeedback = value; }
+        public bool Interlock { get => interlock; set => interlock = value; }
+        public bool Cmd { get => cmd; set => cmd = value; }
+        public bool Fault { get => fault; set => fault = value; }
+        public short State { get => state; set => state = value; }
+        public float OpenPercent { get => openPercent; set => openPercent = value; }
+        public uint Runtime { get => runtime; set => runtime = value; }
+        public uint AccRuntime { get => accRuntime; set => accRuntime = value; }
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
     public class aT_Furnace
     {
-        public float Temperature;
+        public float temperature;
+
+        public float Temperature { get => temperature; set => temperature = value; }
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
     public class aT_Heater
     {
-        public float Temperature;
-        public float Pressure;
+        public float temperature;
+        public float pressure;
+
+        public float Temperature { get => temperature; set => temperature = value; }
+        public float Pressure { get => pressure; set => pressure = value; }
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
     public class aT_Turbine
     {
-        public float Rotation;
-        public float HighPressure;
-        public float ImmediatePressure;
-        public float OutPressure;
-        public float HighTemperature;
-        public float ImmediateTemperature;
-        public float OutTemperature;
+        public float rotation;
+        public float highPressure;
+        public float immediatePressure;
+        public float outPressure;
+        public float highTemperature;
+        public float immediateTemperature;
+        public float outTemperature;
+
+        public float Rotation { get => rotation; set => rotation = value; }
+        public float HighPressure { get => highPressure; set => highPressure = value; }
+        public float ImmediatePressure { get => immediatePressure; set => immediatePressure = value; }
+        public float OutPressure { get => outPressure; set => outPressure = value; }
+        public float HighTemperature { get => highTemperature; set => highTemperature = value; }
+        public float ImmediateTemperature { get => immediateTemperature; set => immediateTemperature = value; }
+        public float OutTemperature { get => outTemperature; set => outTemperature = value; }
     }
 
     public enum aE_Mode { Manual = 0, Auto = 1, Service = 2}

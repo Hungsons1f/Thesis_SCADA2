@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Thesis_SCADA.Model;
 using Thesis_SCADA.ViewModel;
 
 namespace Thesis_SCADA.UserControls
@@ -11,16 +12,29 @@ namespace Thesis_SCADA.UserControls
     /// </summary>
     public partial class ucPopupPump : UserControl
     {
-        double FirstXPos, FirstYPos, FirstArrowXPos, FirstArrowYPos;
-        object MovingObject;
-        private Canvas canvas;
-
         public ucPopupPumpViewModel ViewModel { get; set; }
         public ucPopupPump()
         {
             InitializeComponent();
             this.DataContext = ViewModel = new ucPopupPumpViewModel();
         }
+
+        #region Dependency Properties
+        public aFb_Motor MotorObject
+        {
+            get { return (aFb_Motor)GetValue(MotorObjectProperty); }
+            set { SetValue(MotorObjectProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for navframe.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MotorObjectProperty =
+            DependencyProperty.Register("MotorObject", typeof(aFb_Motor), typeof(ucPopupPump), new FrameworkPropertyMetadata(null));
+        #endregion
+
+        #region Moving Popup
+        double FirstXPos, FirstYPos, FirstArrowXPos, FirstArrowYPos;
+        object MovingObject;
+        private Canvas canvas;
 
         private void PopupPump_Loaded(object sender, RoutedEventArgs e)
         {
@@ -62,5 +76,6 @@ namespace Thesis_SCADA.UserControls
                 }
             }
         }
+        #endregion
     }
 }

@@ -69,13 +69,22 @@
                         <!--Left Gauge-->
                         <Grid Grid.Column="0" Width="100" HorizontalAlignment="Center">
                             <Canvas >
-                                <uc:ucGauge Data="10" Width="100" />
-                                <uc:ucComponent Canvas.Left="23" Canvas.Top="22" Height="50" Width="55" NormalSymbol="{StaticResource Pump}" RunSymbol="{StaticResource PumpActive}" FaultSymbol="{StaticResource PumpFault}"/>
+                                <uc:ucGauge Width="100" 
+                                            Data="10" />
+                                <uc:ucComponent Canvas.Left="23" Canvas.Top="22" Height="50" Width="55" 
+                                                NormalSymbol="{StaticResource Pump}" 
+                                                RunSymbol="{StaticResource PumpActive}" 
+                                                FaultSymbol="{StaticResource PumpFault}"
+                                                Data="1"/>
                                 <Grid Canvas.Top="73" Width="100">
-                                    <TextBlock Text="1500" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+                                    <TextBlock  FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" 
+                                               Style="{StaticResource MaterialDesignBody1TextBlock}"
+                                               Text="{Binding ElementName=UcPopupPump, Path=MotorObject.ActualSpeed}"/>
                                 </Grid>
                                 <Grid Canvas.Bottom="0" Width="100">
-                                    <TextBlock Text="Max: 1500 RPM" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignCaptionTextBlock}"/>
+                                    <TextBlock  HorizontalAlignment="Center" 
+                                               Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                                               Text="{Binding ElementName=UcPopupPump, Path=MotorObject.Maxspeed, StringFormat=Max: {0} RPM}"/>
                                 </Grid>
                             </Canvas>
                         </Grid>
@@ -105,6 +114,8 @@
                             <Button Grid.Row="1" Grid.Column="0"
                                     Background="{Binding Source={StaticResource GlobalColor}, Path=ClGreen, Mode=OneWay}"
                                     BorderBrush="{Binding Source={StaticResource GlobalColor}, Path=ClGreen, Mode=OneWay}"
+                                    Command="{Binding xxx}"
+                                    CommandParameter="{Binding ElementName=UcPopupPump, Path=MotorObject}"
                                     ToolTip="Chạy bơm">
                                 <materialDesign:PackIcon Width="35" Height="35" Kind="Power" />
                             </Button>

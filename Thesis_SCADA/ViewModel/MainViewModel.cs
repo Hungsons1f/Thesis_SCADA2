@@ -40,9 +40,16 @@ namespace Thesis_SCADA.ViewModel
 
         public MainViewModel()
         {
-            ipcData = new AdsDataService();
-            OnIpcDataRefreshed(null, null);
-            ipcData.ValuesRefreshed += OnIpcDataRefreshed;
+            //ipcData = new AdsDataService();
+            //OnIpcDataRefreshed(null, null);
+            //ipcData.ValuesRefreshed += OnIpcDataRefreshed;
+
+            MainInterface mainInterface = new MainInterface();
+            mainInterface.Components = new Components();
+            mainInterface.Components.CondensePump = new aFb_Motor();
+            mainInterface.Components.CondensePump.ActualSpeed = 1400;
+            mainInterface.Components.CondensePump.Maxspeed = 1500;
+            GlobalVar.Ins.IpcData = mainInterface;
 
             WindowLoadedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {
                 if (p == null) return;
@@ -144,7 +151,7 @@ namespace Thesis_SCADA.ViewModel
 
         private void OnIpcDataRefreshed(object sender, EventArgs e)
         {
-            GlobalVar.ipcData = ipcData.PlcData;
+            GlobalVar.Ins.IpcData = ipcData.PlcData;
         }
     }
 }
