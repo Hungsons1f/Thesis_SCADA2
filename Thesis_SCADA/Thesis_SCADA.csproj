@@ -67,10 +67,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\ComponentModeConverter.cs" />
+    <Compile Include="Converters\ComponentStatusConverter.cs" />
+    <Compile Include="Converters\Int2TimeConverter.cs" />
+    <Compile Include="Converters\MultiCommandParaConverter.cs" />
+    <Compile Include="Converters\Value2PercentConverter.cs" />
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\AdsDataService.cs" />
+    <Compile Include="Model\IPCDataService.cs" />
     <Compile Include="Model\DataProvider.cs" />
     <Compile Include="Model\GlobalVar.cs" />
     <Compile Include="Pages\Alarm.xaml.cs">
@@ -110,8 +115,14 @@
     <Compile Include="UserControls\ucGauge.xaml.cs">
       <DependentUpon>ucGauge.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ucPopupFan.xaml.cs">
+      <DependentUpon>ucPopupFan.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\ucPopupPump.xaml.cs">
       <DependentUpon>ucPopupPump.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ucPopupValve.xaml.cs">
+      <DependentUpon>ucPopupValve.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\ucStatusBar.xaml.cs">
       <DependentUpon>ucStatusBar.xaml</DependentUpon>
@@ -119,9 +130,18 @@
     <Compile Include="UserControls\ucTest.xaml.cs">
       <DependentUpon>ucTest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ucWatchBox.xaml.cs">
+      <DependentUpon>ucWatchBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ucWatchBoxRod.xaml.cs">
+      <DependentUpon>ucWatchBoxRod.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\PageVM\OverviewViewModel.cs" />
     <Compile Include="ViewModel\UserControlVM\ucComponentViewModel.cs" />
+    <Compile Include="ViewModel\UserControlVM\ucGaugeViewModel.cs" />
+    <Compile Include="ViewModel\UserControlVM\ucPopupFanViewModel.cs" />
     <Compile Include="ViewModel\UserControlVM\ucPopupPumpViewModel.cs" />
+    <Compile Include="ViewModel\UserControlVM\ucPopupValveViewModel.cs" />
     <Compile Include="ViewModel\UserControlVM\ucStatusBarViewModel.cs" />
     <Compile Include="ViewModel\UserControlVM\ucTestViewModel.cs" />
     <Compile Include="ViewModel\UtilityMethods.cs" />
@@ -298,7 +318,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControls\ucPopupFan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\ucPopupPump.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ucPopupValve.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -307,6 +335,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ucTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ucWatchBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ucWatchBoxRod.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

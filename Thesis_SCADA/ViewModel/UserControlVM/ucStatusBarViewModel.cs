@@ -19,8 +19,8 @@ namespace Thesis_SCADA.ViewModel
         private ConnectionStatus connectionStatus = ConnectionStatus.Offline;
         public ConnectionStatus ConnectionStatus { get => connectionStatus; set { connectionStatus = value; OnPropertyChanged(); } }
 
-        private TimeSpan scanTime = TimeSpan.Zero;
-        public TimeSpan ScanTime { get => scanTime; set { scanTime = value; OnPropertyChanged(); } }
+        private int scanTime = 0;
+        public int ScanTime { get => scanTime; set { scanTime = value; OnPropertyChanged(); } }
 
         private ushort alarmNum = 0;
         public ushort AlarmNum { get => alarmNum; set { alarmNum = value; OnPropertyChanged(); } }
@@ -49,6 +49,8 @@ namespace Thesis_SCADA.ViewModel
         private void timer_Tick(object sender, EventArgs e)
         {
             CurrentTime = DateTime.Now;
+            ConnectionStatus = GlobalVar.Ins.ConnectStatus;
+            ScanTime = GlobalVar.Ins.ScanTime.Milliseconds;
         }
     }
 }

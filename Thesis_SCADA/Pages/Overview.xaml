@@ -16,6 +16,10 @@
       Title="Overview">
 
     <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}"
+                                   CommandParameter="{Binding ElementName=overviewPage}"/>
+        </i:EventTrigger>
         <i:EventTrigger EventName="Unloaded">
             <i:InvokeCommandAction Command="{Binding UnloadedCommand}"
                                    CommandParameter="{Binding ElementName=overviewPage}"/>
@@ -36,7 +40,7 @@
             <ContentControl Height="50" Width="80" ContentTemplate="{StaticResource Heater}" Canvas.Left="120" Canvas.Top="205" />
 
             <uc:ucComponent Height="55" Width="60" NormalSymbol="{StaticResource Pump}" RunSymbol="{StaticResource PumpActive}" FaultSymbol="{StaticResource PumpFault}" Faceplate="{Binding ElementName=SupplyPump}" Canvas.Left="360" Canvas.Top="110"/>
-            <uc:ucComponent Height="55" Width="60" NormalSymbol="{StaticResource Pump}" RunSymbol="{StaticResource PumpActive}" FaultSymbol="{StaticResource PumpFault}" Faceplate="{Binding ElementName=CondensePump}" Canvas.Left="10" Canvas.Top="280"/>
+            <uc:ucComponent Height="55" Width="60" NormalSymbol="{StaticResource Pump}" RunSymbol="{StaticResource PumpActive}" FaultSymbol="{StaticResource PumpFault}" Faceplate="{Binding ElementName=CondensePump}" Canvas.Left="10" Canvas.Top="330"/>
             <uc:ucComponent Height="55" Width="60" NormalSymbol="{StaticResource Pump}" RunSymbol="{StaticResource PumpActive}" FaultSymbol="{StaticResource PumpFault}" Faceplate="{Binding ElementName=CircularPump}" Canvas.Left="895" Canvas.Top="540" RenderTransformOrigin="0.5,0.5">
                 <ContentControl.RenderTransform>
                     <TransformGroup>
@@ -47,17 +51,17 @@
                     </TransformGroup>
                 </ContentControl.RenderTransform>
             </uc:ucComponent>
-            <uc:ucComponent Height="55" Width="55" NormalSymbol="{StaticResource Fan}" RunSymbol="{StaticResource FanActive}" FaultSymbol="{StaticResource FanFault}" Canvas.Left="283" Canvas.Top="600"/>
-            <uc:ucComponent Height="55" Width="55" NormalSymbol="{StaticResource Fan}" RunSymbol="{StaticResource FanActive}" FaultSymbol="{StaticResource FanFault}" Canvas.Left="283" Canvas.Top="525"/>
-            <uc:ucComponent Height="55" Width="55" NormalSymbol="{StaticResource Fan}" RunSymbol="{StaticResource FanActive}" FaultSymbol="{StaticResource FanFault}" Canvas.Left="283" Canvas.Top="450"/>
-            <uc:ucComponent Height="45" Width="45" NormalSymbol="{StaticResource Valve}" RunSymbol="{StaticResource ValveActive}" FaultSymbol="{StaticResource ValveFault}" Canvas.Left="855" Canvas.Top="120"/>
-            <uc:ucComponent Height="45" Width="45" NormalSymbol="{StaticResource Valve}" RunSymbol="{StaticResource ValveActive}" FaultSymbol="{StaticResource ValveFault}" Canvas.Left="405" Canvas.Top="5"/>
-            <uc:ucComponent Height="45" Width="45" NormalSymbol="{StaticResource Valve}" RunSymbol="{StaticResource ValveActive}" FaultSymbol="{StaticResource ValveFault}" Canvas.Left="80" Canvas.Top="145"/>
-            <uc:ucComponent Height="45" Width="45" NormalSymbol="{StaticResource Valve}" RunSymbol="{StaticResource ValveActive}" FaultSymbol="{StaticResource ValveFault}" Canvas.Left="240" Canvas.Top="145"/>
+            <uc:ucComponent Height="55" Width="55" NormalSymbol="{StaticResource Fan}" RunSymbol="{StaticResource FanActive}" FaultSymbol="{StaticResource FanFault}" Faceplate="{Binding ElementName=ForceFan3}" Canvas.Left="283" Canvas.Top="600"/>
+            <uc:ucComponent Height="55" Width="55" NormalSymbol="{StaticResource Fan}" RunSymbol="{StaticResource FanActive}" FaultSymbol="{StaticResource FanFault}" Faceplate="{Binding ElementName=ForceFan2}" Canvas.Left="283" Canvas.Top="525"/>
+            <uc:ucComponent Height="55" Width="55" NormalSymbol="{StaticResource Fan}" RunSymbol="{StaticResource FanActive}" FaultSymbol="{StaticResource FanFault}" Faceplate="{Binding ElementName=ForceFan1}" Canvas.Left="283" Canvas.Top="450"/>
+            <uc:ucComponent Height="45" Width="45" NormalSymbol="{StaticResource Valve}" RunSymbol="{StaticResource ValveActive}" FaultSymbol="{StaticResource ValveFault}" Faceplate="{Binding ElementName=TurbineValve}" Canvas.Left="855" Canvas.Top="120"/>
+            <uc:ucComponent Height="45" Width="45" NormalSymbol="{StaticResource Valve}" RunSymbol="{StaticResource ValveActive}" FaultSymbol="{StaticResource ValveFault}" Faceplate="{Binding ElementName=HPHValve}" Canvas.Left="405" Canvas.Top="5"/>
+            <uc:ucComponent Height="45" Width="45" NormalSymbol="{StaticResource Valve}" RunSymbol="{StaticResource ValveActive}" FaultSymbol="{StaticResource ValveFault}" Faceplate="{Binding ElementName=LPHValve}" Canvas.Left="80" Canvas.Top="145"/>
+            <uc:ucComponent Height="45" Width="45" NormalSymbol="{StaticResource Valve}" RunSymbol="{StaticResource ValveActive}" FaultSymbol="{StaticResource ValveFault}" Faceplate="{Binding ElementName=DeaeratorValve}" Canvas.Left="240" Canvas.Top="145"/>
             <!--#endregion-->
-            
+
             <!--#region Arrows-->
-            <ar:ArrowPolyline Points="65 295 65 230 120 230" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="65 345 65 230 120 230" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
             <ar:ArrowPolyline Points="200 230 285 230" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
             <ar:ArrowPolyline Points="365 230 385 230 385 160" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
             <ar:ArrowPolyline Points="415 125 415 90 480 90" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
@@ -70,7 +74,7 @@
             <ar:ArrowPolyline Points="1210 275 1210 390 760 390 760 450" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
             <ar:ArrowPolyline Points="1030 265 1030 310" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
             <ar:ArrowPolyline Points="1105 265 1105 310" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
-            <ar:ArrowPolyline Points="1175 265 1175 310" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="1210 265 1210 300 1240 300" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
 
             <ar:ArrowPolyline Points="1060 615 930 615 930 590" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
             <ar:ArrowPolyline Points="900 555 900 515 830 515 " StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
@@ -84,7 +88,6 @@
             <ar:ArrowPolyline Points="280 175 325 175 325 200" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
             <ar:ArrowPolyline Points="320 35 405 35" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
             <ar:ArrowPolyline Points="445 35 510 35 510 60" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
-            <ar:ArrowPolyline Points="445 35 510 35 510 60" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
 
             <ar:ArrowPolyline Points="115 525 115 540 285 540" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlack, Mode=OneWay}" Canvas.Top="10"/>
             <ar:ArrowPolyline Points="240 540 240 465 285 465" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlack, Mode=OneWay}" Canvas.Top="10"/>
@@ -94,20 +97,179 @@
             <ar:ArrowPolyline Points="335 465 380 465 380 540 460 540" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlack, Mode=OneWay}" Canvas.Top="10"/>
             <ar:ArrowPolyline Points="600 230 650 230" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlack, Mode=OneWay}"/>
 
-            <ar:ArrowPolyline Points="720 450 720 410 35 410 35 330" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
-            <ar:ArrowPolyline Points="145 250 145 390 760 390 760 450" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="720 450 720 410 35 410 35 380" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="160 255 160 390 760 390 760 450" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
             <ar:ArrowPolyline Points="325 250 325 390 760 390 760 450" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
             <ar:ArrowPolyline Points="510 115 510 390 760 390 760 450" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
             <!--#endregion-->
 
-            <!--Faceplate-->
+            <!--#region Faceplate-->
             <uc:ucPopupPump x:Name="SupplyPump" Tag="Bơm cấp"  Visibility="Collapsed" Canvas.Left="360" Canvas.Top="167"
-                            />
-            <uc:ucPopupPump x:Name="CondensePump" Tag="Bơm ngưng"  Visibility="Visible" Canvas.Left="10" Canvas.Top="340"
-                            MotorObject="{Binding Source={StaticResource OverviewViewModel}, Path=CondensePumpObj, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-            <uc:ucPopupPump x:Name="CircularPump" Tag="Bơm tuần hoàn"  Visibility="Collapsed" Canvas.Left="953" Canvas.Top="370"/>
-            <TextBlock Canvas.Left="172" TextWrapping="Wrap" Text="{Binding Test2}" Canvas.Top="150"/>
+                            MotorObject="{Binding Source={StaticResource OverviewViewModel}, Path=SupplyPumpObj}"
+                            Prefix="{Binding Source={StaticResource OverviewViewModel}, Path=SupplyPumpTag}"/>
+            <uc:ucPopupPump x:Name="CondensePump" Tag="Bơm ngưng"  Visibility="Collapsed" Canvas.Left="10" Canvas.Top="340"
+                            MotorObject="{Binding Source={StaticResource OverviewViewModel}, Path=CondensePumpObj}"
+                            Prefix="{Binding Source={StaticResource OverviewViewModel}, Path=CondensePumpTag}"/>
+            <uc:ucPopupPump x:Name="CircularPump" Tag="Bơm tuần hoàn"  Visibility="Collapsed" Canvas.Left="953" Canvas.Top="370"
+                            MotorObject="{Binding Source={StaticResource OverviewViewModel}, Path=CircularPumpObj}"
+                            Prefix="{Binding Source={StaticResource OverviewViewModel}, Path=CircularPumpTag}"/>
+            <uc:ucPopupFan x:Name="ForceFan1" Tag="Bơm cấp 1"  Visibility="Collapsed" Canvas.Left="360" Canvas.Top="300"
+                            MotorObject="{Binding Source={StaticResource OverviewViewModel}, Path=ForceFan1Obj}"
+                            Prefix="{Binding Source={StaticResource OverviewViewModel}, Path=ForceFan1Tag}"/>
+            <uc:ucPopupFan x:Name="ForceFan2" Tag="Bơm cấp 2"  Visibility="Collapsed" Canvas.Left="360" Canvas.Top="335"
+                            MotorObject="{Binding Source={StaticResource OverviewViewModel}, Path=ForceFan2Obj}"
+                            Prefix="{Binding Source={StaticResource OverviewViewModel}, Path=ForceFan2Tag}"/>
+            <uc:ucPopupFan x:Name="ForceFan3" Tag="Bơm cấp 3"  Visibility="Collapsed" Canvas.Left="360" Canvas.Top="375"
+                            MotorObject="{Binding Source={StaticResource OverviewViewModel}, Path=ForceFan3Obj}"
+                            Prefix="{Binding Source={StaticResource OverviewViewModel}, Path=ForceFan3Tag}"/>
+            <uc:ucPopupValve x:Name="LPHValve" Tag="Van GN hạ áp"  Visibility="Collapsed" Canvas.Left="75" Canvas.Top="200"
+                            ValveObject="{Binding Source={StaticResource OverviewViewModel}, Path=LPHValveObj}"
+                            Prefix="{Binding Source={StaticResource OverviewViewModel}, Path=LPHValveTag}"/>
+            <uc:ucPopupValve x:Name="DeaeratorValve" Tag="Van BKK"  Visibility="Collapsed" Canvas.Left="240" Canvas.Top="200"
+                            ValveObject="{Binding Source={StaticResource OverviewViewModel}, Path=DeaeratorValveObj}"
+                            Prefix="{Binding Source={StaticResource OverviewViewModel}, Path=DeaeratorTag}"/>
+            <uc:ucPopupValve x:Name="HPHValve" Tag="Van GN cao áp"  Visibility="Collapsed" Canvas.Left="405" Canvas.Top="60"
+                            ValveObject="{Binding Source={StaticResource OverviewViewModel}, Path=HPHValveObj}"
+                            Prefix="{Binding Source={StaticResource OverviewViewModel}, Path=HPHValveTag}"/>
+            <uc:ucPopupValve x:Name="TurbineValve" Tag="Van tua bin"  Visibility="Collapsed" Canvas.Left="855" Canvas.Top="172"
+                            ValveObject="{Binding Source={StaticResource OverviewViewModel}, Path=TurbineObj}"
+                            Prefix="{Binding Source={StaticResource OverviewViewModel}, Path=TurbineTag}"/>
+            <!--#endregion-->
 
+            <!--#region WatchBox-->
+            <uc:ucWatchBox Canvas.Left="76" Canvas.Top="263"/>
+            <uc:ucWatchBoxRod Canvas.Left="61" Canvas.Top="273" Width="15"/>
+            <uc:ucWatchBox Canvas.Left="76" Canvas.Top="299"/>
+            <uc:ucWatchBoxRod Canvas.Left="61" Canvas.Top="309" Width="15"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="230" Canvas.Top="219" Width="80" RenderTransformOrigin="0,0.5">
+                <uc:ucWatchBoxRod.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc:ucWatchBoxRod.RenderTransform>
+            </uc:ucWatchBoxRod>
+            <uc:ucWatchBox Canvas.Left="197" Canvas.Top="265"/>
+            <uc:ucWatchBox Canvas.Left="197" Canvas.Top="303"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="350" Canvas.Top="24" Width="20" RenderTransformOrigin="0,0.5">
+                <uc:ucWatchBoxRod.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc:ucWatchBoxRod.RenderTransform>
+            </uc:ucWatchBoxRod>
+            <uc:ucWatchBox Canvas.Left="317" Canvas.Top="50"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="207" Canvas.Top="110" Width="15"/>
+            <uc:ucWatchBox Canvas.Left="222" Canvas.Top="100"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="455" Canvas.Top="79" Width="85" RenderTransformOrigin="0,0.5">
+                <uc:ucWatchBoxRod.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc:ucWatchBoxRod.RenderTransform>
+            </uc:ucWatchBoxRod>
+            <uc:ucWatchBox Canvas.Left="422" Canvas.Top="122"/>
+            <uc:ucWatchBox Canvas.Left="422" Canvas.Top="160"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="381" Canvas.Top="212" Width="20"/>
+            <uc:ucWatchBoxRod Canvas.Left="433" Canvas.Top="220" Width="20" RenderTransformOrigin="0,0.5">
+                <uc:ucWatchBoxRod.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc:ucWatchBoxRod.RenderTransform>
+            </uc:ucWatchBoxRod>
+            <uc:ucWatchBox Canvas.Left="400" Canvas.Top="202"/>
+            <uc:ucWatchBox Canvas.Left="400" Canvas.Top="240"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="610" Canvas.Top="79" Width="85" RenderTransformOrigin="0,0.5">
+                <uc:ucWatchBoxRod.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc:ucWatchBoxRod.RenderTransform>
+            </uc:ucWatchBoxRod>
+            <uc:ucWatchBox Canvas.Left="577" Canvas.Top="122"/>
+            <uc:ucWatchBox Canvas.Left="577" Canvas.Top="160"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="827" Canvas.Top="139" Width="85" RenderTransformOrigin="0,0.5">
+                <uc:ucWatchBoxRod.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc:ucWatchBoxRod.RenderTransform>
+            </uc:ucWatchBoxRod>
+            <uc:ucWatchBox Canvas.Left="794" Canvas.Top="182"/>
+            <uc:ucWatchBox Canvas.Left="794" Canvas.Top="220"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="1225" Canvas.Top="223" Width="15"/>
+            <uc:ucWatchBox Canvas.Left="1240" Canvas.Top="213"/>
+
+            <uc:ucWatchBox Canvas.Left="996" Canvas.Top="350"/>
+            <uc:ucWatchBox Canvas.Left="1072" Canvas.Top="350"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="1207" Canvas.Top="350" Width="15"/>
+            <uc:ucWatchBoxRod Canvas.Left="1255" Canvas.Top="360" Width="20" RenderTransformOrigin="0,0.5">
+                <uc:ucWatchBoxRod.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc:ucWatchBoxRod.RenderTransform>
+            </uc:ucWatchBoxRod>
+            <uc:ucWatchBox Canvas.Left="1222" Canvas.Top="340"/>
+            <uc:ucWatchBox Canvas.Left="1222" Canvas.Top="378"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="540" Canvas.Top="400" Width="20" RenderTransformOrigin="0,0.5">
+                <uc:ucWatchBoxRod.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc:ucWatchBoxRod.RenderTransform>
+            </uc:ucWatchBoxRod>
+            <uc:ucWatchBox Canvas.Left="507" Canvas.Top="425"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="896" Canvas.Top="517" Width="30"/>
+            <uc:ucWatchBox Canvas.Left="926" Canvas.Top="507"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="425" Canvas.Top="539" Width="20" RenderTransformOrigin="0,0.5">
+                <uc:ucWatchBoxRod.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc:ucWatchBoxRod.RenderTransform>
+            </uc:ucWatchBoxRod>
+            <uc:ucWatchBox Canvas.Left="392" Canvas.Top="565"/>
+            <!--#endregion-->
         </Canvas>
     </Grid>
 </Page>

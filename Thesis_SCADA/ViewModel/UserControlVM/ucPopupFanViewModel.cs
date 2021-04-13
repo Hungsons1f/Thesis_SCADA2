@@ -7,11 +7,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Thesis_SCADA.Model;
-using Thesis_SCADA.UserControls;
 
-namespace Thesis_SCADA.ViewModel
+namespace Thesis_SCADA.ViewModel.UserControlVM
 {
-    public class ucPopupPumpViewModel : BaseViewModel
+    public class ucPopupFanViewModel: BaseViewModel
     {
         #region Properties
         private string setpointName = "Tốc độ đặt (RPM): ";
@@ -33,10 +32,10 @@ namespace Thesis_SCADA.ViewModel
 
         public ICommand SetpointEnteredCommand { get; set; }
         public ICommand RpmSelectedCommand { get; set; }
-        public ICommand M3hSelectedCommand { get; set; }
+        public ICommand PercentSelectedCommand { get; set; }
         #endregion
 
-        public ucPopupPumpViewModel()
+        public ucPopupFanViewModel()
         {
             CloseCommand = new RelayCommand<UserControl>((p) => { return true; }, (p) => {
                 if (p == null) return;
@@ -101,22 +100,24 @@ namespace Thesis_SCADA.ViewModel
                 if (p == null) return;
                 string val = (string)p[0];
                 string prefix = (string)p[1];
+                float max = (float)p[2];
 
                 if (SetpointName == "Tốc độ đặt (RPM): ")
                     GlobalVar.Ins.WriteData<float>(prefix + ".SetSpeed", Single.Parse(val));
                 else
-                    GlobalVar.Ins.WriteData<float>(prefix + ".SetSpeed", float.Parse(val)*(float)0.04);
+                    GlobalVar.Ins.WriteData<float>(prefix + ".SetSpeed", float.Parse(val) / (float)100 * max);
             });
 
             RpmSelectedCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
                 SetpointName = "Tốc độ đặt (RPM): ";
             });
 
-            M3hSelectedCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
-                SetpointName = "Lưu lượng đặt (m3/h): ";
+            PercentSelectedCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                SetpointName = "Công suất đặt (%): ";
             });
 
             #endregion
         }
+
     }
 }

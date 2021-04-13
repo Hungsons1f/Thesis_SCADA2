@@ -1,22 +1,41 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 using Thesis_SCADA.Model;
 using Thesis_SCADA.ViewModel;
+using Thesis_SCADA.ViewModel.UserControlVM;
 
 namespace Thesis_SCADA.UserControls
 {
     /// <summary>
-    /// Interaction logic for ucPopupPump.xaml
+    /// Interaction logic for ucPopupFan.xaml
     /// </summary>
-    public partial class ucPopupPump : UserControl
+    //public partial class ucPopupFan : UserControl
+    //{
+    //    public ucPopupFan()
+    //    {
+    //        InitializeComponent();
+    //    }
+    //}
+
+    public partial class ucPopupFan : UserControl
     {
-        public ucPopupPumpViewModel ViewModel { get; set; }
-        public ucPopupPump()
+        public ucPopupFanViewModel ViewModel { get; set; }
+        public ucPopupFan()
         {
             InitializeComponent();
-            this.DataContext = ViewModel = new ucPopupPumpViewModel();
+            this.DataContext = ViewModel = new ucPopupFanViewModel();
         }
 
         #region Dependency Properties
@@ -28,7 +47,7 @@ namespace Thesis_SCADA.UserControls
 
         // Using a DependencyProperty as the backing store for navframe.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MotorObjectProperty =
-            DependencyProperty.Register("MotorObject", typeof(aFb_Motor), typeof(ucPopupPump), new FrameworkPropertyMetadata(null));
+            DependencyProperty.Register("MotorObject", typeof(aFb_Motor), typeof(ucPopupFan), new FrameworkPropertyMetadata(null));
 
         public string Prefix
         {
@@ -38,7 +57,7 @@ namespace Thesis_SCADA.UserControls
 
         // Using a DependencyProperty as the backing store for navframe.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PrefixProperty =
-            DependencyProperty.Register("Prefix", typeof(string), typeof(ucPopupPump), new FrameworkPropertyMetadata(null));
+            DependencyProperty.Register("Prefix", typeof(string), typeof(ucPopupFan), new FrameworkPropertyMetadata(null));
 
         #endregion
 
@@ -47,18 +66,18 @@ namespace Thesis_SCADA.UserControls
         object MovingObject;
         private Canvas canvas;
 
-        private void PopupPump_Loaded(object sender, RoutedEventArgs e)
+        private void PopupFan_Loaded(object sender, RoutedEventArgs e)
         {
             canvas = Parent as Canvas;
             if (canvas == null)
             {
                 throw new InvalidCastException("The parent of a KeyboardPopup control must be a Canvas.");
             }
-            canvas.PreviewMouseMove -= PopupPump_MouseMove;
-            canvas.PreviewMouseMove += PopupPump_MouseMove;
+            canvas.PreviewMouseMove -= PopupFan_MouseMove;
+            canvas.PreviewMouseMove += PopupFan_MouseMove;
         }
 
-        private void PopupPump_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void PopupFan_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             FirstXPos = e.GetPosition(sender as Control).X;
             FirstYPos = e.GetPosition(sender as Control).Y;
@@ -67,12 +86,12 @@ namespace Thesis_SCADA.UserControls
             MovingObject = sender;
         }
 
-        void PopupPump_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        void PopupFan_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             MovingObject = null;
         }
 
-        private void PopupPump_MouseMove(object sender, MouseEventArgs e)
+        private void PopupFan_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -89,4 +108,5 @@ namespace Thesis_SCADA.UserControls
         }
         #endregion
     }
+
 }

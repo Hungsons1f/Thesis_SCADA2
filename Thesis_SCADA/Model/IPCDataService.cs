@@ -11,48 +11,37 @@ using System.Windows;
 
 namespace Thesis_SCADA.Model
 {
-    public class AdsDataService
+    public class IPCDataService                 //use Beckhoff ADS protocol
     {
         #region Properties
-        private TcAdsClient adsClient;
+        private TcAdsClient client;
+        public MainInterface ReadData;
+
         private readonly System.Timers.Timer _timer;
         private DateTime _lastScanTime;
         public TimeSpan ScanTime { get; private set; }
         public TimeSpan Testtime { get; private set; }
+
         private volatile object _locker = new object();
         public event EventHandler ValuesRefreshed;
 
-        public MainInterface PlcData;
+        public enum ConnectionStatus
+        {
+            Offline,
+            Connecting,
+            Online
+        }
+        public ConnectionStatus ConnectStatus { get; private set; }
         #endregion
 
-        public AdsDataService()
+        public IPCDataService()
         {
-            try
-            {
-                StateInfo state;
-                adsClient = new TcAdsClient();
-                adsClient.Connect(851);
-                if (adsClient.TryReadState(out state) != AdsErrorCode.NoError)
-                {
-                    MessageBox.Show("Chưa kết nối được IPC.\n Lỗi: AdsState: " + state.AdsState + ", DeviceState: " + state.DeviceState, 
-                                    "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.ToString());
-                MessageBox.Show("Chưa kết nối được IPC", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            PlcData = new MainInterface();
-            OnValuesRefreshed();
+            client = new TcAdsClient();
+            ReadData = new MainInterface();
 
             _timer = new System.Timers.Timer();
-            _timer.Interval = 100;
+            _timer.Interval = 200;
             _timer.Elapsed += OnTimerElapsed;
-            _timer.Start();
         }
 
         public void DisposeService()
@@ -60,26 +49,64 @@ namespace Thesis_SCADA.Model
             _timer.Stop();
         }
 
-        public async Task Write(string varname, object value)
+        public void Connect(string netid, int port)
+        {
+            try
+            {
+                StateInfo state;
+                ConnectStatus = ConnectionStatus.Connecting;
+
+                client.Connect(netid, port);
+                if (client.TryReadState(out state) != AdsErrorCode.NoError)
+                {
+                    if (!showConnectMsg)
+                    {
+                        MessageBox.Show("Chưa kết nối được IPC.\n Lỗi: AdsState: " + state.AdsState + ", DeviceState: " + state.DeviceState,
+                                        "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        showConnectMsg = true;
+                    }
+                    ConnectStatus = ConnectionStatus.Offline;
+                }
+                else
+                {
+                    _timer.Start();
+                    ConnectStatus = ConnectionStatus.Online;
+                    showConnectMsg = false;
+                }
+
+                OnValuesRefreshed();
+            }
+            catch (Exception e)
+            {
+                if (!showConnectMsg)
+                {
+                    MessageBox.Show("Chưa kết nối được IPC.\n Lỗi: " + e.ToString(), "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    ConnectStatus = ConnectionStatus.Offline;
+                    showConnectMsg = true;
+                }
+            }
+        }
+        private bool showConnectMsg = false;
+
+        public void Disconnect()
+        {
+            _timer.Stop();
+            client.Disconnect();
+            ConnectStatus = ConnectionStatus.Offline;
+            OnValuesRefreshed();
+        }
+
+        public async Task Write<T>(string varname, T value)
         {
             await Task.Run(() =>
             {
-                switch (varname)
+                try
                 {
-                    case "val1cmd":
-                        adsClient.WriteSymbol("MAIN.val1cmd", (bool)value, false);
-                        break;
-                    case "val2cmd":
-                        adsClient.WriteSymbol("MAIN.val2cmd", (bool)value, false);
-                        break;
-                    case "start":
-                        adsClient.WriteSymbol("MAIN.start", (bool)value, false);
-                        break;
-                    case "stop":
-                        adsClient.WriteSymbol("MAIN.stop", (bool)value, false);
-                        break;
-                    default:
-                        break;
+                    client.WriteSymbol(varname, (T)value, false);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Không ghi được dữ liệu xuống IPC: Sai tên biến!\n Lỗi: " + e.ToString(), "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
         }
@@ -100,7 +127,6 @@ namespace Thesis_SCADA.Model
             _lastScanTime = DateTime.Now;
         }
 
-        DateTime scaned;
         private Task RefreshValues()
         {
             return Task.Run(() =>
@@ -110,19 +136,18 @@ namespace Thesis_SCADA.Model
                     try
                     {
                         scaned = DateTime.Now;
-                        PlcData = adsClient.ReadSymbol("Interfacex.ScadaInterface", typeof(MainInterface), false) as MainInterface;
-
+                        ReadData = client.ReadSymbol("Interfacex.ScadaInterface", typeof(MainInterface), false) as MainInterface;
                         Testtime = DateTime.Now - scaned;
                     }
                     catch (Exception e)
                     {
                         _timer.Stop();
-                        MessageBox.Show("Không đọc được dữ liệu tuần hoàn từ IPC" + e.ToString(), "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                        
+                        MessageBox.Show("Không đọc được dữ liệu tuần hoàn từ IPC: " + e.ToString(), "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             });
         }
+        private DateTime scaned;
 
         private void OnValuesRefreshed()
         {

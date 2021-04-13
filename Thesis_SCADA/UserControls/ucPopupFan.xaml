@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Thesis_SCADA.UserControls.ucPopupPump"
+﻿<UserControl x:Class="Thesis_SCADA.UserControls.ucPopupFan"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -19,10 +19,10 @@
              TextOptions.TextRenderingMode="Auto"
              FontFamily="{DynamicResource MaterialDesignFont}"
              
-             Name="UcPopupPump"
-             Loaded="PopupPump_Loaded"
-             PreviewMouseLeftButtonDown="PopupPump_MouseLeftButtonDown"
-             PreviewMouseLeftButtonUp="PopupPump_PreviewMouseLeftButtonUp">
+             Name="UcPopupFan"
+             Loaded="PopupFan_Loaded"
+             PreviewMouseLeftButtonDown="PopupFan_MouseLeftButtonDown"
+             PreviewMouseLeftButtonUp="PopupFan_PreviewMouseLeftButtonUp">
 
     <UserControl.Resources>
         <converter:ComponentStatusConverter x:Key="ComponentStatusConverter"/>
@@ -30,7 +30,7 @@
         <converter:ComponentModeConverter x:Key="ComponentModeConverter"/>
         <converter:MultiCommandParaConverter x:Key="MultiCommandParaConverter"/>
     </UserControl.Resources>
-    
+
     <Grid>
         <materialDesign:Card>
             <Grid>
@@ -48,12 +48,12 @@
                             Style="{StaticResource MaterialDesignRaisedButton}"
                             ToolTip="Đóng"
                             Command="{Binding CloseCommand}"
-                            CommandParameter="{Binding ElementName=UcPopupPump}">
+                            CommandParameter="{Binding ElementName=UcPopupFan}">
                             <materialDesign:PackIcon Kind="Close" />
                         </Button>
                         <TextBlock VerticalAlignment="Center" DockPanel.Dock="Left" Margin="10 0 0 0"
                             Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                            Text="{Binding ElementName=UcPopupPump, Path=Tag}" />
+                            Text="{Binding ElementName=UcPopupFan, Path=Tag}" />
                     </DockPanel>
                 </materialDesign:ColorZone>
 
@@ -78,32 +78,32 @@
                         <Grid Grid.Column="0" Width="100" HorizontalAlignment="Center">
                             <Canvas >
                                 <uc:ucGauge Width="100" 
-                                            Data="{Binding ElementName=UcPopupPump, Path=MotorObject.ActualSpeed, Mode=OneWay}" 
-                                            Max="{Binding ElementName=UcPopupPump, Path=MotorObject.Maxspeed, Mode=OneWay}"/>
+                                            Data="{Binding ElementName=UcPopupFan, Path=MotorObject.ActualSpeed, Mode=OneWay}" 
+                                            Max="{Binding ElementName=UcPopupFan, Path=MotorObject.Maxspeed, Mode=OneWay}"/>
                                 <uc:ucComponent Canvas.Left="23" Canvas.Top="22" Height="50" Width="55" 
-                                                NormalSymbol="{StaticResource Pump}" 
-                                                RunSymbol="{StaticResource PumpActive}" 
-                                                FaultSymbol="{StaticResource PumpFault}">
+                                                NormalSymbol="{StaticResource Fan}" 
+                                                RunSymbol="{StaticResource FanActive}" 
+                                                FaultSymbol="{StaticResource FanFault}">
                                     <uc:ucComponent.Data>
                                         <MultiBinding Converter="{StaticResource ComponentStatusConverter}">
-                                            <Binding ElementName="UcPopupPump" Path="MotorObject.RunFeedback"/>
-                                            <Binding ElementName="UcPopupPump" Path="MotorObject.Fault"/>
+                                            <Binding ElementName="UcPopupFan" Path="MotorObject.RunFeedback"/>
+                                            <Binding ElementName="UcPopupFan" Path="MotorObject.Fault"/>
                                         </MultiBinding>
                                     </uc:ucComponent.Data>
                                 </uc:ucComponent>
                                 <Grid Canvas.Top="73" Width="100">
                                     <TextBlock  FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" 
                                                Style="{StaticResource MaterialDesignBody1TextBlock}"
-                                               Text="{Binding ElementName=UcPopupPump, Path=MotorObject.ActualSpeed, StringFormat=N0}"/>
+                                               Text="{Binding ElementName=UcPopupFan, Path=MotorObject.ActualSpeed, StringFormat=N0}"/>
                                 </Grid>
                                 <Grid Canvas.Bottom="0" Width="100">
                                     <TextBlock  HorizontalAlignment="Center" 
                                                Style="{StaticResource MaterialDesignCaptionTextBlock}"
-                                               Text="{Binding ElementName=UcPopupPump, Path=MotorObject.Maxspeed, StringFormat=Max: {0} RPM}"/>
+                                               Text="{Binding ElementName=UcPopupFan, Path=MotorObject.Maxspeed, StringFormat=Max: {0} RPM}"/>
                                 </Grid>
                             </Canvas>
                         </Grid>
-                           
+
                         <!--Control Buttons-->
                         <Grid Grid.Column="1" Margin="10 0 5 0">
                             <Grid.RowDefinitions>
@@ -135,7 +135,7 @@
                                             <i:InvokeCommandAction.CommandParameter>
                                                 <MultiBinding Converter="{StaticResource MultiCommandParaConverter}">
                                                     <Binding ElementName="cbMode" Path="SelectedIndex"/>
-                                                    <Binding ElementName="UcPopupPump" Path="Prefix"/>
+                                                    <Binding ElementName="UcPopupFan" Path="Prefix"/>
                                                 </MultiBinding>
                                             </i:InvokeCommandAction.CommandParameter>
                                         </i:InvokeCommandAction>
@@ -145,7 +145,7 @@
                             <TextBox Grid.Row="0" Grid.ColumnSpan="2" IsReadOnly="True" Margin="3 0 0 13" FontSize="17" VerticalContentAlignment="Bottom"
                                      Background="{StaticResource MaterialDesignBackground}" 
                                      materialDesign:TextFieldAssist.DecorationVisibility="Hidden" BorderThickness="0"
-                                     Text="{Binding ElementName=UcPopupPump, Path=MotorObject.Mode, Converter={StaticResource ComponentModeConverter}}"/>
+                                     Text="{Binding ElementName=UcPopupFan, Path=MotorObject.Mode, Converter={StaticResource ComponentModeConverter}}"/>
                             <Button Grid.Row="1" Grid.Column="0"
                                     Background="{Binding Source={StaticResource GlobalColor}, Path=ClGreen, Mode=OneWay}"
                                     BorderBrush="{Binding Source={StaticResource GlobalColor}, Path=ClGreen, Mode=OneWay}"
@@ -153,11 +153,11 @@
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
                                         <i:InvokeCommandAction Command="{Binding StartReleasedCommand}"
-                                                               CommandParameter="{Binding ElementName=UcPopupPump, Path=Prefix}"/>
+                                                               CommandParameter="{Binding ElementName=UcPopupFan, Path=Prefix}"/>
                                     </i:EventTrigger>
                                     <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                                         <i:InvokeCommandAction Command="{Binding StartPressedCommand}"
-                                                               CommandParameter="{Binding ElementName=UcPopupPump, Path=Prefix}"/>
+                                                               CommandParameter="{Binding ElementName=UcPopupFan, Path=Prefix}"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <materialDesign:PackIcon Width="35" Height="35" Kind="Power" />
@@ -169,11 +169,11 @@
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
                                         <i:InvokeCommandAction Command="{Binding StopReleasedCommand}"
-                                                               CommandParameter="{Binding ElementName=UcPopupPump, Path=Prefix}"/>
+                                                               CommandParameter="{Binding ElementName=UcPopupFan, Path=Prefix}"/>
                                     </i:EventTrigger>
                                     <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                                         <i:InvokeCommandAction Command="{Binding StopPressedCommand}"
-                                                               CommandParameter="{Binding ElementName=UcPopupPump, Path=Prefix}"/>
+                                                               CommandParameter="{Binding ElementName=UcPopupFan, Path=Prefix}"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <materialDesign:PackIcon Width="35" Height="35" Kind="PowerCycle" />
@@ -185,11 +185,11 @@
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
                                         <i:InvokeCommandAction Command="{Binding ResetReleasedCommand}"
-                                                               CommandParameter="{Binding ElementName=UcPopupPump, Path=Prefix}"/>
+                                                               CommandParameter="{Binding ElementName=UcPopupFan, Path=Prefix}"/>
                                     </i:EventTrigger>
                                     <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                                         <i:InvokeCommandAction Command="{Binding ResetPressedCommand}"
-                                                               CommandParameter="{Binding ElementName=UcPopupPump, Path=Prefix}"/>
+                                                               CommandParameter="{Binding ElementName=UcPopupFan, Path=Prefix}"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <materialDesign:PackIcon Width="35" Height="35" Kind="Reload" />
@@ -208,8 +208,8 @@
                             <StackPanel>
                                 <Button ToolTip="Vận tốc" Content="RPM" 
                                         Command="{Binding RpmSelectedCommand}"/>
-                                <Button ToolTip="Lưu lượng" Content="m3/h" 
-                                        Command="{Binding M3hSelectedCommand}"/>
+                                <Button ToolTip="% Công suất" Content="%" 
+                                        Command="{Binding PercentSelectedCommand}"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
                         <StackPanel Orientation="Horizontal">
@@ -220,7 +220,8 @@
                                         <KeyBinding.CommandParameter>
                                             <MultiBinding Converter="{StaticResource MultiCommandParaConverter}">
                                                 <Binding ElementName="tbSetpoint" Path="Text"/>
-                                                <Binding ElementName="UcPopupPump" Path="Prefix"/>
+                                                <Binding ElementName="UcPopupFan" Path="Prefix"/>
+                                                <Binding ElementName="UcPopupFan" Path="MotorObject.Maxspeed"/>
                                             </MultiBinding>
                                         </KeyBinding.CommandParameter>
                                     </KeyBinding>
@@ -242,12 +243,12 @@
                         <StackPanel Grid.Column="0">
                             <TextBlock Text="Thời gian chạy" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignBody2TextBlock}"  />
                             <TextBlock Margin="0 5" FontSize="20" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignSubtitle2TextBlock}"  
-                                       Text="{Binding ElementName=UcPopupPump, Path=MotorObject.Runtime, Converter={StaticResource Int2TimeConverter}}"/>
+                                       Text="{Binding ElementName=UcPopupFan, Path=MotorObject.Runtime, Converter={StaticResource Int2TimeConverter}}"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1">
                             <TextBlock Text="Tổng thời gian chạy" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignBody2TextBlock}"  />
                             <TextBlock Margin="0 5" FontSize="20" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignSubtitle2TextBlock}"  
-                                       Text="{Binding ElementName=UcPopupPump, Path=MotorObject.AccRuntime, Converter={StaticResource Int2TimeConverter}}"/>
+                                       Text="{Binding ElementName=UcPopupFan, Path=MotorObject.AccRuntime, Converter={StaticResource Int2TimeConverter}}"/>
                         </StackPanel>
                     </Grid>
                 </Grid>

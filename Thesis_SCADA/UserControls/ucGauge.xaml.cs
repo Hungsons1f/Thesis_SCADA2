@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Thesis_SCADA.ViewModel;
+using Microsoft.Expression.Shapes;
 
 namespace Thesis_SCADA.UserControls
 {
@@ -23,16 +26,25 @@ namespace Thesis_SCADA.UserControls
     public partial class ucGauge : UserControl
     {
         #region DependencyProperty
-        public float Data
+        public double Data
         {
-            get { return (float)GetValue(DataProperty); }
+            get { return (double)GetValue(DataProperty); }
             set { SetValue(DataProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for navframe.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DataProperty =
-            DependencyProperty.Register("Data", typeof(float), typeof(ucGauge), new FrameworkPropertyMetadata((float)60));
+            DependencyProperty.Register("Data", typeof(double), typeof(ucGauge), new FrameworkPropertyMetadata((double)1));
 
+        public double Max
+        {
+            get { return (double)GetValue(MaxProperty); }
+            set { SetValue(MaxProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for navframe.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MaxProperty =
+            DependencyProperty.Register("Max", typeof(double), typeof(ucGauge), new FrameworkPropertyMetadata((double)1));
 
         #endregion
 
@@ -42,20 +54,29 @@ namespace Thesis_SCADA.UserControls
         }
     }
 
-    public class DataConverter : IValueConverter
+    public class DataConverter : IMultiValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            float? data = (float)value;
-            if (data == null) return null;
-            return (int)(data * 280 / 100 - 140);
+            double? data = (double)values[0];
+            double? max = (double)values[1];
+            if (data == null || max == null || max == 0) return -140;
+            if (data > max) return max;
+            if (max != 0)
+            {
+                if (data <= 0) data = 0.1; 
+                return (double)(data * 280 / max - 140);
+            }
+            else return -140;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             float back = (float)value;
-            return (back + 140) * 100 / 280;
+            object[] a = new object[2];
+            a[0] = (back + 140) * 100 / 280;
+            a[1] = 100;
+            return a;
         }
     }
-
 }

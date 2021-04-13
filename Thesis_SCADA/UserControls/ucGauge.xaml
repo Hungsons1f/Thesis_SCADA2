@@ -25,8 +25,16 @@
         <ed:Arc StartAngle="-140" EndAngle="140" Stretch="None"  
                     StrokeThickness="10"      
                     StrokeDashArray=".2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClLightOrange, Mode=OneWay}"/>
-        <ed:Arc StartAngle="-140" EndAngle="{Binding ElementName=UcGauge, Path=Data, Converter={StaticResource DataConverter}}" Stretch="None" 
+        <ed:Arc StartAngle="-140" Stretch="None" 
                     StrokeThickness="10"
-                    StrokeDashArray=".2" Stroke="{DynamicResource PrimaryHueMidBrush}"/>
+                    StrokeDashArray=".2" Stroke="{DynamicResource PrimaryHueMidBrush}">
+            <ed:Arc.EndAngle>
+                <MultiBinding  Converter="{StaticResource DataConverter}">
+                    <Binding ElementName="UcGauge" Path="Data"/>
+                    <Binding ElementName="UcGauge" Path="Max"/>
+                </MultiBinding>
+            </ed:Arc.EndAngle>
+        </ed:Arc>
+
     </Grid>
 </UserControl>

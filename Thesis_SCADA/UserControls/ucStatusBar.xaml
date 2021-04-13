@@ -34,7 +34,7 @@
                     <Rectangle Margin="10 0 10 0" Height="auto" Width="1" Fill="White"/>
                     <TextBlock Text="{Binding AlarmNum, StringFormat=Cảnh Báo: {0}}"/>
                     <Rectangle Margin="10 0 10 0" Height="auto" Width="1" Fill="White"/>
-                    <TextBlock Text="{Binding ScanTime, StringFormat=Thời gian quét: {0}}" />
+                    <TextBlock Text="{Binding ScanTime, StringFormat=Thời gian quét: {0}ms}" />
                 </StackPanel>
 
                 <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" Background="Transparent" 

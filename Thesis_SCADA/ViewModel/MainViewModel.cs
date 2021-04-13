@@ -16,7 +16,7 @@ namespace Thesis_SCADA.ViewModel
     public class MainViewModel: BaseViewModel
     {
         #region properties
-        private AdsDataService ipcData;
+        
         #endregion
 
         #region commands
@@ -40,16 +40,19 @@ namespace Thesis_SCADA.ViewModel
 
         public MainViewModel()
         {
-            //ipcData = new AdsDataService();
-            //OnIpcDataRefreshed(null, null);
-            //ipcData.ValuesRefreshed += OnIpcDataRefreshed;
+            int a = (int) GlobalVar.Ins.ConnectStatus;
 
-            MainInterface mainInterface = new MainInterface();
-            mainInterface.Components = new Components();
-            mainInterface.Components.CondensePump = new aFb_Motor();
-            mainInterface.Components.CondensePump.ActualSpeed = 1400;
-            mainInterface.Components.CondensePump.Maxspeed = 1500;
-            GlobalVar.Ins.IpcData = mainInterface;
+            //MainInterface mainInterface = new MainInterface();
+            //mainInterface.Components = new Components();
+            //mainInterface.Components.CondensePump = new aFb_Motor();
+            //mainInterface.Components.CondensePump.ActualSpeed = 1400;
+            //mainInterface.Components.CondensePump.Maxspeed = 1500;
+            //mainInterface.Components.CondensePump.RunFeedback = true;
+            //mainInterface.Components.CondensePump.Fault = true;
+            //mainInterface.Components.CondensePump.Runtime = 150000;
+            //mainInterface.Components.CondensePump.AccRuntime = 150541;
+            //mainInterface.Components.CondensePump.Mode = 1;
+            //GlobalVar.Ins.IpcData = mainInterface;
 
             WindowLoadedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => {
                 if (p == null) return;
@@ -147,11 +150,6 @@ namespace Thesis_SCADA.ViewModel
                 DrawerHost.CloseDrawerCommand.Execute(null, null);
             });
             #endregion
-        }
-
-        private void OnIpcDataRefreshed(object sender, EventArgs e)
-        {
-            GlobalVar.Ins.IpcData = ipcData.PlcData;
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Thesis_SCADA.Model
 {
     public class GlobalVar
     {
+        #region Properties
         private static GlobalVar _ins;
         public static GlobalVar Ins
         {
@@ -24,14 +25,42 @@ namespace Thesis_SCADA.Model
             }
         }
 
+        private IPCDataService ipcDataService;
+
         private MainInterface ipcData;
         public MainInterface IpcData { get => ipcData; set {ipcData = value; OnDataChanged(); } }
 
+        private ConnectionStatus connectstatus;
+        public ConnectionStatus ConnectStatus { get => connectstatus; set => connectstatus = value; }
+
+        private TimeSpan scanTime;
+        public TimeSpan ScanTime { get => scanTime; set => scanTime = value; }
+
         private event EventHandler dataChanged;
-        public event EventHandler DataChanged
+        public event EventHandler DataChanged { add { dataChanged += value; }  remove { dataChanged -= value; } }
+        #endregion
+
+        //Đặt pt khởi tạo là private để không thể tạo đối tượng bằng lớp này từ bên ngoài
+        private GlobalVar()
         {
-            add { dataChanged += value; }
-            remove { dataChanged -= value; }
+            ipcDataService = new IPCDataService();
+            IpcData = new MainInterface();
+            OnIpcDataRefreshed(null, null);
+            ipcDataService.ValuesRefreshed += OnIpcDataRefreshed;
+
+            ipcDataService.Connect("", 851);
+        }
+
+        public async void WriteData<T> (string varname, T value)
+        {
+            await ipcDataService.Write<T>(varname, value);
+        }
+
+        private void OnIpcDataRefreshed(object sender, EventArgs e)
+        {
+            IpcData = ipcDataService.ReadData;
+            ConnectStatus = (ConnectionStatus)ipcDataService.ConnectStatus;
+            ScanTime = ipcDataService.ScanTime;
         }
 
         void OnDataChanged()
@@ -41,14 +70,9 @@ namespace Thesis_SCADA.Model
                 dataChanged(this, new EventArgs());
             }
         }
-
-        //Đặt pt khởi tạo là private để không thể tạo đối tượng bằng lớp này từ bên ngoài
-        private GlobalVar()
-        {
-            ipcData = new MainInterface();
-        }
-
     }
+
+
 
     public enum ConnectionStatus
     {
@@ -57,11 +81,14 @@ namespace Thesis_SCADA.Model
         Online
     }
 
-    public enum ComponentStatus
+
+
+
+    public enum ComponentMode
     {
-        Stop,
-        Run,
-        Fault
+        Manual,
+        Automatic,
+        Service
     }
 
     public class GlobalColor
