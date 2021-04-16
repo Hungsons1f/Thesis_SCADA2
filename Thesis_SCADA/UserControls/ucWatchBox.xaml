@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Thesis_SCADA.UserControls"
+             xmlns:converter="clr-namespace:Thesis_SCADA.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="100"
              
@@ -16,18 +17,21 @@
              FontFamily="{DynamicResource MaterialDesignFont}"
 
              Name="UcWatchBox">
+
+    <UserControl.Resources>
+        <converter:DecimalFormatConverter x:Key="DecimalFormatConverter"/>
+    </UserControl.Resources>
+    
     <Grid>
-        <materialDesign:Card UniformCornerRadius="6">
-            <Border BorderBrush="{DynamicResource PrimaryHueMidBrush}" Padding="7 0" BorderThickness="3" CornerRadius="6">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-                    <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" Padding="0 4 0 2"
-                           Style="{StaticResource MaterialDesignBody1TextBlock}" FontWeight="Bold" FontSize="18"
-                           Text="366"/>
-                    <TextBlock Margin="3 0 0 0" TextWrapping="Wrap" VerticalAlignment="Center" Padding="0 4 0 2"
-                           Style="{StaticResource MaterialDesignBody1TextBlock}" FontStyle="Italic" FontSize="13"
-                           Text="oC"/>
-                </StackPanel>
-            </Border>
-        </materialDesign:Card>
+        <Border BorderBrush="{DynamicResource PrimaryHueMidBrush}" Background="{DynamicResource MaterialDesignPaper}" Padding="4 0" BorderThickness="3" CornerRadius="6">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+                <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" Padding="0 4 0 2"
+                        Style="{StaticResource MaterialDesignBody1TextBlock}" FontWeight="Bold" FontSize="18"
+                        Text="{Binding ElementName=UcWatchBox, Path=Data, Converter={StaticResource DecimalFormatConverter}}"/>
+                <TextBlock Margin="2 0 0 0" TextWrapping="Wrap" VerticalAlignment="Center" Padding="0 4 0 2"
+                        Style="{StaticResource MaterialDesignBody1TextBlock}" FontStyle="Italic" FontSize="12"
+                        Text="{Binding ElementName=UcWatchBox, Path=Tag}"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>

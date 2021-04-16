@@ -31,7 +31,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <materialDesign:DrawerHost  x:Name="DrawerHost" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}">
+    <materialDesign:DrawerHost  x:Name="DrawerHost" BorderThickness="0" BorderBrush="{DynamicResource MaterialDesignDivider}">
         <materialDesign:DrawerHost.Style>
             <Style TargetType="materialDesign:DrawerHost" BasedOn="{StaticResource {x:Type materialDesign:DrawerHost}}">
                 <Style.Triggers>
@@ -299,7 +299,8 @@
                     <!--List-->
                     <Grid>
                         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                            <Frame Height="665" Width="1360" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
+                            <Frame Height="670" Width="1366" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0"
+                                   x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
                         </ScrollViewer>
                     </Grid>
                 </Grid>

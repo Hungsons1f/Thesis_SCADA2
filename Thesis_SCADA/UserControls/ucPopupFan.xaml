@@ -143,7 +143,7 @@
                                 </i:Interaction.Triggers>
                             </ComboBox>
                             <TextBox Grid.Row="0" Grid.ColumnSpan="2" IsReadOnly="True" Margin="3 0 0 13" FontSize="17" VerticalContentAlignment="Bottom"
-                                     Background="{StaticResource MaterialDesignBackground}" 
+                                     Background="{StaticResource MaterialDesignCardBackground}" 
                                      materialDesign:TextFieldAssist.DecorationVisibility="Hidden" BorderThickness="0"
                                      Text="{Binding ElementName=UcPopupFan, Path=MotorObject.Mode, Converter={StaticResource ComponentModeConverter}}"/>
                             <Button Grid.Row="1" Grid.Column="0"

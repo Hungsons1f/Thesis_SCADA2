@@ -4,12 +4,1277 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Thesis_SCADA.Pages"
+      xmlns:uc="clr-namespace:Thesis_SCADA.UserControls"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Calib">
+      d:DesignHeight="670" d:DesignWidth="1366"
+      Title="Calib"
+      
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+      xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+
+      Name="overviewPage"
+      DataContext="{StaticResource CalibViewModel}">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="286,178,0,0" TextWrapping="Wrap" Text="Calib" VerticalAlignment="Top"/>
+        <dragablz:TabablzControl BorderThickness="0" >
+            <!--Tab Chung-->
+            <TabItem x:Name="tabBig" IsSelected="True" >
+                <TabItem.Header>
+                    <TextBlock Text="CHUNG" 
+                               Foreground="{DynamicResource PrimaryHueMidForegroundBrush}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignHeadline6TextBlock}">
+                                <Setter Property="FontSize" Value="14"/>
+                                <Setter Property="FontStyle" Value="Normal"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=tabBig, Path=IsSelected}" Value="True">
+                                        <Setter Property="FontSize" Value="18" />
+                                        <Setter Property="FontStyle" Value="Italic"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </TabItem.Header>
+                <materialDesign:ColorZone Mode="Standard" Margin="30 30" Height="35" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                               Text="Chu kỳ lấy mẫu PID (s)" 
+                               VerticalAlignment="Center" Margin="0 0 20 0"/>
+                        <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="80" Padding="8 5" Margin="5 0"
+                             Text="{Binding SampleTime}" FontSize="20" IsReadOnly="True"/>
+                        <TextBox x:Name="tSampleTime" Style="{StaticResource MaterialDesignOutlinedTextBox}" Width="80" Padding="8 5" Margin="5 0"
+                             Text="" FontSize="20">
+                            <TextBox.InputBindings>
+                                <KeyBinding Key="Return" Command="{Binding SampleTimeCommand}"
+                                        CommandParameter="{Binding ElementName=tSampleTime, Path=Text}"/>
+                            </TextBox.InputBindings>
+                        </TextBox>
+                    </StackPanel>
+                </materialDesign:ColorZone>
+            </TabItem>
+            
+            <!--Tab Pump-->
+            <TabItem x:Name="tabPump" IsSelected="True" >
+                <TabItem.Header>
+                    <TextBlock Text="BƠM" 
+                               Foreground="{DynamicResource PrimaryHueMidForegroundBrush}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignHeadline6TextBlock}">
+                                <Setter Property="FontSize" Value="14"/>
+                                <Setter Property="FontStyle" Value="Normal"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=tabPump, Path=IsSelected}" Value="True">
+                                        <Setter Property="FontSize" Value="18" />
+                                        <Setter Property="FontStyle" Value="Italic"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
 
+                    <!--Condense Pump-->
+                    <materialDesign:Card Grid.Column="0" Margin="50 30 20 105" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition />
+                                <RowDefinition Height="280"/>
+                            </Grid.RowDefinitions>
+
+                            <materialDesign:ColorZone Mode="SecondaryMid" Grid.Row="0" Background="{Binding Source={StaticResource GlobalColor}, Path=ClRed}">
+                                <TextBlock HorizontalAlignment="Center" Margin="10" 
+                                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                       Text="BƠM NGƯNG" />
+                            </materialDesign:ColorZone>
+
+                            <StackPanel Grid.Row="1">
+                                <uc:ucComponent Height="100" Width="100" Margin="0 20 0 0" NormalSymbol="{StaticResource Pump}"/>
+                                <materialDesign:ColorZone Mode="Standard" Background="{x:Null}">
+                                    <TextBlock HorizontalAlignment="Center" Margin="0 20 0 0"
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                           Text="Điều khiển áp suất Bình gia nhiệt hạ áp và Bình khử khí"/>
+                                </materialDesign:ColorZone>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="2" Background="#aaf8bbd0">
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tốc độ tối đa" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding MaxSpeed_CondensePump}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tConPumpMS" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                              FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding MaxSpeedCondensePumpCommand}"
+                                                        CommandParameter="{Binding ElementName=tConPumpMS, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Kp" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding CondensePumpPress.Kp}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tConPumpKp" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                              FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding KpCondensePumpCommand}"                                        
+                                                        CommandParameter="{Binding ElementName=tConPumpKp, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Ti" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding CondensePumpPress.Ti}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox  x:Name="tConPumpTi" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                              FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TiCondensePumpCommand}"                                         
+                                                        CommandParameter="{Binding ElementName=tConPumpTi, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Td" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding CondensePumpPress.Td}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tConPumpTd" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                              FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TdCondensePumpCommand}"                                         
+                                                        CommandParameter="{Binding ElementName=tConPumpTd, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tn" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding CondensePumpPress.Tn}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tConPumpTn" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                              FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TnCondensePumpCommand}"                                         
+                                                        CommandParameter="{Binding ElementName=tConPumpTn, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                            </StackPanel>
+                        </Grid>
+                    </materialDesign:Card>
+
+                    <!--Supply Pump-->
+                    <materialDesign:Card Grid.Column="1" Margin="30 30 20 105" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition />
+                                <RowDefinition Height="280"/>
+                            </Grid.RowDefinitions>
+
+                            <materialDesign:ColorZone Mode="SecondaryMid" Grid.Row="0" Background="{Binding Source={StaticResource GlobalColor}, Path=ClBlue}">
+                                <TextBlock HorizontalAlignment="Center" Margin="10" 
+                                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                       Text="BƠM CẤP" />
+                            </materialDesign:ColorZone>
+
+                            <StackPanel Grid.Row="1">
+                                <uc:ucComponent Height="100" Width="100" Margin="0 20 0 0" NormalSymbol="{StaticResource Pump}"/>
+                                <materialDesign:ColorZone Mode="Standard" Background="{x:Null}">
+                                    <TextBlock HorizontalAlignment="Center" Margin="0 20 0 0"
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                           Text="Điều khiển áp suất Bình gia nhiệt cao áp và Lò hơi"/>
+                                </materialDesign:ColorZone>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="2" Background="#aab2ebf2">
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tốc độ tối đa" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding MaxSpeed_SupplyPump}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tSupPumpMS" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding MaxSpeedSupplyPumpCommand}"                                                        
+                                                        CommandParameter="{Binding ElementName=tSupPumpMS, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Kp" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding SupplyPumpPress.Kp}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tSupPumpKp" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding KpSupplyPumpCommand}"                                                       
+                                                        CommandParameter="{Binding ElementName=tSupPumpKp, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Ti" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding SupplyPumpPress.Ti}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tSupPumpTi" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TiSupplyPumpCommand}"                                                    
+                                                        CommandParameter="{Binding ElementName=tSupPumpTi, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Td" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding SupplyPumpPress.Td}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tSupPumpTd"  Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TdSupplyPumpCommand}"                                                   
+                                                        CommandParameter="{Binding ElementName=tSupPumpTd, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tn" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding SupplyPumpPress.Tn}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tSupPumpTn" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TnSupplyPumpCommand}"                                                    
+                                                        CommandParameter="{Binding ElementName=tSupPumpTn, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                            </StackPanel>
+                        </Grid>
+                    </materialDesign:Card>
+
+                    <!--Circular Pump-->
+                    <materialDesign:Card Grid.Column="2" Margin="30 30 50 105" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition />
+                                <RowDefinition Height="280"/>
+                            </Grid.RowDefinitions>
+
+                            <materialDesign:ColorZone Mode="SecondaryMid" Grid.Row="0" Background="{Binding Source={StaticResource GlobalColor}, Path=ClYellow}">
+                                <TextBlock HorizontalAlignment="Center" Margin="10" 
+                                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                       Text="BƠM TUẦN HOÀN" />
+                            </materialDesign:ColorZone>
+
+                            <StackPanel Grid.Row="1">
+                                <uc:ucComponent Height="100" Width="100" Margin="0 20 0 0" NormalSymbol="{StaticResource Pump}"/>
+                                <materialDesign:ColorZone Mode="Standard" Background="{x:Null}">
+                                    <TextBlock HorizontalAlignment="Center" Margin="0 20 0 0"
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                           Text="Điều khiển nhiệt độ Bình ngưng"/>
+                                </materialDesign:ColorZone>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="2" Background="#aafff9c4">
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tốc độ tối đa" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding MaxSpeed_CircularPump}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tCirPumpMS" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding MaxSpeedCircularPumpCommand}"                                                     
+                                                        CommandParameter="{Binding ElementName=tCirPumpMS, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Kp" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding CondenserTemp.Kp}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tCirPumpKp" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding KpCircularPumpCommand}"                                                     
+                                                        CommandParameter="{Binding ElementName=tCirPumpKp, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Ti" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding CondenserTemp.Ti}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tCirPumpTi" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TiCircularPumpCommand}"                                          
+                                                        CommandParameter="{Binding ElementName=tCirPumpTi, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Td" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding CondenserTemp.Td}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tCirPumpTd" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TdCircularPumpCommand}"                                                     
+                                                        CommandParameter="{Binding ElementName=tCirPumpTd, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tn" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding CondenserTemp.Tn}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tCirPumpTn" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TnCircularPumpCommand}"                                                 
+                                                        CommandParameter="{Binding ElementName=tCirPumpTn, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                            </StackPanel>
+                        </Grid>
+                    </materialDesign:Card>
+
+                </Grid>
+            </TabItem>
+            
+            <!--Tab Fan-->
+            <TabItem x:Name="tabFan">
+                <TabItem.Header>
+                    <TextBlock Text="QUẠT" 
+                               Foreground="{DynamicResource PrimaryHueMidForegroundBrush}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignHeadline6TextBlock}">
+                                <Setter Property="FontSize" Value="14"/>
+                                <Setter Property="FontStyle" Value="Normal"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=tabFan, Path=IsSelected}" Value="True">
+                                        <Setter Property="FontSize" Value="18" />
+                                        <Setter Property="FontStyle" Value="Italic"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--Force Fan 1-->
+                    <materialDesign:Card Grid.Column="0" Margin="50 30 20 105" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition />
+                                <RowDefinition Height="280"/>
+                            </Grid.RowDefinitions>
+
+                            <materialDesign:ColorZone Mode="SecondaryMid" Grid.Row="0" Background="{Binding Source={StaticResource GlobalColor}, Path=ClRed}">
+                                <TextBlock HorizontalAlignment="Center" Margin="10" 
+                                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                       Text="QUẠT CẤP 1" />
+                            </materialDesign:ColorZone>
+
+                            <StackPanel Grid.Row="1">
+                                <uc:ucComponent Height="100" Width="100" Margin="0 20 0 0" NormalSymbol="{StaticResource Fan}"/>
+                                <materialDesign:ColorZone Mode="Standard" Background="{x:Null}">
+                                    <TextBlock HorizontalAlignment="Center" Margin="0 20 0 0"
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                           Text="Điều khiển nhiệt độ Lò đốt"/>
+                                </materialDesign:ColorZone>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="2" Background="#aaf8bbd0">
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tốc độ tối đa" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding MaxSpeed_ForceFan1}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="t1FanMS" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding MaxSpeedForceFan1Command}"                                                    
+                                                        CommandParameter="{Binding ElementName=t1FanMS, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Kp" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding BoilerTemp.Kp}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="t1FanKp" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding KpForceFanCommand}"                                                      
+                                                        CommandParameter="{Binding ElementName=t1FanKp, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Ti" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding BoilerTemp.Ti}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="t1FanTi" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TiForceFanCommand}"                                                 
+                                                        CommandParameter="{Binding ElementName=t1FanTi, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Td" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding BoilerTemp.Td}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="t1FanTd" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TdForceFanCommand}"                                                      
+                                                        CommandParameter="{Binding ElementName=t1FanTd, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tn" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding BoilerTemp.Tn}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="t1FanTn" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TnForceFanCommand}"                                                  
+                                                        CommandParameter="{Binding ElementName=t1FanTn, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                            </StackPanel>
+                        </Grid>
+                    </materialDesign:Card>
+
+                    <!--Force Fan 2-->
+                    <materialDesign:Card Grid.Column="1" Margin="30 30 20 105" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition />
+                                <RowDefinition Height="280"/>
+                            </Grid.RowDefinitions>
+
+                            <materialDesign:ColorZone Mode="SecondaryMid" Grid.Row="0" Background="{Binding Source={StaticResource GlobalColor}, Path=ClYellow}">
+                                <TextBlock HorizontalAlignment="Center" Margin="10" 
+                                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                       Text="QUẠT CẤP 2" />
+                            </materialDesign:ColorZone>
+
+                            <StackPanel Grid.Row="1">
+                                <uc:ucComponent Height="100" Width="100" Margin="0 20 0 0" NormalSymbol="{StaticResource Fan}"/>
+                                <materialDesign:ColorZone Mode="Standard" Background="{x:Null}">
+                                    <TextBlock HorizontalAlignment="Center" Margin="0 20 0 0"
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                           Text="Điều khiển nhiệt độ Lò đốt"/>
+                                </materialDesign:ColorZone>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="2" Background="#aafff9c4">
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tốc độ tối đa" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding MaxSpeed_ForceFan2}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="t2FanMS" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding MaxSpeedForceFan2Command}"                                         
+                                                        CommandParameter="{Binding ElementName=t2FanMS, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Kp" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding BoilerTemp.Kp}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="t2FanKp" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding KpForceFanCommand}"                                                       
+                                                        CommandParameter="{Binding ElementName=t2FanKp, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Ti" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding BoilerTemp.Ti}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="t2FanTi" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TiForceFanCommand}"                                                     
+                                                        CommandParameter="{Binding ElementName=t2FanTi, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Td" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding BoilerTemp.Td}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="t2FanTd" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TdForceFanCommand}"                                                   
+                                                        CommandParameter="{Binding ElementName=t2FanTd, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tn" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding BoilerTemp.Tn}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="t2FanTn" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TnForceFanCommand}"                                                     
+                                                        CommandParameter="{Binding ElementName=t2FanTn, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                            </StackPanel>
+                        </Grid>
+                    </materialDesign:Card>
+
+                    <!--Force Fan 3-->
+                    <materialDesign:Card Grid.Column="2" Margin="30 30 50 105" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition />
+                                <RowDefinition Height="280"/>
+                            </Grid.RowDefinitions>
+
+                            <materialDesign:ColorZone Mode="SecondaryMid" Grid.Row="0" Background="{Binding Source={StaticResource GlobalColor}, Path=ClBlue}">
+                                <TextBlock HorizontalAlignment="Center" Margin="10" 
+                                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                       Text="QUẠT CẤP 3" />
+                            </materialDesign:ColorZone>
+
+                            <StackPanel Grid.Row="1">
+                                <uc:ucComponent Height="100" Width="100" Margin="0 20 0 0" NormalSymbol="{StaticResource Fan}"/>
+                                <materialDesign:ColorZone Mode="Standard" Background="{x:Null}">
+                                    <TextBlock HorizontalAlignment="Center" Margin="0 20 0 0"
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                           Text="Điều khiển nhiệt độ Lò đốt"/>
+                                </materialDesign:ColorZone>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="2" Background="#aab2ebf2">
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tốc độ tối đa" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding MaxSpeed_ForceFan3}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="t3FanMS" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding MaxSpeedForceFan3Command}"                                              
+                                                        CommandParameter="{Binding ElementName=t3FanMS, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Kp" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding BoilerTemp.Kp}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="t3FanKp" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding KpForceFanCommand}"                                                   
+                                                        CommandParameter="{Binding ElementName=t3FanKp, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Ti" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding BoilerTemp.Ti}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="t3FanTi" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TiForceFanCommand}"                                                       
+                                                        CommandParameter="{Binding ElementName=t3FanTi, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Td" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding BoilerTemp.Td}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="t3FanTd" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TdForceFanCommand}"                                                    
+                                                        CommandParameter="{Binding ElementName=t3FanTd, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tn" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding BoilerTemp.Tn}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="t3FanTn" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TnForceFanCommand}"                                                   
+                                                        CommandParameter="{Binding ElementName=t3FanTn, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                            </StackPanel>
+                        </Grid>
+                    </materialDesign:Card>
+
+                </Grid>
+            </TabItem>
+            
+            <!--Tab Valve-->
+            <TabItem x:Name="tabValve">
+                <TabItem.Header>
+                    <TextBlock Text="VAN" 
+                               Foreground="{DynamicResource PrimaryHueMidForegroundBrush}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignHeadline6TextBlock}">
+                                <Setter Property="FontSize" Value="14"/>
+                                <Setter Property="FontStyle" Value="Normal"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=tabValve, Path=IsSelected}" Value="True">
+                                        <Setter Property="FontSize" Value="18" />
+                                        <Setter Property="FontStyle" Value="Italic"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--LPH Valve-->
+                    <materialDesign:Card Grid.Column="0" Margin="30 30 15 150" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition />
+                                <RowDefinition Height="230"/>
+                            </Grid.RowDefinitions>
+
+                            <materialDesign:ColorZone Mode="SecondaryMid" Grid.Row="0" >
+                                <TextBlock HorizontalAlignment="Center" Margin="10" 
+                                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                       Text="VAN GN HẠ ÁP" />
+                            </materialDesign:ColorZone>
+
+                            <StackPanel Grid.Row="1">
+                                <uc:ucComponent Height="100" Width="100" Margin="0 20 0 0" NormalSymbol="{StaticResource Valve}"/>
+                                <materialDesign:ColorZone Mode="Standard" Background="{x:Null}">
+                                    <TextBlock HorizontalAlignment="Center" Margin="0 20 0 0"
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                           Text="Điều khiển nhiệt độ Bình gia nhiệt hạ áp"/>
+                                </materialDesign:ColorZone>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="2" Background="#aae6ee9c">
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Kp" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding LPHeaterTemp.Kp}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tLphVanKp" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding KpLPHValveCommand}"                                             
+                                                        CommandParameter="{Binding ElementName=tLphVanKp, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Ti" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding LPHeaterTemp.Ti}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tLphVanTi" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TiLPHValveCommand}"                                                      
+                                                        CommandParameter="{Binding ElementName=tLphVanTi, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Td" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding LPHeaterTemp.Td}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tLphVanTd" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TdLPHValveCommand}"                                                     
+                                                        CommandParameter="{Binding ElementName=tLphVanTd, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tn" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding LPHeaterTemp.Tn}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tLphVanTn" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TnLPHValveCommand}"                                                        
+                                                        CommandParameter="{Binding ElementName=tLphVanTn, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                            </StackPanel>
+                        </Grid>
+                    </materialDesign:Card>
+
+                    <!--Deaerator Valve-->
+                    <materialDesign:Card Grid.Column="1" Margin="15 30 15 150" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition />
+                                <RowDefinition Height="230"/>
+                            </Grid.RowDefinitions>
+
+                            <materialDesign:ColorZone Mode="SecondaryMid" Grid.Row="0" Background="{Binding Source={StaticResource GlobalColor}, Path=ClBlue}">
+                                <TextBlock HorizontalAlignment="Center" Margin="10" 
+                                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                       Text="VAN KHỬ KHÍ" />
+                            </materialDesign:ColorZone>
+
+                            <StackPanel Grid.Row="1">
+                                <uc:ucComponent Height="100" Width="100" Margin="0 20 0 0" NormalSymbol="{StaticResource Valve}"/>
+                                <materialDesign:ColorZone Mode="Standard" Background="{x:Null}">
+                                    <TextBlock HorizontalAlignment="Center" Margin="0 20 0 0"
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                           Text="Điều khiển nhiệt độ Bình khử khí"/>
+                                </materialDesign:ColorZone>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="2" Background="#aab2ebf2">
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Kp" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding DeaeratorTemp.Kp}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tDeaVanKp" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding KpDeaerValveCommand}"                                                       
+                                                        CommandParameter="{Binding ElementName=tDeaVanKp, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Ti" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding DeaeratorTemp.Ti}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tDeaVanTi" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TiDeaerValveCommand}"                                                   
+                                                        CommandParameter="{Binding ElementName=tDeaVanTi, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Td" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding DeaeratorTemp.Td}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tDeaVanTd" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TdDeaerValveCommand}"                                                      
+                                                        CommandParameter="{Binding ElementName=tDeaVanTd, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tn" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding DeaeratorTemp.Tn}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tDeaVanTn" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TnDeaerValveCommand}"                                                       
+                                                        CommandParameter="{Binding ElementName=tDeaVanTn, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                            </StackPanel>
+                        </Grid>
+                    </materialDesign:Card>
+
+                    <!--HPH Valve-->
+                    <materialDesign:Card Grid.Column="2" Margin="15 30 15 150" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition />
+                                <RowDefinition Height="230"/>
+                            </Grid.RowDefinitions>
+
+                            <materialDesign:ColorZone Mode="SecondaryMid" Grid.Row="0" Background="{Binding Source={StaticResource GlobalColor}, Path=ClRed}">
+                                <TextBlock HorizontalAlignment="Center" Margin="10" 
+                                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                       Text="VAN GN CAO ÁP" />
+                            </materialDesign:ColorZone>
+
+                            <StackPanel Grid.Row="1">
+                                <uc:ucComponent Height="100" Width="100" Margin="0 20 0 0" NormalSymbol="{StaticResource Valve}"/>
+                                <materialDesign:ColorZone Mode="Standard" Background="{x:Null}">
+                                    <TextBlock HorizontalAlignment="Center" Margin="0 20 0 0"
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                           Text="Điều khiển nhiệt độ Bình gia nhiệt cao áp"/>
+                                </materialDesign:ColorZone>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="2" Background="#aaf8bbd0">
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Kp" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding HPHeaterTemp.Kp}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tHphVanKp" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding KpHPHValveCommand}"                                                       
+                                                        CommandParameter="{Binding ElementName=tHphVanKp, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Ti" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding HPHeaterTemp.Ti}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tHphVanTi" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TiHPHValveCommand}"                                                      
+                                                        CommandParameter="{Binding ElementName=tHphVanTi, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Td" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding HPHeaterTemp.Td}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tHphVanTd" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TdHPHValveCommand}"                                            
+                                                        CommandParameter="{Binding ElementName=tHphVanTd, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tn" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding HPHeaterTemp.Tn}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tHphVanTn" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TnHPHValveCommand}"                                                      
+                                                        CommandParameter="{Binding ElementName=tHphVanTn, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                            </StackPanel>
+                        </Grid>
+                    </materialDesign:Card>
+
+                    <!--Turbine Valve-->
+                    <materialDesign:Card Grid.Column="3" Margin="15 30 30 150" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition />
+                                <RowDefinition Height="230"/>
+                            </Grid.RowDefinitions>
+
+                            <materialDesign:ColorZone Mode="SecondaryMid" Grid.Row="0" Background="{Binding Source={StaticResource GlobalColor}, Path=ClYellow}">
+                                <TextBlock HorizontalAlignment="Center" Margin="10" 
+                                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                       Text="VAN TUA BIN" />
+                            </materialDesign:ColorZone>
+
+                            <StackPanel Grid.Row="1">
+                                <uc:ucComponent Height="100" Width="100" Margin="0 20 0 0" NormalSymbol="{StaticResource Valve}"/>
+                                <materialDesign:ColorZone Mode="Standard" Background="{x:Null}">
+                                    <TextBlock HorizontalAlignment="Center" Margin="0 20 0 0"
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                           Text="Điều khiển tốc độ Tua bin"/>
+                                </materialDesign:ColorZone>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="2" Background="#aafff9c4">
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Kp" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding TurbineSpeed.Kp}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tTurVanKp" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding KpTurbineCommand}"                                                   
+                                                        CommandParameter="{Binding ElementName=tTurVanKp, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Ti" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding TurbineSpeed.Ti}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tTurVanTi" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TiTurbineCommand}"                                                       
+                                                        CommandParameter="{Binding ElementName=tTurVanTi, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Td" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding TurbineSpeed.Td}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tTurVanTd" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TdTurbineCommand}"                                                    
+                                                        CommandParameter="{Binding ElementName=tTurVanTd, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                                <Grid Margin="20 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tn" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding TurbineSpeed.Tn}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tTurVanTn" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="" FontSize="16">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding TnTurbineCommand}"                                                       
+                                                        CommandParameter="{Binding ElementName=tTurVanTn, Path=Text}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+                                </Grid>
+                                <Separator Margin="10"/>
+                            </StackPanel>
+                        </Grid>
+                    </materialDesign:Card>
+                </Grid>
+            </TabItem>
+
+        </dragablz:TabablzControl>
     </Grid>
 </Page>

@@ -1,0 +1,39 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DataTemplate x:Key="EmergencyButtonOn">
+
+        <Viewbox Stretch="Fill" >
+            <Viewbox.Tag>
+                <s:Int64>1257874638</s:Int64>
+            </Viewbox.Tag>
+            <Canvas UseLayoutRounding="False" Name="Group_Red_pushbutton_2" Tag="#00000000,#FFFF225B,Original,0,None" LayoutTransform="Identity" Width="112.5" Height="112.5" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Canvas Name="Group_Mounting_Bannet" Tag="#00000000,#FFFF225B,Original,0,None" Width="112.5" Height="112.5" Canvas.Left="-1" Canvas.Top="-1.25">
+                    <Path Data="F1M46.044,-0.5C22.824,3.322,4.397,21.365,0,44.387L0,44.387 0,65.614C4.964,91.605,27.813,111.25,55.25,111.25L55.25,111.25C86.316,111.25,111.5,86.066,111.5,55L111.5,55C111.5,27.068,91.144,3.892,64.456,-0.5L64.456,-0.5z" Stretch="Fill" Width="111.5" Height="111.75" Canvas.Left="1" Canvas.Top="0.75">
+                        <Path.Fill>
+                            <RadialGradientBrush Center="0.496,0.497" RadiusX="0.504" RadiusY="0.503" GradientOrigin="0.496,0.497">
+                                <RadialGradientBrush.GradientStops>
+                                    <GradientStop Color="#FF8A8C8E" Offset="0" />
+                                    <GradientStop Color="#FFA7A9AC" Offset="0.82" />
+                                    <GradientStop Color="#FF5B5C5F" Offset="1" />
+                                </RadialGradientBrush.GradientStops>
+                            </RadialGradientBrush>
+                        </Path.Fill>
+                    </Path>
+                    <Path Data="M111.5,55C111.5,86.066 86.316,111.25 55.25,111.25 24.184,111.25 -1,86.066 -1,55 -1,23.934 24.184,-1.25 55.25,-1.25 86.316,-1.25 111.5,23.934 111.5,55z" Stretch="Fill" Stroke="#FF4C4C4C" StrokeThickness="0.5" Width="113" Height="113" Canvas.Left="-0.25" Canvas.Top="-0.25" />
+                </Canvas>
+                <Canvas Name="Group_Red_Push_Button2" Tag="#00000000,#FFFF225B,Original,0,None" Width="74.323" Height="74.324" Canvas.Left="18.032" Canvas.Top="18.532">
+                    <Path Data="M18.0322,55.6938C18.0322,76.2178 34.6702,92.8558 55.1942,92.8558 75.7182,92.8558 92.3552,76.2178 92.3552,55.6938 92.3552,35.1698 75.7182,18.5318 55.1942,18.5318 34.6702,18.5318 18.0322,35.1698 18.0322,55.6938" Stretch="Fill" Fill="#FFFF0000" Stroke="#FF000000" StrokeThickness="0.25" Width="74.573" Height="74.574" Canvas.Left="-0.125" Canvas.Top="-0.125" />
+                    <Path Data="F1M26.462,44.596C26.462,54.797,34.729,63.064,44.93,63.064L44.93,63.064C55.13,63.064,63.399,54.797,63.399,44.596L63.399,44.596C63.399,34.397,55.13,26.128,44.93,26.128L44.93,26.128C34.729,26.128,26.462,34.397,26.462,44.596" Stretch="Fill" Width="36.937" Height="36.936" Canvas.Left="8.43" Canvas.Top="7.596">
+                        <Path.Fill>
+                            <RadialGradientBrush Center="0.5,0.5" RadiusX="0.5" RadiusY="0.5" GradientOrigin="0.5,0.5">
+                                <RadialGradientBrush.GradientStops>
+                                    <GradientStop Color="#FFFFBFBF" Offset="0" />
+                                    <GradientStop Color="#FFFF0000" Offset="1" />
+                                </RadialGradientBrush.GradientStops>
+                            </RadialGradientBrush>
+                        </Path.Fill>
+                    </Path>
+                </Canvas>
+            </Canvas>
+        </Viewbox>
+    </DataTemplate>
+</ResourceDictionary>

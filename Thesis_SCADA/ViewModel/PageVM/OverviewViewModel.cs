@@ -15,36 +15,73 @@ namespace Thesis_SCADA.ViewModel
 {
     public class OverviewViewModel : BaseViewModel
     {
-        #region Test
-        private readonly System.Timers.Timer _timer;
-
-        #endregion
-
         #region Properties
-        private MainInterface model;
-        public MainInterface Model
+        public delegate void Anonym();
+        private MainInterface componentModel;
+        public MainInterface ComponentModel
         {
-            get => model;
+            get => componentModel;
             set
             {
-                model = value;
-                //OnPropertyChanged();
-
-                if (model != null)
+                componentModel = value;
+                if (componentModel != null)
                 {
-                    CondensePumpObj = model?.Components?.CondensePump;
-                    SupplyPumpObj = model?.Components?.SupplyPump;
-                    CircularPumpObj = model?.Components?.CircularPump;
-                    ForceFan1Obj = model?.Components?.ForceFan1;
-                    ForceFan2Obj = model?.Components?.ForceFan2;
-                    ForceFan3Obj = model?.Components?.ForceFan3;
-                    LPHValveObj = model?.Components?.LPHValve;
-                    DeaeratorValveObj = model?.Components?.AirEjValve;
-                    HPHValveObj = model?.Components?.HPHValve;
-                    TurbineObj = model?.Components?.TurbineValve;
+                    Anonym update = async () => 
+                    {
+                        await Task.Run(() =>
+                        {
+                            CondensePumpObj = componentModel?.Components?.CondensePump;
+                            SupplyPumpObj = componentModel?.Components?.SupplyPump;
+                            CircularPumpObj = componentModel?.Components?.CircularPump;
+                            ForceFan1Obj = componentModel?.Components?.ForceFan1;
+                            ForceFan2Obj = componentModel?.Components?.ForceFan2;
+                            ForceFan3Obj = componentModel?.Components?.ForceFan3;
+                            LPHValveObj = componentModel?.Components?.LPHValve;
+                            DeaeratorValveObj = componentModel?.Components?.AirEjValve;
+                            HPHValveObj = componentModel?.Components?.HPHValve;
+                            TurbineObj = componentModel?.Components?.TurbineValve;
+
+                            LPHeater = componentModel?.Components?.LPHeater;
+                            Deaerator = componentModel?.Components?.Deaerator;
+                            HPHeater = componentModel?.Components?.HPHeater;
+                            Boiler = componentModel?.Components?.Boiler;
+                            Condenser = componentModel?.Components?.Condenser;
+                            Turbine = componentModel?.Components?.Turbine;
+                            Furnace = componentModel?.Components?.Furnace;
+                        });
+                    };
+
+                    update();
                 }
             }
         }
+
+        private AutoCtrlCmds processModel;
+        public AutoCtrlCmds ProcessModel
+        {
+            get => processModel;
+            set
+            {
+                processModel = value;
+                if (processModel != null)
+                {
+                    ProcessReady = (bool)processModel?.ProcessReady;
+                    ProcessRun = (bool)processModel?.ProcessRun;
+                    ProcessFault = (bool)processModel?.ProcessFault;
+                }
+            }
+        }
+
+        #region Process States
+        private bool processReady = false;
+        public bool ProcessReady { get => processReady; set { processReady = value; OnPropertyChanged(); } }
+
+        private bool processRun = false;
+        public bool ProcessRun { get => processRun; set { processRun = value; OnPropertyChanged(); } }
+
+        private bool processFault = false;
+        public bool ProcessFault { get => processFault; set { processFault = value; OnPropertyChanged(); } }
+        #endregion
 
         #region Components
         private aFb_Motor condensePumpObj = new aFb_Motor();
@@ -106,20 +143,50 @@ namespace Thesis_SCADA.ViewModel
 
         private string turbineTag = "PnID.TurbineValve";
         public string TurbineTag { get => turbineTag; }
+
+        private aT_Heater lPHeater = new aT_Heater();
+        public aT_Heater LPHeater { get => lPHeater; set { lPHeater = value; OnPropertyChanged(); } }
+
+        private aT_Heater deaerator = new aT_Heater();
+        public aT_Heater Deaerator { get => deaerator; set { deaerator = value; OnPropertyChanged(); } }
+
+        private aT_Heater hPHeater = new aT_Heater();
+        public aT_Heater HPHeater { get => hPHeater; set { hPHeater = value; OnPropertyChanged(); } }
+
+        private aT_Heater boiler = new aT_Heater();
+        public aT_Heater Boiler { get => boiler; set { boiler = value; OnPropertyChanged(); } }
+
+        private aT_Heater condenser = new aT_Heater();
+        public aT_Heater Condenser { get => condenser; set { condenser = value; OnPropertyChanged(); } }
+
+        private aT_Furnace furnace = new aT_Furnace();
+        public aT_Furnace Furnace { get => furnace; set { furnace = value; OnPropertyChanged(); } }
+
+        private aT_Turbine turbine = new aT_Turbine();
+        public aT_Turbine Turbine { get => turbine; set { turbine = value; OnPropertyChanged(); } }
+
         #endregion
         #endregion
 
         #region commands
         public ICommand LoadedCommand { get; set; }
         public ICommand UnloadedCommand { get; set; }
-        
+
+        public ICommand StartPressedCommand { get; set; }
+        public ICommand StartReleasedCommand { get; set; }
+        public ICommand StopPressedCommand { get; set; }
+        public ICommand StopReleasedCommand { get; set; }
+        public ICommand ResetPressedCommand { get; set; }
+        public ICommand ResetReleasedCommand { get; set; }
+        public ICommand EmergencyPressedCommand { get; set; }
+        public ICommand EmergencyReleasedCommand { get; set; }
 
         #endregion
 
         public OverviewViewModel()
         {
             
-            Model = GlobalVar.Ins.IpcData;
+            ComponentModel = GlobalVar.Ins.IpcData;
             GlobalVar.Ins.DataChanged -= OnModelChanged;
             GlobalVar.Ins.DataChanged += OnModelChanged;
 
@@ -131,30 +198,51 @@ namespace Thesis_SCADA.ViewModel
                 //GlobalVar.Ins.DataChanged -= OnModelChanged; 
             });
 
-            //_timer = new System.Timers.Timer();
-            //_timer.Interval = 1000;
-            //_timer.Elapsed += OnTimerElapsed;
-            //_timer.Start();
-            //Test2 = "1";
+            #region Button Command
+
+            StartPressedCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                GlobalVar.Ins.WriteData<bool>("Interfacex.AutoCtrlCmds.Start", true);
+            });
+
+            StartReleasedCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                GlobalVar.Ins.WriteData<bool>("Interfacex.AutoCtrlCmds.Start", false);
+            });
+
+            StopPressedCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                GlobalVar.Ins.WriteData<bool>("Interfacex.AutoCtrlCmds.Stop", true);
+            });
+
+            StopReleasedCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                GlobalVar.Ins.WriteData<bool>("Interfacex.AutoCtrlCmds.Stop", false);
+            });
+
+            ResetPressedCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                GlobalVar.Ins.WriteData<bool>("Interfacex.AutoCtrlCmds.Reset", true);
+            });
+
+            ResetReleasedCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                GlobalVar.Ins.WriteData<bool>("Interfacex.AutoCtrlCmds.Reset", false);
+            });
+
+            EmergencyPressedCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                GlobalVar.Ins.WriteData<bool>("Interfacex.AutoCtrlCmds.Emergency", true);
+            });
+
+            EmergencyReleasedCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
+                GlobalVar.Ins.WriteData<bool>("Interfacex.AutoCtrlCmds.Emergency", false);
+            });
+
+            #endregion
+
         }
 
-        private void OnModelChanged(object sender, EventArgs e)
+        private async void OnModelChanged(object sender, EventArgs e)
         {
-            Model = GlobalVar.Ins.IpcData;
+            await Task.Run(() => 
+            {
+                ComponentModel = GlobalVar.Ins.IpcData;
+                ProcessModel = GlobalVar.Ins.ProcessState;
+            });
         }
-
-        //private void OnTimerElapsed(object sender, ElapsedEventArgs e)
-        //{
-        //    //MainInterface mainInterface = new MainInterface();
-        //    //mainInterface.Components = new Components();
-        //    //mainInterface.Components.CondensePump = new aFb_Motor();
-        //    //if ((GlobalVar.Ins.IpcData != null) && (GlobalVar.Ins.IpcData.Components.CondensePump.Fault == true))
-        //    //    mainInterface.Components.CondensePump.Fault = false;
-        //    //else
-        //    //    mainInterface.Components.CondensePump.Fault = true;
-        //    //GlobalVar.Ins.IpcData = mainInterface;
-        //    int i = Int32.Parse(Test2) + 1;
-        //    Test2 = i.ToString();
-        //}
     }
 }

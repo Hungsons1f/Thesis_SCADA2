@@ -69,6 +69,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\ComponentModeConverter.cs" />
     <Compile Include="Converters\ComponentStatusConverter.cs" />
+    <Compile Include="Converters\DecimalFormatConverter.cs" />
     <Compile Include="Converters\Int2TimeConverter.cs" />
     <Compile Include="Converters\MultiCommandParaConverter.cs" />
     <Compile Include="Converters\Value2PercentConverter.cs" />
@@ -115,6 +116,9 @@
     <Compile Include="UserControls\ucGauge.xaml.cs">
       <DependentUpon>ucGauge.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ucLight.xaml.cs">
+      <DependentUpon>ucLight.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\ucPopupFan.xaml.cs">
       <DependentUpon>ucPopupFan.xaml</DependentUpon>
     </Compile>
@@ -136,6 +140,7 @@
     <Compile Include="UserControls\ucWatchBoxRod.xaml.cs">
       <DependentUpon>ucWatchBoxRod.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\PageVM\CalibViewModel.cs" />
     <Compile Include="ViewModel\PageVM\OverviewViewModel.cs" />
     <Compile Include="ViewModel\UserControlVM\ucComponentViewModel.cs" />
     <Compile Include="ViewModel\UserControlVM\ucGaugeViewModel.cs" />
@@ -178,6 +183,7 @@
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\UserManagementViewModel.cs" />
+    <Resource Include="Symbols\Sea.png" />
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -258,6 +264,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Symbols\Emergency-button-off.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Symbols\Emergency-button-on.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Symbols\Fan-active.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -271,6 +285,22 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Symbols\Heater.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Symbols\Light-fault.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Symbols\Light-off.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Symbols\Light-ready.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Symbols\Light-run.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -315,6 +345,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ucGauge.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ucLight.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -385,6 +419,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Dragablz">
+      <Version>0.0.3.223</Version>
+    </PackageReference>
     <PackageReference Include="EntityFramework">
       <Version>6.2.0</Version>
     </PackageReference>

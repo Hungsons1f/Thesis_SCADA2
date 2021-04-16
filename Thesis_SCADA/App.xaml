@@ -2,15 +2,17 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Thesis_SCADA"
+             xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepOrange.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/materialdesign.xaml" />
                 <ResourceDictionary Source="/Resources/MainResource.xaml"/>
 
                 <ResourceDictionary x:Name="Turbine" Source="/Symbols/Turbine.xaml"/>
@@ -30,9 +32,17 @@
                 <ResourceDictionary x:Name="Valve" Source="/Symbols/Valve.xaml"/>
                 <ResourceDictionary x:Name="ValveActive" Source="/Symbols/Valve-active.xaml"/>
                 <ResourceDictionary x:Name="ValveFault" Source="/Symbols/Valve-fault.xaml"/>
-
+                <ResourceDictionary x:Name="LightFault" Source="/Symbols/Light-fault.xaml"/>
+                <ResourceDictionary x:Name="LightRun" Source="/Symbols/Light-run.xaml"/>
+                <ResourceDictionary x:Name="LightReady" Source="/Symbols/Light-ready.xaml"/>
+                <ResourceDictionary x:Name="LightOff" Source="/Symbols/Light-off.xaml"/>
+                <ResourceDictionary x:Name="EmergencyButtonOn" Source="/Symbols/Emergency-button-on.xaml"/>
+                <ResourceDictionary x:Name="EmergencyButtonOff" Source="/Symbols/Emergency-button-off.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MaterialDesignTabablzControlStyle}">
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

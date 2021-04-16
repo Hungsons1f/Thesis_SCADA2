@@ -8,12 +8,25 @@
       xmlns:ar="clr-namespace:Petzold.Media2D;assembly=Petzold.Media2D"
       xmlns:uc="clr-namespace:Thesis_SCADA.UserControls"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:converter="clr-namespace:Thesis_SCADA.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="670" d:DesignWidth="1366"
     
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+
       Name="overviewPage"
       DataContext="{StaticResource OverviewViewModel}"
       Title="Overview">
+
+    <Page.Resources>
+        <converter:ComponentStatusConverter x:Key="ComponentStatusConverter"/>
+    </Page.Resources>
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -27,7 +40,7 @@
     </i:Interaction.Triggers>
 
     <Grid>
-        <Canvas>
+        <Canvas Margin="10 0 0 0">
             <!--#region Symbols-->
             <ContentControl Height="99" Width="264" ContentTemplate="{StaticResource Turbine}" Canvas.Left="971" Canvas.Top="180" />
             <ContentControl Height="50" Width="80" ContentTemplate="{StaticResource Deaerator}" Canvas.Left="288" Canvas.Top="205" />
@@ -39,9 +52,29 @@
             <ContentControl Height="50" Width="80" ContentTemplate="{StaticResource Heater}" Canvas.Left="485" Canvas.Top="65" />
             <ContentControl Height="50" Width="80" ContentTemplate="{StaticResource Heater}" Canvas.Left="120" Canvas.Top="205" />
 
-            <uc:ucComponent Height="55" Width="60" NormalSymbol="{StaticResource Pump}" RunSymbol="{StaticResource PumpActive}" FaultSymbol="{StaticResource PumpFault}" Faceplate="{Binding ElementName=SupplyPump}" Canvas.Left="360" Canvas.Top="110"/>
-            <uc:ucComponent Height="55" Width="60" NormalSymbol="{StaticResource Pump}" RunSymbol="{StaticResource PumpActive}" FaultSymbol="{StaticResource PumpFault}" Faceplate="{Binding ElementName=CondensePump}" Canvas.Left="10" Canvas.Top="330"/>
-            <uc:ucComponent Height="55" Width="60" NormalSymbol="{StaticResource Pump}" RunSymbol="{StaticResource PumpActive}" FaultSymbol="{StaticResource PumpFault}" Faceplate="{Binding ElementName=CircularPump}" Canvas.Left="895" Canvas.Top="540" RenderTransformOrigin="0.5,0.5">
+            <uc:ucComponent Height="55" Width="60" 
+                            NormalSymbol="{StaticResource Pump}" RunSymbol="{StaticResource PumpActive}" FaultSymbol="{StaticResource PumpFault}" 
+                            Faceplate="{Binding ElementName=SupplyPump}" Canvas.Left="360" Canvas.Top="110">
+                <uc:ucComponent.Data>
+                    <MultiBinding Converter="{StaticResource ComponentStatusConverter}">
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="SupplyPumpObj.RunFeedback"/>
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="SupplyPumpObj.Fault"/>
+                    </MultiBinding>
+                </uc:ucComponent.Data>
+            </uc:ucComponent>
+            <uc:ucComponent Height="55" Width="60" 
+                            NormalSymbol="{StaticResource Pump}" RunSymbol="{StaticResource PumpActive}" FaultSymbol="{StaticResource PumpFault}" 
+                            Faceplate="{Binding ElementName=CondensePump}" Canvas.Left="10" Canvas.Top="330">
+                <uc:ucComponent.Data>
+                    <MultiBinding Converter="{StaticResource ComponentStatusConverter}">
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="CondensePumpObj.RunFeedback"/>
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="CondensePumpObj.Fault"/>
+                    </MultiBinding>
+                </uc:ucComponent.Data>
+            </uc:ucComponent>
+            <uc:ucComponent Height="55" Width="60" NormalSymbol="{StaticResource Pump}" 
+                            RunSymbol="{StaticResource PumpActive}" FaultSymbol="{StaticResource PumpFault}" 
+                            Faceplate="{Binding ElementName=CircularPump}" Canvas.Left="895" Canvas.Top="540" RenderTransformOrigin="0.5,0.5">
                 <ContentControl.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleY="1" ScaleX="-1"/>
@@ -50,14 +83,97 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </ContentControl.RenderTransform>
+                <uc:ucComponent.Data>
+                    <MultiBinding Converter="{StaticResource ComponentStatusConverter}">
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="CircularPumpObj.RunFeedback"/>
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="CircularPumpObj.Fault"/>
+                    </MultiBinding>
+                </uc:ucComponent.Data>
             </uc:ucComponent>
-            <uc:ucComponent Height="55" Width="55" NormalSymbol="{StaticResource Fan}" RunSymbol="{StaticResource FanActive}" FaultSymbol="{StaticResource FanFault}" Faceplate="{Binding ElementName=ForceFan3}" Canvas.Left="283" Canvas.Top="600"/>
-            <uc:ucComponent Height="55" Width="55" NormalSymbol="{StaticResource Fan}" RunSymbol="{StaticResource FanActive}" FaultSymbol="{StaticResource FanFault}" Faceplate="{Binding ElementName=ForceFan2}" Canvas.Left="283" Canvas.Top="525"/>
-            <uc:ucComponent Height="55" Width="55" NormalSymbol="{StaticResource Fan}" RunSymbol="{StaticResource FanActive}" FaultSymbol="{StaticResource FanFault}" Faceplate="{Binding ElementName=ForceFan1}" Canvas.Left="283" Canvas.Top="450"/>
-            <uc:ucComponent Height="45" Width="45" NormalSymbol="{StaticResource Valve}" RunSymbol="{StaticResource ValveActive}" FaultSymbol="{StaticResource ValveFault}" Faceplate="{Binding ElementName=TurbineValve}" Canvas.Left="855" Canvas.Top="120"/>
-            <uc:ucComponent Height="45" Width="45" NormalSymbol="{StaticResource Valve}" RunSymbol="{StaticResource ValveActive}" FaultSymbol="{StaticResource ValveFault}" Faceplate="{Binding ElementName=HPHValve}" Canvas.Left="405" Canvas.Top="5"/>
-            <uc:ucComponent Height="45" Width="45" NormalSymbol="{StaticResource Valve}" RunSymbol="{StaticResource ValveActive}" FaultSymbol="{StaticResource ValveFault}" Faceplate="{Binding ElementName=LPHValve}" Canvas.Left="80" Canvas.Top="145"/>
-            <uc:ucComponent Height="45" Width="45" NormalSymbol="{StaticResource Valve}" RunSymbol="{StaticResource ValveActive}" FaultSymbol="{StaticResource ValveFault}" Faceplate="{Binding ElementName=DeaeratorValve}" Canvas.Left="240" Canvas.Top="145"/>
+            <uc:ucComponent Height="55" Width="55" NormalSymbol="{StaticResource Fan}" 
+                            RunSymbol="{StaticResource FanActive}" FaultSymbol="{StaticResource FanFault}" 
+                            Faceplate="{Binding ElementName=ForceFan3}" Canvas.Left="283" Canvas.Top="600">
+                <uc:ucComponent.Data>
+                    <MultiBinding Converter="{StaticResource ComponentStatusConverter}">
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="ForceFan1Obj.RunFeedback"/>
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="ForceFan1Obj.Fault"/>
+                    </MultiBinding>
+                </uc:ucComponent.Data>
+            </uc:ucComponent>
+            <uc:ucComponent Height="55" Width="55" NormalSymbol="{StaticResource Fan}" 
+                            RunSymbol="{StaticResource FanActive}" FaultSymbol="{StaticResource FanFault}" 
+                            Faceplate="{Binding ElementName=ForceFan2}" Canvas.Left="283" Canvas.Top="525">
+                <uc:ucComponent.Data>
+                    <MultiBinding Converter="{StaticResource ComponentStatusConverter}">
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="ForceFan2Obj.RunFeedback"/>
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="ForceFan2Obj.Fault"/>
+                    </MultiBinding>
+                </uc:ucComponent.Data>
+            </uc:ucComponent>
+            <uc:ucComponent Height="55" Width="55" NormalSymbol="{StaticResource Fan}" 
+                            RunSymbol="{StaticResource FanActive}" FaultSymbol="{StaticResource FanFault}" 
+                            Faceplate="{Binding ElementName=ForceFan1}" Canvas.Left="283" Canvas.Top="450">
+                <uc:ucComponent.Data>
+                    <MultiBinding Converter="{StaticResource ComponentStatusConverter}">
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="ForceFan3Obj.RunFeedback"/>
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="ForceFan3Obj.Fault"/>
+                    </MultiBinding>
+                </uc:ucComponent.Data>
+            </uc:ucComponent>
+            <uc:ucComponent Height="45" Width="45" NormalSymbol="{StaticResource Valve}" 
+                            RunSymbol="{StaticResource ValveActive}" FaultSymbol="{StaticResource ValveFault}" 
+                            Faceplate="{Binding ElementName=TurbineValve}" Canvas.Left="855" Canvas.Top="120">
+                <uc:ucComponent.Data>
+                    <MultiBinding Converter="{StaticResource ComponentStatusConverter}">
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="TurbineObj.RunFeedback"/>
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="TurbineObj.Fault"/>
+                    </MultiBinding>
+                </uc:ucComponent.Data>
+            </uc:ucComponent>
+            <uc:ucComponent Height="45" Width="45" NormalSymbol="{StaticResource Valve}" 
+                            RunSymbol="{StaticResource ValveActive}" FaultSymbol="{StaticResource ValveFault}" 
+                            Faceplate="{Binding ElementName=HPHValve}" Canvas.Left="405" Canvas.Top="5">
+                <uc:ucComponent.Data>
+                    <MultiBinding Converter="{StaticResource ComponentStatusConverter}">
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="HPHValveObj.RunFeedback"/>
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="HPHValveObj.Fault"/>
+                    </MultiBinding>
+                </uc:ucComponent.Data>
+            </uc:ucComponent>
+            <uc:ucComponent Height="45" Width="45" NormalSymbol="{StaticResource Valve}" 
+                            RunSymbol="{StaticResource ValveActive}" FaultSymbol="{StaticResource ValveFault}" 
+                            Faceplate="{Binding ElementName=LPHValve}" Canvas.Left="80" Canvas.Top="145">
+                <uc:ucComponent.Data>
+                    <MultiBinding Converter="{StaticResource ComponentStatusConverter}">
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="LPHValveObj.RunFeedback"/>
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="LPHValveObj.Fault"/>
+                    </MultiBinding>
+                </uc:ucComponent.Data>
+            </uc:ucComponent>
+            <uc:ucComponent Height="45" Width="45" NormalSymbol="{StaticResource Valve}" 
+                            RunSymbol="{StaticResource ValveActive}" FaultSymbol="{StaticResource ValveFault}" 
+                            Faceplate="{Binding ElementName=DeaeratorValve}" Canvas.Left="240" Canvas.Top="145" >
+                <uc:ucComponent.Data>
+                    <MultiBinding Converter="{StaticResource ComponentStatusConverter}">
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="DeaeratorValveObj.RunFeedback"/>
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="DeaeratorValveObj.Fault"/>
+                    </MultiBinding>
+                </uc:ucComponent.Data>
+            </uc:ucComponent>
+
+            <TextBlock Text="Hơi cao áp" Style="{StaticResource MaterialDesignBody2TextBlock}" Canvas.Left="245" Canvas.Top="26"/>
+            <TextBlock Text="Hơi trung áp" Style="{StaticResource MaterialDesignBody2TextBlock}" Canvas.Left="171" Canvas.Top="78"/>
+            <TextBlock Text="Hơi hạ áp" Style="{StaticResource MaterialDesignBody2TextBlock}" Canvas.Left="10" Canvas.Top="78"/>
+            <TextBlock Text="Nhiên liệu cháy" Style="{StaticResource MaterialDesignBody2TextBlock}" Canvas.Left="529" Canvas.Top="214" Width="70" TextAlignment="Center" TextWrapping="Wrap"/>
+            <TextBlock Text="Nhiên liệu cháy" Style="{StaticResource MaterialDesignBody2TextBlock}" Canvas.Left="469" Canvas.Top="535" Width="70" TextAlignment="Center" TextWrapping="Wrap"/>
+            <TextBlock Text="Hơi cao áp" Style="{StaticResource MaterialDesignBody2TextBlock}" Canvas.Left="987" Canvas.Top="314"/>
+            <TextBlock Text="Hơi trung áp" Style="{StaticResource MaterialDesignBody2TextBlock}" Canvas.Left="1074" Canvas.Top="314"/>
+            <TextBlock Text="Hơi hạ áp" Style="{StaticResource MaterialDesignBody2TextBlock}" Canvas.Left="1247" Canvas.Top="291"/>
+
+            <Image Source="/Symbols/Sea.png" Canvas.Left="1255" Canvas.Top="451"/>
+            <Image Source="/Symbols/Sea.png" Canvas.Left="1255" Canvas.Top="579"/>
+            <Image Source="/Symbols/Sea.png" Canvas.Left="1255" Canvas.Top="515"/>
+
             <!--#endregion-->
 
             <!--#region Arrows-->
@@ -103,6 +219,163 @@
             <ar:ArrowPolyline Points="510 115 510 390 760 390 760 450" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
             <!--#endregion-->
 
+            <!--#region WatchBox-->
+            <uc:ucWatchBox Width="75" Canvas.Left="76" Canvas.Top="263" Tag="bar"
+                           Data="{Binding LPHeater.InPressure}" />
+            <uc:ucWatchBoxRod Canvas.Left="61" Canvas.Top="273" Width="15"/>
+            <uc:ucWatchBox Width="80" Canvas.Left="76" Canvas.Top="299" Tag="m3/h"
+                           Data="{Binding LPHeater.InFlow}"/>
+            <uc:ucWatchBoxRod Canvas.Left="61" Canvas.Top="309" Width="15"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="230" Canvas.Top="219" Width="80" RenderTransformOrigin="0,0.5">
+                <uc:ucWatchBoxRod.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc:ucWatchBoxRod.RenderTransform>
+            </uc:ucWatchBoxRod>
+            <uc:ucWatchBox Width="75" Canvas.Left="192" Canvas.Top="265" Tag="oC"
+                           Data="{Binding LPHeater.Temperature}"/>
+            <uc:ucWatchBox Width="75" Canvas.Left="192" Canvas.Top="303" Tag="bar"
+                           Data="{Binding LPHeater.Pressure}"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="350" Canvas.Top="24" Width="20" RenderTransformOrigin="0,0.5">
+                <uc:ucWatchBoxRod.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc:ucWatchBoxRod.RenderTransform>
+            </uc:ucWatchBoxRod>
+            <uc:ucWatchBox Width="75" Canvas.Left="312" Canvas.Top="50" Tag="bar"
+                           Data="{Binding Turbine.HighPressure}"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="207" Canvas.Top="110" Width="15"/>
+            <uc:ucWatchBox Width="75" Canvas.Left="222" Canvas.Top="100" Tag="bar"
+                           Data="{Binding Turbine.ImmediatePressure}"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="459" Canvas.Top="79" Width="85" RenderTransformOrigin="0,0.5">
+                <uc:ucWatchBoxRod.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc:ucWatchBoxRod.RenderTransform>
+            </uc:ucWatchBoxRod>
+            <uc:ucWatchBox Width="75" Canvas.Left="422" Canvas.Top="122" Tag="bar"
+                           Data="{Binding HPHeater.InPressure}"/>
+            <uc:ucWatchBox Width="80" Canvas.Left="420" Canvas.Top="160" Tag="m3/h"
+                           Data="{Binding HPHeater.InFlow}"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="381" Canvas.Top="212" Width="20"/>
+            <uc:ucWatchBoxRod Canvas.Left="437" Canvas.Top="220" Width="20" RenderTransformOrigin="0,0.5">
+                <uc:ucWatchBoxRod.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc:ucWatchBoxRod.RenderTransform>
+            </uc:ucWatchBoxRod>
+            <uc:ucWatchBox Width="75" Canvas.Left="400" Canvas.Top="202" Tag="oC"
+                           Data="{Binding Deaerator.Temperature}"/>
+            <uc:ucWatchBox Width="75" Canvas.Left="400" Canvas.Top="240" Tag="bar"
+                           Data="{Binding Deaerator.Pressure}"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="614" Canvas.Top="79" Width="85" RenderTransformOrigin="0,0.5">
+                <uc:ucWatchBoxRod.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc:ucWatchBoxRod.RenderTransform>
+            </uc:ucWatchBoxRod>
+            <uc:ucWatchBox Width="75" Canvas.Left="577" Canvas.Top="122" Tag="oC"
+                           Data="{Binding HPHeater.Temperature}"/>
+            <uc:ucWatchBox Width="75" Canvas.Left="577" Canvas.Top="169" Tag="bar"
+                           Data="{Binding HPHeater.Pressure}"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="831" Canvas.Top="139" Width="85" RenderTransformOrigin="0,0.5">
+                <uc:ucWatchBoxRod.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc:ucWatchBoxRod.RenderTransform>
+            </uc:ucWatchBoxRod>
+            <uc:ucWatchBox Width="75" Canvas.Left="794" Canvas.Top="182" Tag="oC"
+                           Data="{Binding Boiler.Temperature}"/>
+            <uc:ucWatchBox Width="75" Canvas.Left="794" Canvas.Top="220" Tag="bar"
+                           Data="{Binding Boiler.Pressure}"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="1225" Canvas.Top="223" Width="15"/>
+            <uc:ucWatchBox Width="82" Canvas.Left="1240" Canvas.Top="213" Tag="RPM"
+                           Data="{Binding Turbine.Rotation}"/>
+
+            <uc:ucWatchBox Width="75" Canvas.Left="985" Canvas.Top="340" Tag="oC"
+                           Data="{Binding Turbine.HighTemperature}"/>
+            <uc:ucWatchBox Width="75" Canvas.Left="1074" Canvas.Top="340" Tag="oC"
+                           Data="{Binding Turbine.ImmediateTemperature}"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="1207" Canvas.Top="350" Width="15"/>
+            <uc:ucWatchBoxRod Canvas.Left="1259" Canvas.Top="360" Width="20" RenderTransformOrigin="0,0.5">
+                <uc:ucWatchBoxRod.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc:ucWatchBoxRod.RenderTransform>
+            </uc:ucWatchBoxRod>
+            <uc:ucWatchBox Width="75" Canvas.Left="1222" Canvas.Top="340" Tag="oC"
+                           Data="{Binding Turbine.OutTemperature}"/>
+            <uc:ucWatchBox Width="75" Canvas.Left="1222" Canvas.Top="378" Tag="bar"
+                           Data="{Binding Turbine.OutPressure}"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="544" Canvas.Top="400" Width="20" RenderTransformOrigin="0,0.5">
+                <uc:ucWatchBoxRod.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc:ucWatchBoxRod.RenderTransform>
+            </uc:ucWatchBoxRod>
+            <uc:ucWatchBox Width="75" Canvas.Left="507" Canvas.Top="425" Tag="oC"
+                           Data="{Binding Condenser.Temperature}"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="896" Canvas.Top="517" Width="30"/>
+            <uc:ucWatchBox Width="75" Canvas.Left="926" Canvas.Top="507" Tag="m3/h"
+                           Data="{Binding Condenser.InFlow}"/>
+
+            <uc:ucWatchBoxRod Canvas.Left="429" Canvas.Top="539" Width="20" RenderTransformOrigin="0,0.5">
+                <uc:ucWatchBoxRod.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </uc:ucWatchBoxRod.RenderTransform>
+            </uc:ucWatchBoxRod>
+            <uc:ucWatchBox Width="75" Canvas.Left="392" Canvas.Top="565" Tag="oC"
+                           Data="{Binding Furnace.Temperature}"/>
+            <!--#endregion-->
+
             <!--#region Faceplate-->
             <uc:ucPopupPump x:Name="SupplyPump" Tag="Bơm cấp"  Visibility="Collapsed" Canvas.Left="360" Canvas.Top="167"
                             MotorObject="{Binding Source={StaticResource OverviewViewModel}, Path=SupplyPumpObj}"
@@ -136,139 +409,126 @@
                             Prefix="{Binding Source={StaticResource OverviewViewModel}, Path=TurbineTag}"/>
             <!--#endregion-->
 
-            <!--#region WatchBox-->
-            <uc:ucWatchBox Canvas.Left="76" Canvas.Top="263"/>
-            <uc:ucWatchBoxRod Canvas.Left="61" Canvas.Top="273" Width="15"/>
-            <uc:ucWatchBox Canvas.Left="76" Canvas.Top="299"/>
-            <uc:ucWatchBoxRod Canvas.Left="61" Canvas.Top="309" Width="15"/>
+            <!--#region Control Panel-->
+            <materialDesign:PopupBox Width="40" Height="40" Canvas.Right="82" Canvas.Top="90"
+                Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+                PlacementMode="LeftAndAlignMiddles" 
+                ToolTipService.Placement="Left" StaysOpen="True"
+                ToolTip="Bảng điều khiển quá trình" >
+                <materialDesign:Card>
+                    <Grid Margin="10 0 5 0" Width="170" Height="60">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.Resources>
+                            <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFloatingActionButton}">
+                                <Setter Property="Width" Value="48"/>
+                                <Setter Property="Height" Value="48"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Margin" Value="0 0 0 0"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Button Grid.Column="0"
+                                    Background="{Binding Source={StaticResource GlobalColor}, Path=ClGreen, Mode=OneWay}"
+                                    BorderBrush="{Binding Source={StaticResource GlobalColor}, Path=ClGreen, Mode=OneWay}"
+                                    ToolTip="Chạy">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                                    <i:InvokeCommandAction Command="{Binding StartReleasedCommand}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding StartPressedCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <materialDesign:PackIcon Width="35" Height="35" Kind="Power" />
+                        </Button>
+                        <Button Grid.Column="1"
+                                    Background="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"
+                                    BorderBrush="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"
+                                    ToolTip="Dừng">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                                    <i:InvokeCommandAction Command="{Binding StopReleasedCommand}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding StopPressedCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <materialDesign:PackIcon Width="35" Height="35" Kind="PowerCycle" />
+                        </Button>
+                        <Button Grid.Column="2"
+                                    Background="{Binding Source={StaticResource GlobalColor}, Path=ClYellow, Mode=OneWay}"
+                                    BorderBrush="{Binding Source={StaticResource GlobalColor}, Path=ClYellow, Mode=OneWay}"
+                                    ToolTip="Reset">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                                    <i:InvokeCommandAction Command="{Binding ResetReleasedCommand}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding ResetPressedCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <materialDesign:PackIcon Width="35" Height="35" Kind="Reload" />
+                        </Button>
+                    </Grid>
 
-            <uc:ucWatchBoxRod Canvas.Left="230" Canvas.Top="219" Width="80" RenderTransformOrigin="0,0.5">
-                <uc:ucWatchBoxRod.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </uc:ucWatchBoxRod.RenderTransform>
-            </uc:ucWatchBoxRod>
-            <uc:ucWatchBox Canvas.Left="197" Canvas.Top="265"/>
-            <uc:ucWatchBox Canvas.Left="197" Canvas.Top="303"/>
+                </materialDesign:Card>
+            </materialDesign:PopupBox>
 
-            <uc:ucWatchBoxRod Canvas.Left="350" Canvas.Top="24" Width="20" RenderTransformOrigin="0,0.5">
-                <uc:ucWatchBoxRod.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </uc:ucWatchBoxRod.RenderTransform>
-            </uc:ucWatchBoxRod>
-            <uc:ucWatchBox Canvas.Left="317" Canvas.Top="50"/>
+            <materialDesign:ColorZone Mode="Dark" Canvas.Left="1156" Canvas.Top="10" CornerRadius="8">
+                <StackPanel Orientation="Horizontal" >
+                    <Button Height="50" Width="50" Margin="10 5 0 5"
+                    Style="{StaticResource MaterialDesignIconButton}"
+                    ToolTip="Đèn báo sẵn sàng">
+                        <uc:ucLight 
+                        OnSymbol="{StaticResource LightReady}" OffSymbol="{StaticResource LightOff}"
+                        IsOn="{Binding ProcessReady}"/>
+                    </Button>
+                    <Button Height="50" Width="50" Margin="10 5 0 5"
+                    Style="{StaticResource MaterialDesignIconButton}"
+                    ToolTip="Đèn báo đang chạy">
+                        <uc:ucLight 
+                        OnSymbol="{StaticResource LightRun}" OffSymbol="{StaticResource LightOff}"
+                        IsOn="{Binding ProcessRun}"/>
+                    </Button>
+                    <Button Height="50" Width="50" Margin="10 5 10 5"
+                    Style="{StaticResource MaterialDesignIconButton}"
+                    ToolTip="Đèn báo lỗi">
+                        <uc:ucLight 
+                        OnSymbol="{StaticResource LightFault}" OffSymbol="{StaticResource LightOff}"
+                        IsOn="{Binding ProcessFault}"/>
+                    </Button>
+                </StackPanel>
+            </materialDesign:ColorZone>
 
-            <uc:ucWatchBoxRod Canvas.Left="207" Canvas.Top="110" Width="15"/>
-            <uc:ucWatchBox Canvas.Left="222" Canvas.Top="100"/>
-
-            <uc:ucWatchBoxRod Canvas.Left="455" Canvas.Top="79" Width="85" RenderTransformOrigin="0,0.5">
-                <uc:ucWatchBoxRod.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </uc:ucWatchBoxRod.RenderTransform>
-            </uc:ucWatchBoxRod>
-            <uc:ucWatchBox Canvas.Left="422" Canvas.Top="122"/>
-            <uc:ucWatchBox Canvas.Left="422" Canvas.Top="160"/>
-
-            <uc:ucWatchBoxRod Canvas.Left="381" Canvas.Top="212" Width="20"/>
-            <uc:ucWatchBoxRod Canvas.Left="433" Canvas.Top="220" Width="20" RenderTransformOrigin="0,0.5">
-                <uc:ucWatchBoxRod.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </uc:ucWatchBoxRod.RenderTransform>
-            </uc:ucWatchBoxRod>
-            <uc:ucWatchBox Canvas.Left="400" Canvas.Top="202"/>
-            <uc:ucWatchBox Canvas.Left="400" Canvas.Top="240"/>
-
-            <uc:ucWatchBoxRod Canvas.Left="610" Canvas.Top="79" Width="85" RenderTransformOrigin="0,0.5">
-                <uc:ucWatchBoxRod.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </uc:ucWatchBoxRod.RenderTransform>
-            </uc:ucWatchBoxRod>
-            <uc:ucWatchBox Canvas.Left="577" Canvas.Top="122"/>
-            <uc:ucWatchBox Canvas.Left="577" Canvas.Top="160"/>
-
-            <uc:ucWatchBoxRod Canvas.Left="827" Canvas.Top="139" Width="85" RenderTransformOrigin="0,0.5">
-                <uc:ucWatchBoxRod.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </uc:ucWatchBoxRod.RenderTransform>
-            </uc:ucWatchBoxRod>
-            <uc:ucWatchBox Canvas.Left="794" Canvas.Top="182"/>
-            <uc:ucWatchBox Canvas.Left="794" Canvas.Top="220"/>
-
-            <uc:ucWatchBoxRod Canvas.Left="1225" Canvas.Top="223" Width="15"/>
-            <uc:ucWatchBox Canvas.Left="1240" Canvas.Top="213"/>
-
-            <uc:ucWatchBox Canvas.Left="996" Canvas.Top="350"/>
-            <uc:ucWatchBox Canvas.Left="1072" Canvas.Top="350"/>
-
-            <uc:ucWatchBoxRod Canvas.Left="1207" Canvas.Top="350" Width="15"/>
-            <uc:ucWatchBoxRod Canvas.Left="1255" Canvas.Top="360" Width="20" RenderTransformOrigin="0,0.5">
-                <uc:ucWatchBoxRod.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </uc:ucWatchBoxRod.RenderTransform>
-            </uc:ucWatchBoxRod>
-            <uc:ucWatchBox Canvas.Left="1222" Canvas.Top="340"/>
-            <uc:ucWatchBox Canvas.Left="1222" Canvas.Top="378"/>
-
-            <uc:ucWatchBoxRod Canvas.Left="540" Canvas.Top="400" Width="20" RenderTransformOrigin="0,0.5">
-                <uc:ucWatchBoxRod.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </uc:ucWatchBoxRod.RenderTransform>
-            </uc:ucWatchBoxRod>
-            <uc:ucWatchBox Canvas.Left="507" Canvas.Top="425"/>
-
-            <uc:ucWatchBoxRod Canvas.Left="896" Canvas.Top="517" Width="30"/>
-            <uc:ucWatchBox Canvas.Left="926" Canvas.Top="507"/>
-
-            <uc:ucWatchBoxRod Canvas.Left="425" Canvas.Top="539" Width="20" RenderTransformOrigin="0,0.5">
-                <uc:ucWatchBoxRod.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </uc:ucWatchBoxRod.RenderTransform>
-            </uc:ucWatchBoxRod>
-            <uc:ucWatchBox Canvas.Left="392" Canvas.Top="565"/>
+            <ToggleButton x:Name="btnEmergency" Height="52" Canvas.Right="20" Canvas.Top="84" Width="50"
+                    Style="{StaticResource MaterialDesignIconButton}"
+                    ToolTip="Nút dừng khẩn cấp">
+                <ContentControl Background="Transparent">
+                    <ContentControl.Style>
+                        <Style TargetType="ContentControl">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=btnEmergency, Path=IsChecked}" Value="true">
+                                    <Setter Property="ContentTemplate" Value="{StaticResource EmergencyButtonOff}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=btnEmergency, Path=IsChecked}" Value="false">
+                                    <Setter Property="ContentTemplate" Value="{StaticResource EmergencyButtonOn}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+                </ContentControl>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Unchecked">
+                        <i:InvokeCommandAction Command="{Binding EmergencyReleasedCommand}"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="Checked">
+                        <i:InvokeCommandAction Command="{Binding EmergencyPressedCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ToggleButton>
             <!--#endregion-->
         </Canvas>
     </Grid>

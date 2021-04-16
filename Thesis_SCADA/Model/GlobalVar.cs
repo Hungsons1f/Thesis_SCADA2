@@ -30,6 +30,12 @@ namespace Thesis_SCADA.Model
         private MainInterface ipcData;
         public MainInterface IpcData { get => ipcData; set {ipcData = value; OnDataChanged(); } }
 
+        private AutoCtrlCmds processState;
+        public AutoCtrlCmds ProcessState { get => processState; set { processState = value; OnDataChanged(); } }
+
+        private Parameters parameter;
+        public Parameters Parameter { get => parameter; set { parameter = value; OnDataChanged(); } }
+
         private ConnectionStatus connectstatus;
         public ConnectionStatus ConnectStatus { get => connectstatus; set => connectstatus = value; }
 
@@ -45,10 +51,12 @@ namespace Thesis_SCADA.Model
         {
             ipcDataService = new IPCDataService();
             IpcData = new MainInterface();
+            ProcessState = new AutoCtrlCmds();
+            Parameter = new Parameters();
             OnIpcDataRefreshed(null, null);
             ipcDataService.ValuesRefreshed += OnIpcDataRefreshed;
 
-            ipcDataService.Connect("", 851);
+            ipcDataService.Connect("", 851);//"5.57.208.6.1.1"
         }
 
         public async void WriteData<T> (string varname, T value)
@@ -59,6 +67,8 @@ namespace Thesis_SCADA.Model
         private void OnIpcDataRefreshed(object sender, EventArgs e)
         {
             IpcData = ipcDataService.ReadData;
+            ProcessState = ipcDataService.ProcessState;
+            Parameter = ipcDataService.Parameter;
             ConnectStatus = (ConnectionStatus)ipcDataService.ConnectStatus;
             ScanTime = ipcDataService.ScanTime;
         }
