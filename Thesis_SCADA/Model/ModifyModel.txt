@@ -1,20 +1,25 @@
-﻿public partial class Users : BaseViewModel
+﻿namespace Thesis_SCADA.Model
 {
-    public int Id { get; set; }
+    using System;
+    using System.Collections.Generic;
+    using Thesis_SCADA.ViewModel;
 
-    private string _DisplayName;
-    public string DisplayName { get => _DisplayName; set { _DisplayName = value; OnPropertyChanged(); } }
+    public partial class Users : BaseViewModel
+    {
+        public int Id { get; set; }
 
-    private string _UserName;
-    public string UserName { get => _UserName; set { _UserName = value; OnPropertyChanged(); } }
+        private string _UserName;
+        public string UserName { get => _UserName; set { _UserName = value; OnPropertyChanged(); } }
 
-    private string _Password;
-    public string Password { get => _Password; set { _Password = value; OnPropertyChanged(); } }
+        private string _Password;
+        public string Password { get => _Password; set { _Password = value; OnPropertyChanged(); } }
 
-    private int _IdRole;
-    public int IdRole { get => _IdRole; set { _IdRole = value; OnPropertyChanged(); } }
+        private int _IdRole;
+        public int IdRole { get => _IdRole; set { _IdRole = value; OnPropertyChanged(); } }
 
-            private UserRole _UserRole { get; set; }
+        private UserRole _UserRole { get; set; }
         public virtual UserRole UserRole { get => _UserRole; set { _UserRole = value; OnPropertyChanged(); } }
 
+    }
 }
+

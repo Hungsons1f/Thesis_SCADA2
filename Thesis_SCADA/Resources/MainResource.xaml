@@ -9,6 +9,7 @@
     <viewmodel:UserManagementViewModel x:Key="UserManagementViewModel"></viewmodel:UserManagementViewModel>
     <viewmodel:OverviewViewModel x:Key="OverviewViewModel"></viewmodel:OverviewViewModel>
     <viewmodel:CalibViewModel x:Key="CalibViewModel"></viewmodel:CalibViewModel>
+    <viewmodel:TrendViewModel x:Key="TrendViewModel"></viewmodel:TrendViewModel>
     
     <globalvar:GlobalColor x:Key="GlobalColor"></globalvar:GlobalColor>
 </ResourceDictionary>   

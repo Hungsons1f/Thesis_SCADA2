@@ -79,13 +79,15 @@
     <Compile Include="Model\IPCDataService.cs" />
     <Compile Include="Model\DataProvider.cs" />
     <Compile Include="Model\GlobalVar.cs" />
+    <Compile Include="Model\ProcessData.cs">
+      <DependentUpon>Scada_DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Alarm.xaml.cs">
       <DependentUpon>Alarm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Calib.xaml.cs">
       <DependentUpon>Calib.xaml</DependentUpon>
     </Compile>
-    <Content Include="Pages\_pnid.txt" />
     <Compile Include="Pages\Event.xaml.cs">
       <DependentUpon>Event.xaml</DependentUpon>
     </Compile>
@@ -142,6 +144,7 @@
     </Compile>
     <Compile Include="ViewModel\PageVM\CalibViewModel.cs" />
     <Compile Include="ViewModel\PageVM\OverviewViewModel.cs" />
+    <Compile Include="ViewModel\PageVM\TrendViewModel.cs" />
     <Compile Include="ViewModel\UserControlVM\ucComponentViewModel.cs" />
     <Compile Include="ViewModel\UserControlVM\ucGaugeViewModel.cs" />
     <Compile Include="ViewModel\UserControlVM\ucPopupFanViewModel.cs" />
@@ -424,6 +427,9 @@
     </PackageReference>
     <PackageReference Include="EntityFramework">
       <Version>6.2.0</Version>
+    </PackageReference>
+    <PackageReference Include="LiveCharts.Wpf">
+      <Version>0.9.7</Version>
     </PackageReference>
     <PackageReference Include="MaterialDesignThemes">
       <Version>4.0.0</Version>

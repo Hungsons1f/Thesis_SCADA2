@@ -4,12 +4,130 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Thesis_SCADA.Pages"
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Trend">
+      Title="Trend"
+      
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal"
+      TextOptions.TextRenderingMode="Auto"
+      FontFamily="{DynamicResource MaterialDesignFont}"
+      xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+      
+      Name="trendPage"
+      DataContext="{StaticResource TrendViewModel}">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="286,178,0,0" TextWrapping="Wrap" Text="Trend" VerticalAlignment="Top"/>
+        <dragablz:TabablzControl BorderThickness="0" >
+            <!--Tab KHU 1-->
+            <TabItem x:Name="tabZone1" IsSelected="True" >
+                <TabItem.Header>
+                    <TextBlock Text="KHU 1" 
+                               Foreground="{DynamicResource PrimaryHueMidForegroundBrush}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignHeadline6TextBlock}">
+                                <Setter Property="FontSize" Value="14"/>
+                                <Setter Property="FontStyle" Value="Normal"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=tabZone1, Path=IsSelected}" Value="True">
+                                        <Setter Property="FontSize" Value="18" />
+                                        <Setter Property="FontStyle" Value="Italic"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </TabItem.Header>
+
+                <Grid Margin="100 50">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <materialDesign:ColorZone Margin="0 0 0 15" Mode="Standard" Background="{x:Null}">
+                        <TextBlock Grid.Row="0" Text="NHIỆT ĐỘ LÒ ĐỐT" Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                               HorizontalAlignment="Center"/>
+                    </materialDesign:ColorZone>
+                    <lvc:CartesianChart Grid.Row="1" Series="{Binding S}" LegendLocation="Right">
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis  Title="Tốc độ"/>
+                        </lvc:CartesianChart.AxisY>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Thời gian" />
+                            <!--Labels="{Binding Labels}"/>-->
+                        </lvc:CartesianChart.AxisX>
+                    </lvc:CartesianChart>
+                </Grid>
+            </TabItem>
+
+            <!--Tab KHU 2-->
+            <TabItem x:Name="tabZone2" >
+                <TabItem.Header>
+                    <TextBlock Text="KHU 2" 
+                               Foreground="{DynamicResource PrimaryHueMidForegroundBrush}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignHeadline6TextBlock}">
+                                <Setter Property="FontSize" Value="14"/>
+                                <Setter Property="FontStyle" Value="Normal"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=tabZone2, Path=IsSelected}" Value="True">
+                                        <Setter Property="FontSize" Value="18" />
+                                        <Setter Property="FontStyle" Value="Italic"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </TabItem.Header>
+            </TabItem>
+
+            <!--Tab KHU 3-->
+            <TabItem x:Name="tabZone3" >
+                <TabItem.Header>
+                    <TextBlock Text="KHU 3" 
+                               Foreground="{DynamicResource PrimaryHueMidForegroundBrush}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignHeadline6TextBlock}">
+                                <Setter Property="FontSize" Value="14"/>
+                                <Setter Property="FontStyle" Value="Normal"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=tabZone3, Path=IsSelected}" Value="True">
+                                        <Setter Property="FontSize" Value="18" />
+                                        <Setter Property="FontStyle" Value="Italic"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </TabItem.Header>
+            </TabItem>
+
+            <!--Tab KHU 4-->
+            <TabItem x:Name="tabZone4" >
+                <TabItem.Header>
+                    <TextBlock Text="KHU 4" 
+                               Foreground="{DynamicResource PrimaryHueMidForegroundBrush}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignHeadline6TextBlock}">
+                                <Setter Property="FontSize" Value="14"/>
+                                <Setter Property="FontStyle" Value="Normal"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=tabZone4, Path=IsSelected}" Value="True">
+                                        <Setter Property="FontSize" Value="18" />
+                                        <Setter Property="FontStyle" Value="Italic"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </TabItem.Header>
+            </TabItem>
+
+        </dragablz:TabablzControl>
 
     </Grid>
 </Page>

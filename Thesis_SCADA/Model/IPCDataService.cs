@@ -84,8 +84,9 @@ namespace Thesis_SCADA.Model
             _timer.Stop();
         }
 
-        public void Connect(string netid, int port)
+        public bool Connect(string netid, int port)
         {
+            bool result = false;
             try
             {
                 StateInfo state;
@@ -105,8 +106,6 @@ namespace Thesis_SCADA.Model
                 else
                 {
                     _timer.Start();
-                    ConnectStatus = ConnectionStatus.Online;
-                    showConnectMsg = false;
 
                     ProcessState = client.ReadSymbol("Interfacex.AutoCtrlCmds", typeof(AutoCtrlCmds), false) as AutoCtrlCmds;
                     Parameter = client.ReadSymbol("Interfacex.Parameters", typeof(Parameters), false) as Parameters;
@@ -136,6 +135,9 @@ namespace Thesis_SCADA.Model
                     client.AdsNotificationEx -= OnAdsNotificationEx;
                     client.AdsNotificationEx += OnAdsNotificationEx;
 
+                    ConnectStatus = ConnectionStatus.Online;
+                    showConnectMsg = false;
+                    result = true;
                 }
 
                 OnValuesRefreshed();
@@ -149,6 +151,7 @@ namespace Thesis_SCADA.Model
                     showConnectMsg = true;
                 }
             }
+            return result;
         }
 
         private bool showConnectMsg = false;

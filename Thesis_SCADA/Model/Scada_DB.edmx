@@ -5,6 +5,35 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ScadaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ProcessData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Timestamp" Type="datetime" />
+          <Property Name="Furnace_Temp" Type="float" />
+          <Property Name="PCondense_Flow" Type="float" />
+          <Property Name="PCondense_Press" Type="float" />
+          <Property Name="HLPHeater_Temp" Type="float" />
+          <Property Name="HLPHeater_Press" Type="float" />
+          <Property Name="HDeaerator_Temp" Type="float" />
+          <Property Name="HDeaerator_Press" Type="float" />
+          <Property Name="PSupply_Flow" Type="float" />
+          <Property Name="PSupply_Press" Type="float" />
+          <Property Name="HHPHeater_Temp" Type="float" />
+          <Property Name="HHPHeater_Press" Type="float" />
+          <Property Name="HBoiler_Temp" Type="float" />
+          <Property Name="HBoiler_Press" Type="float" />
+          <Property Name="TurbineH_Temp" Type="float" />
+          <Property Name="TurbineH_Press" Type="float" />
+          <Property Name="TurbineI_Temp" Type="float" />
+          <Property Name="TurbineI_Press" Type="float" />
+          <Property Name="TurbineL_Temp" Type="float" />
+          <Property Name="TurbineL_Press" Type="float" />
+          <Property Name="Turbine_Freq" Type="float" />
+          <Property Name="HCondenser_Temp" Type="float" />
+          <Property Name="PCircular_Flow" Type="float" />
+        </EntityType>
         <EntityType Name="UserRole">
           <Key>
             <PropertyRef Name="Id" />
@@ -34,6 +63,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ScadaModelStoreContainer">
+          <EntitySet Name="ProcessData" EntityType="Self.ProcessData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Users__IdRole__267ABA7A" Association="Self.FK__Users__IdRole__267ABA7A">
@@ -52,6 +82,7 @@
             <End Role="UserRole" EntitySet="UserRole" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="ProcessData" EntityType="ScadaModel.ProcessData" />
         </EntityContainer>
         <EntityType Name="UserRole">
           <Key>
@@ -83,6 +114,35 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ProcessData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Timestamp" Type="DateTime" Precision="3" />
+          <Property Name="Furnace_Temp" Type="Double" />
+          <Property Name="PCondense_Flow" Type="Double" />
+          <Property Name="PCondense_Press" Type="Double" />
+          <Property Name="HLPHeater_Temp" Type="Double" />
+          <Property Name="HLPHeater_Press" Type="Double" />
+          <Property Name="HDeaerator_Temp" Type="Double" />
+          <Property Name="HDeaerator_Press" Type="Double" />
+          <Property Name="PSupply_Flow" Type="Double" />
+          <Property Name="PSupply_Press" Type="Double" />
+          <Property Name="HHPHeater_Temp" Type="Double" />
+          <Property Name="HHPHeater_Press" Type="Double" />
+          <Property Name="HBoiler_Temp" Type="Double" />
+          <Property Name="HBoiler_Press" Type="Double" />
+          <Property Name="TurbineH_Temp" Type="Double" />
+          <Property Name="TurbineH_Press" Type="Double" />
+          <Property Name="TurbineI_Temp" Type="Double" />
+          <Property Name="TurbineI_Press" Type="Double" />
+          <Property Name="TurbineL_Temp" Type="Double" />
+          <Property Name="TurbineL_Press" Type="Double" />
+          <Property Name="Turbine_Freq" Type="Double" />
+          <Property Name="HCondenser_Temp" Type="Double" />
+          <Property Name="PCircular_Flow" Type="Double" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -103,6 +163,36 @@
                 <ScalarProperty Name="IdRole" ColumnName="IdRole" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProcessData">
+            <EntityTypeMapping TypeName="ScadaModel.ProcessData">
+              <MappingFragment StoreEntitySet="ProcessData">
+                <ScalarProperty Name="PCircular_Flow" ColumnName="PCircular_Flow" />
+                <ScalarProperty Name="HCondenser_Temp" ColumnName="HCondenser_Temp" />
+                <ScalarProperty Name="Turbine_Freq" ColumnName="Turbine_Freq" />
+                <ScalarProperty Name="TurbineL_Press" ColumnName="TurbineL_Press" />
+                <ScalarProperty Name="TurbineL_Temp" ColumnName="TurbineL_Temp" />
+                <ScalarProperty Name="TurbineI_Press" ColumnName="TurbineI_Press" />
+                <ScalarProperty Name="TurbineI_Temp" ColumnName="TurbineI_Temp" />
+                <ScalarProperty Name="TurbineH_Press" ColumnName="TurbineH_Press" />
+                <ScalarProperty Name="TurbineH_Temp" ColumnName="TurbineH_Temp" />
+                <ScalarProperty Name="HBoiler_Press" ColumnName="HBoiler_Press" />
+                <ScalarProperty Name="HBoiler_Temp" ColumnName="HBoiler_Temp" />
+                <ScalarProperty Name="HHPHeater_Press" ColumnName="HHPHeater_Press" />
+                <ScalarProperty Name="HHPHeater_Temp" ColumnName="HHPHeater_Temp" />
+                <ScalarProperty Name="PSupply_Press" ColumnName="PSupply_Press" />
+                <ScalarProperty Name="PSupply_Flow" ColumnName="PSupply_Flow" />
+                <ScalarProperty Name="HDeaerator_Press" ColumnName="HDeaerator_Press" />
+                <ScalarProperty Name="HDeaerator_Temp" ColumnName="HDeaerator_Temp" />
+                <ScalarProperty Name="HLPHeater_Press" ColumnName="HLPHeater_Press" />
+                <ScalarProperty Name="HLPHeater_Temp" ColumnName="HLPHeater_Temp" />
+                <ScalarProperty Name="PCondense_Press" ColumnName="PCondense_Press" />
+                <ScalarProperty Name="PCondense_Flow" ColumnName="PCondense_Flow" />
+                <ScalarProperty Name="Furnace_Temp" ColumnName="Furnace_Temp" />
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

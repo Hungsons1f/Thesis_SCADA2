@@ -74,7 +74,9 @@ namespace Thesis_SCADA.ViewModel
                 return true;
             }, (p) => 
             {
-                var user = new Users() { UserName = UserName, Password = Encode.MD5Hash(Encode.Base64Encode(Password)), IdRole = SelectedRole.Id };
+                var user = new Users() { UserName = UserName, Password = "", IdRole = SelectedRole.Id };
+                if (Password != "" && Password != null)
+                    user.Password = Encode.MD5Hash(Encode.Base64Encode(Password));
                 DataProvider.Ins.DB.Users.Add(user);
                 DataProvider.Ins.DB.SaveChanges();
 
@@ -99,7 +101,7 @@ namespace Thesis_SCADA.ViewModel
                 var user = DataProvider.Ins.DB.Users.Where(x => x.Id == SelectedItem.Id).SingleOrDefault();
                 user.UserName = UserName;
                 user.IdRole = SelectedRole.Id;
-                if (Password != "")
+                if (Password != "" && Password != null)
                     user.Password = Encode.MD5Hash(Encode.Base64Encode(Password));
                 DataProvider.Ins.DB.SaveChanges();
 

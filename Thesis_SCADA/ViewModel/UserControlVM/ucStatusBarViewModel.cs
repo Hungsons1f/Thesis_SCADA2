@@ -38,6 +38,7 @@ namespace Thesis_SCADA.ViewModel
         {
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick -= timer_Tick;
             timer.Tick += timer_Tick;
             timer.Start();
 
