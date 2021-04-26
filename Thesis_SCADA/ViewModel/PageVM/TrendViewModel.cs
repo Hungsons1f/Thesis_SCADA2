@@ -1,6 +1,6 @@
-﻿using LiveCharts;
-using LiveCharts.Defaults;
-using LiveCharts.Wpf;
+﻿using OxyPlot;
+using OxyPlot.Axes;
+using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,41 +17,96 @@ namespace Thesis_SCADA.ViewModel
     public class TrendViewModel : BaseViewModel
     {
         #region Properties
-        private DispatcherTimer timer;
+        private bool updated;
+        public bool Updated { get => updated; set => updated = value; }
 
-        public delegate void Anonym();
-        private ObservableCollection<ProcessData> model;
-        public ObservableCollection<ProcessData> Model
-        {
-            get => model;
-            set
-            {
-                model = value;
-                if (model != null)
-                {
-                    Anonym update = async () =>
-                    {
-                        await Task.Run(() =>
-                        {
+        #region Plot Model
+        private PlotModel furTempTrend;
+        public PlotModel FurTempTrend { get => furTempTrend; set { furTempTrend = value; OnPropertyChanged(); } }
 
-                        });
-                    };
+        private PlotModel vesTempTrend;
+        public PlotModel VesTempTrend { get => vesTempTrend; set { vesTempTrend = value; OnPropertyChanged(); } }
 
-                    update();
-                }
-            }
-        }
+        private PlotModel vesPressTrend;
+        public PlotModel VesPressTrend { get => vesPressTrend; set { vesPressTrend = value; OnPropertyChanged(); } }
 
+        private PlotModel pumpFlowTrend;
+        public PlotModel PumpFlowTrend { get => pumpFlowTrend; set { pumpFlowTrend = value; OnPropertyChanged(); } }
 
+        private PlotModel pumpPressTrend;
+        public PlotModel PumpPressTrend { get => pumpPressTrend; set { pumpPressTrend = value; OnPropertyChanged(); } }
 
-        public string[] Labels { get; set; }
-        private SeriesCollection s;
-        public SeriesCollection S { get => s; set { s = value; } }
+        private PlotModel turPressTrend;
+        public PlotModel TurPressTrend { get => turPressTrend; set { turPressTrend = value; OnPropertyChanged(); } }
 
+        private PlotModel turTempTrend;
+        public PlotModel TurTempTrend { get => turTempTrend; set { turTempTrend = value; OnPropertyChanged(); } }
 
-        #region Plot Object
-        private ChartValues<double> turbineOutPress = new ChartValues<double>();
-        public ChartValues<double> TurbineOutPress { get => turbineOutPress; set { turbineOutPress = value; OnPropertyChanged(); } }
+        private PlotModel turSpeedTrend;
+        public PlotModel TurSpeedTrend { get => turSpeedTrend; set { turSpeedTrend = value; OnPropertyChanged(); } }
+
+        private PlotModel conTempTrend;
+        public PlotModel ConTempTrend { get => conTempTrend; set { conTempTrend = value; OnPropertyChanged(); } }
+
+        private PlotModel cirFlowTrend;
+        public PlotModel CirFlowTrend { get => cirFlowTrend; set { cirFlowTrend = value; OnPropertyChanged(); } }
+
+        #endregion
+
+        #region Data Series
+        private LineSeries furTemp = new LineSeries() { };
+        public LineSeries FurTemp { get => furTemp; set { furTemp = value;  } }
+
+        private LineSeries lPHeaterTemp = new LineSeries() { Title = "GNHA"};
+        public LineSeries LPHeaterTemp { get => lPHeaterTemp; set { lPHeaterTemp = value; } }
+        private LineSeries deaeratorTemp = new LineSeries() { Title = "BKK" };
+        public LineSeries DeaeratorTemp { get => deaeratorTemp; set { deaeratorTemp = value; } }
+        private LineSeries hPHeaterTemp = new LineSeries() { Title = "GNCA" };
+        public LineSeries HPHeaterTemp { get => hPHeaterTemp; set { hPHeaterTemp = value; } }
+
+        private LineSeries lPHeaterPress = new LineSeries() { Title = "GNHA" };
+        public LineSeries LPHeaterPress { get => lPHeaterPress; set { lPHeaterPress = value; } }
+        private LineSeries deaeratorPress = new LineSeries() { Title = "BKK" };
+        public LineSeries DeaeratorPress { get => deaeratorPress; set { deaeratorPress = value; } }
+        private LineSeries hPHeaterPress = new LineSeries() { Title = "GNCA" };
+        public LineSeries HPHeaterPress { get => hPHeaterPress; set { hPHeaterPress = value; } }
+
+        private LineSeries conPumpPress = new LineSeries() { Title = "BNgưng" };
+        public LineSeries ConPumpPress { get => conPumpPress; set { conPumpPress = value; } }
+        private LineSeries supPumpPress = new LineSeries() { Title = "BCấp" };
+        public LineSeries SupPumpPress { get => supPumpPress; set { supPumpPress = value; } }
+
+        private LineSeries conPumpFlow = new LineSeries() { Title = "BNgưng" };
+        public LineSeries ConPumpFlow { get => conPumpFlow; set { conPumpFlow = value; } }
+        private LineSeries supPumpFlow = new LineSeries() { Title = "BCấp" };
+        public LineSeries SupPumpFlow { get => supPumpFlow; set { supPumpFlow = value; } }
+
+        private LineSeries boiTemp = new LineSeries() { Title = "Lò hơi" };
+        public LineSeries BoiTemp { get => boiTemp; set { boiTemp = value; } }
+        private LineSeries turHTemp = new LineSeries() { Title = "Tuabin CA" };
+        public LineSeries TurHTemp { get => turHTemp; set { turHTemp = value; } }
+        private LineSeries turITemp = new LineSeries() { Title = "Tuabin TA" };
+        public LineSeries TurITemp { get => turITemp; set { turITemp = value; } }
+        private LineSeries turLTemp = new LineSeries() { Title = "Tuabin HA" };
+        public LineSeries TurLTemp { get => turLTemp; set { turLTemp = value; } }
+
+        private LineSeries boiPress = new LineSeries() { Title = "Lò hơi" };
+        public LineSeries BoiPress { get => boiPress; set { boiPress = value; } }
+        private LineSeries turHPress = new LineSeries() { Title = "Tuabin CA" };
+        public LineSeries TurHPress { get => turHPress; set { turHPress = value; } }
+        private LineSeries turIPress = new LineSeries() { Title = "Tuabin TA" };
+        public LineSeries TurIPress { get => turIPress; set { turIPress = value; } }
+        private LineSeries turLPress = new LineSeries() { Title = "Tuabin HA" };
+        public LineSeries TurLPress { get => turLPress; set { turLPress = value; } }
+
+        private LineSeries turSpeed = new LineSeries() { };
+        public LineSeries TurSpeed { get => turSpeed; set { turSpeed = value; } }
+
+        private LineSeries conTemp = new LineSeries() { };
+        public LineSeries ConTemp { get => conTemp; set { conTemp = value; } }
+
+        private LineSeries cirFlow = new LineSeries() { };
+        public LineSeries CirFlow { get => cirFlow; set { cirFlow = value; } }
 
         #endregion
         #endregion
@@ -65,29 +120,87 @@ namespace Thesis_SCADA.ViewModel
 
         public TrendViewModel()
         {
-            S = new SeriesCollection
-            {
-                new LineSeries
-                {
-                    Title = "Motor 2",
-                    Values = TurbineOutPress
-                //    PointGeometry = DefaultGeometries.Triangle,
-                //    PointGeometrySize = 15
-                }
-            };
-            Labels = new[] { "Motor 1", "Motor 2" };
+            #region Create Plot Model
+            FurTempTrend = CreateNewPlotModel();
+            FurTempTrend.Series.Add(FurTemp);
 
-            //timer = new DispatcherTimer();
-            //timer.Interval = TimeSpan.FromSeconds(1);
-            //timer.Tick -= timer_Tick;
-            //timer.Tick += timer_Tick;
-            //timer.Start();
+            VesTempTrend = CreateNewPlotModel();
+            VesTempTrend.Series.Add(LPHeaterTemp);
+            VesTempTrend.Series.Add(DeaeratorTemp);
+            VesTempTrend.Series.Add(HPHeaterTemp);
 
-            Model = new ObservableCollection<ProcessData>(DataProvider.Ins.DB.ProcessData.OrderByDescending(p => p.Timestamp).Take(120));
-            foreach (var item in Model)
+            VesPressTrend = CreateNewPlotModel();
+            VesPressTrend.Series.Add(LPHeaterPress);
+            VesPressTrend.Series.Add(DeaeratorPress);
+            VesPressTrend.Series.Add(HPHeaterPress);
+
+            PumpFlowTrend = CreateNewPlotModel();
+            PumpFlowTrend.Series.Add(ConPumpFlow);
+            PumpFlowTrend.Series.Add(SupPumpFlow);
+
+            PumpPressTrend = CreateNewPlotModel();
+            PumpPressTrend.Series.Add(ConPumpPress);
+            PumpPressTrend.Series.Add(SupPumpPress);
+
+            TurTempTrend = CreateNewPlotModel();
+            TurTempTrend.Series.Add(BoiTemp);
+            TurTempTrend.Series.Add(TurHTemp);
+            TurTempTrend.Series.Add(TurITemp);
+            TurTempTrend.Series.Add(TurLTemp);
+
+            TurPressTrend = CreateNewPlotModel();
+            TurPressTrend.Series.Add(BoiPress);
+            TurPressTrend.Series.Add(TurHPress);
+            TurPressTrend.Series.Add(TurIPress);
+            TurPressTrend.Series.Add(TurLPress);
+
+            TurSpeedTrend = CreateNewPlotModel();
+            TurSpeedTrend.Series.Add(TurSpeed);
+
+            ConTempTrend = CreateNewPlotModel();
+            ConTempTrend.Series.Add(ConTemp);
+
+            CirFlowTrend = CreateNewPlotModel();
+            CirFlowTrend.Series.Add(CirFlow);
+
+            #endregion
+
+            #region Initialize Data
+            var init = new ObservableCollection<ProcessData>(DataProvider.Ins.DB.ProcessData.OrderByDescending(p => p.Timestamp).Take(120));
+            for (var i = init.Count - 1; i >= 0; i--)
             {
-                TurbineOutPress.Add((double)item.TurbineL_Press);
+                FurTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].TurbineL_Press));
+
+                LPHeaterTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].HLPHeater_Temp));
+                DeaeratorTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].HDeaerator_Temp));
+                HPHeaterTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].HHPHeater_Temp));
+
+                LPHeaterPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].HLPHeater_Press));
+                DeaeratorPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].HDeaerator_Press));
+                HPHeaterPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].HHPHeater_Press));
+
+                ConPumpFlow.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].PCondense_Flow));
+                SupPumpFlow.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].PSupply_Flow));
+
+                ConPumpPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].PCondense_Press));
+                SupPumpPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].PSupply_Press));
+
+                BoiTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].HBoiler_Temp));
+                TurHTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].TurbineH_Temp));
+                TurITemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].TurbineI_Temp));
+                TurLTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].TurbineL_Temp));
+
+                BoiPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].HBoiler_Press));
+                TurHPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].TurbineH_Press));
+                TurIPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].TurbineI_Press));
+                TurLPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].TurbineL_Press));
+
+                TurSpeed.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].Turbine_Freq));
+                ConTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].HCondenser_Temp));
+                CirFlow.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].PCircular_Flow));
             }
+            #endregion
+
             GlobalVar.Ins.DatabaseUpdated -= OnTrendDatabaseUpdated;
             GlobalVar.Ins.DatabaseUpdated += OnTrendDatabaseUpdated;
 
@@ -98,24 +211,132 @@ namespace Thesis_SCADA.ViewModel
             //UnloadedCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
             //    timer.Stop();
             //});
-
         }
 
-        private void OnTrendDatabaseUpdated(object sender, EventArgs e)
+        private PlotModel CreateNewPlotModel()
         {
-            if (Model.Count > 120)
-            {
-                Model.RemoveAt(0);
-                TurbineOutPress.RemoveAt(0);
-            }
-            Model.Add(GlobalVar.Ins.DbProcessdata);
+            PlotModel plotModel = new PlotModel();
+            plotModel.LegendOrientation = LegendOrientation.Vertical;
+            plotModel.LegendPlacement = LegendPlacement.Outside;
+            plotModel.LegendPosition = LegendPosition.RightMiddle;
+            plotModel.LegendTextColor = OxyColor.FromUInt32(0xff808080);
+            plotModel.PlotAreaBorderColor = OxyColor.FromUInt32(0x00000000);
 
-            TurbineOutPress.Add((double)GlobalVar.Ins.DbProcessdata.TurbineL_Press);
+            DateTimeAxis dateAxis = new DateTimeAxis()
+            {
+                Title = "Thời gian",
+                Position = OxyPlot.Axes.AxisPosition.Bottom,
+                StringFormat = "dd/MM/yy HH:mm:ss",
+                AxislineStyle = LineStyle.Solid,
+                AxislineColor = OxyColor.FromUInt32(0xff808080),
+                MajorGridlineStyle = LineStyle.Solid,
+                MinorGridlineStyle = LineStyle.Dot,
+                MajorGridlineColor = OxyColor.FromUInt32(0x77808080),
+                MinorGridlineColor = OxyColor.FromUInt32(0x77808080),
+                TextColor = OxyColor.FromUInt32(0xff808080),
+                TitleColor = OxyColor.FromUInt32(0xff808080),
+                IntervalLength = 100,
+            };
+            LinearAxis valueAxis = new LinearAxis()
+            {
+                Title = "Giá trị",
+                Position = OxyPlot.Axes.AxisPosition.Left,
+                StartPosition = 0,
+                AxislineStyle = LineStyle.Solid,
+                AxislineColor = OxyColor.FromUInt32(0xff808080),
+                MajorGridlineStyle = LineStyle.Solid,
+                MinorGridlineStyle = LineStyle.Dot,
+                MajorGridlineColor = OxyColor.FromUInt32(0x77808080),
+                MinorGridlineColor = OxyColor.FromUInt32(0x77808080),
+                TextColor = OxyColor.FromUInt32(0xff808080),
+                TitleColor = OxyColor.FromUInt32(0xff808080),
+            };
+            plotModel.Axes.Add(dateAxis);
+            plotModel.Axes.Add(valueAxis);
+            return plotModel;
         }
 
-    //    private void timer_Tick(object sender, EventArgs e)
-    //    {
+        private async void OnTrendDatabaseUpdated(object sender, EventArgs e)
+        {
+            await Task.Run(() =>
+            {
+                if (FurTemp.Points.Count > 120)
+                {
+                    FurTemp.Points.RemoveAt(0);
 
-    //    }
-    //}
+                    LPHeaterTemp.Points.RemoveAt(0);
+                    DeaeratorTemp.Points.RemoveAt(0);
+                    HPHeaterTemp.Points.RemoveAt(0);
+
+                    LPHeaterPress.Points.RemoveAt(0);
+                    DeaeratorPress.Points.RemoveAt(0);
+                    HPHeaterPress.Points.RemoveAt(0);
+
+                    ConPumpFlow.Points.RemoveAt(0);
+                    SupPumpFlow.Points.RemoveAt(0);
+
+                    ConPumpPress.Points.RemoveAt(0);
+                    SupPumpPress.Points.RemoveAt(0);
+
+                    BoiTemp.Points.RemoveAt(0);
+                    TurHTemp.Points.RemoveAt(0);
+                    TurITemp.Points.RemoveAt(0);
+                    TurLTemp.Points.RemoveAt(0);
+
+                    BoiPress.Points.RemoveAt(0);
+                    TurHPress.Points.RemoveAt(0);
+                    TurIPress.Points.RemoveAt(0);
+                    TurLPress.Points.RemoveAt(0);
+
+                    TurSpeed.Points.RemoveAt(0);
+                    ConTemp.Points.RemoveAt(0);
+                    CirFlow.Points.RemoveAt(0);
+                }
+
+                FurTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press));
+
+                LPHeaterTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press+1));
+                DeaeratorTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press+2));
+                HPHeaterTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press+3));
+
+                LPHeaterPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press+1));
+                HPHeaterPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press+2));
+                DeaeratorPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press+3));
+
+                ConPumpFlow.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 2));
+                SupPumpFlow.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 3));
+
+                ConPumpPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 2));
+                SupPumpPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 3));
+
+                BoiTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 0));
+                TurHTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 1));
+                TurITemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 2));
+                TurLTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 3));
+
+                BoiPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 0));
+                TurHPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 1));
+                TurIPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 2));
+                TurLPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 3));
+
+                TurSpeed.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 3));
+                ConTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 3));
+                CirFlow.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 3));
+
+                Updated = true;
+
+                FurTempTrend.InvalidatePlot(true);
+                VesPressTrend.InvalidatePlot(true);
+                VesTempTrend.InvalidatePlot(true);
+                PumpFlowTrend.InvalidatePlot(true);
+                PumpPressTrend.InvalidatePlot(true);
+                TurPressTrend.InvalidatePlot(true);
+                TurTempTrend.InvalidatePlot(true);
+                TurSpeedTrend.InvalidatePlot(true);
+                ConTempTrend.InvalidatePlot(true);
+                CirFlowTrend.InvalidatePlot(true);
+
+            });
+        }
+    }
 }

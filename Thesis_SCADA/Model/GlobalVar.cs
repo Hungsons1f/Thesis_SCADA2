@@ -131,7 +131,7 @@ namespace Thesis_SCADA.Model
                     }
                     catch (Exception e)
                     {
-                        MessageBox.Show("Không có SQL server của cơ sở dữ liệu", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Không có SQL server của cơ sở dữ liệu: " + e.ToString(), "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             });

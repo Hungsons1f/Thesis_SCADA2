@@ -5,8 +5,9 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Thesis_SCADA.Pages"
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      xmlns:oxy="http://oxyplot.org/wpf"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="670" d:DesignWidth="1366"
       Title="Trend"
       
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -18,8 +19,8 @@
       FontFamily="{DynamicResource MaterialDesignFont}"
       xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
       
-      Name="trendPage"
-      DataContext="{StaticResource TrendViewModel}">
+      Name="trendPage">
+    <!--DataContext="{StaticResource TrendViewModel}">-->
 
     <Grid>
         <dragablz:TabablzControl BorderThickness="0" >
@@ -48,19 +49,12 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <materialDesign:ColorZone Margin="0 0 0 15" Mode="Standard" Background="{x:Null}">
+                    <materialDesign:ColorZone Grid.Row="0" Margin="0 0 0 15" Mode="Standard" Background="{x:Null}">
                         <TextBlock Grid.Row="0" Text="NHIỆT ĐỘ LÒ ĐỐT" Style="{StaticResource MaterialDesignHeadline6TextBlock}"
                                HorizontalAlignment="Center"/>
                     </materialDesign:ColorZone>
-                    <lvc:CartesianChart Grid.Row="1" Series="{Binding S}" LegendLocation="Right">
-                        <lvc:CartesianChart.AxisY>
-                            <lvc:Axis  Title="Tốc độ"/>
-                        </lvc:CartesianChart.AxisY>
-                        <lvc:CartesianChart.AxisX>
-                            <lvc:Axis Title="Thời gian" />
-                            <!--Labels="{Binding Labels}"/>-->
-                        </lvc:CartesianChart.AxisX>
-                    </lvc:CartesianChart>
+                    <oxy:PlotView Grid.Row="1" x:Name="FurTemp" Model="{Binding FurTempTrend}"
+                                  Background="Transparent"/>
                 </Grid>
             </TabItem>
 
@@ -83,6 +77,65 @@
                         </TextBlock.Style>
                     </TextBlock>
                 </TabItem.Header>
+
+                <Grid Margin="10 15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0" Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <materialDesign:ColorZone Grid.Row="0" Margin="0 0 0 0" Mode="Standard" Background="{x:Null}">
+                            <TextBlock Text="NHIỆT ĐỘ CÁC BÌNH" Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                               HorizontalAlignment="Center"/>
+                        </materialDesign:ColorZone>
+                        <oxy:PlotView Grid.Row="1" x:Name="VesTemp" Model="{Binding VesTempTrend}" Background="Transparent"/>
+                    </Grid>
+
+                    <Grid Grid.Column="1" Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <materialDesign:ColorZone Grid.Row="0" Margin="0 0 0 0" Mode="Standard" Background="{x:Null}">
+                            <TextBlock Text="ÁP SUẤT CÁC BÌNH" Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                               HorizontalAlignment="Center"/>
+                        </materialDesign:ColorZone>
+                        <oxy:PlotView Grid.Row="1" x:Name="VesPress" Model="{Binding VesPressTrend}" Background="Transparent"/>
+                    </Grid>
+
+                    <Grid Grid.Column="0" Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <materialDesign:ColorZone Grid.Row="0" Margin="0 0 0 0" Mode="Standard" Background="{x:Null}">
+                            <TextBlock Text="LƯU LƯỢNG CÁC BƠM" Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                               HorizontalAlignment="Center"/>
+                        </materialDesign:ColorZone>
+                        <oxy:PlotView Grid.Row="1" x:Name="MotorFlow" Model="{Binding PumpFlowTrend}" Background="Transparent"/>
+                    </Grid>
+
+                    <Grid Grid.Column="1" Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <materialDesign:ColorZone Grid.Row="0" Margin="0 0 0 0" Mode="Standard" Background="{x:Null}">
+                            <TextBlock Text="ÁP SUẤT CÁC BƠM" Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                               HorizontalAlignment="Center"/>
+                        </materialDesign:ColorZone>
+                        <oxy:PlotView Grid.Row="1" x:Name="MotorPress" Model="{Binding PumpPressTrend}" Background="Transparent"/>
+                    </Grid>
+                </Grid>
             </TabItem>
 
             <!--Tab KHU 3-->
@@ -104,6 +157,54 @@
                         </TextBlock.Style>
                     </TextBlock>
                 </TabItem.Header>
+
+                <Grid Margin="10 15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0" Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <materialDesign:ColorZone Grid.Row="0" Margin="0 0 0 0" Mode="Standard" Background="{x:Null}">
+                            <TextBlock Text="NHIỆT ĐỘ CÁC THIẾT BỊ" Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                               HorizontalAlignment="Center"/>
+                        </materialDesign:ColorZone>
+                        <oxy:PlotView Grid.Row="1" x:Name="TurTemp" Model="{Binding TurTempTrend}" Background="Transparent"/>
+                    </Grid>
+
+                    <Grid Grid.Column="1" Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <materialDesign:ColorZone Grid.Row="0" Margin="0 0 0 0" Mode="Standard" Background="{x:Null}">
+                            <TextBlock Text="ÁP SUẤT CÁC THIẾT BỊ" Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                               HorizontalAlignment="Center"/>
+                        </materialDesign:ColorZone>
+                        <oxy:PlotView Grid.Row="1" x:Name="TurPress" Model="{Binding TurPressTrend}" Background="Transparent"/>
+                    </Grid>
+
+                    <Grid Grid.ColumnSpan="2" Grid.Row="1" Margin="300 0" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <materialDesign:ColorZone Grid.Row="0" Margin="0 0 0 0" Mode="Standard" Background="{x:Null}">
+                            <TextBlock Text="TỐC ĐỘ QUAY TUA BIN" Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                               HorizontalAlignment="Center"/>
+                        </materialDesign:ColorZone>
+                        <oxy:PlotView Grid.Row="1" x:Name="TurSpeed" Model="{Binding TurSpeedTrend}" Background="Transparent"/>
+                    </Grid>
+                </Grid>
+
             </TabItem>
 
             <!--Tab KHU 4-->
@@ -125,6 +226,37 @@
                         </TextBlock.Style>
                     </TextBlock>
                 </TabItem.Header>
+
+                <Grid VerticalAlignment="Center" Height="400" Margin="10 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <materialDesign:ColorZone Grid.Row="0" Margin="0 0 0 0" Mode="Standard" Background="{x:Null}">
+                            <TextBlock Text="NHIỆT ĐỘ BÌNH NGƯNG" Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                               HorizontalAlignment="Center"/>
+                        </materialDesign:ColorZone>
+                        <oxy:PlotView Grid.Row="1" x:Name="ConTemp" Model="{Binding ConTempTrend}" Background="Transparent"/>
+                    </Grid>
+
+                    <Grid Grid.Column="1" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <materialDesign:ColorZone Grid.Row="0" Margin="0 0 0 0" Mode="Standard" Background="{x:Null}">
+                            <TextBlock Text="LƯU LƯỢNG BƠM TUẦN HOÀN" Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                               HorizontalAlignment="Center"/>
+                        </materialDesign:ColorZone>
+                        <oxy:PlotView Grid.Row="1" x:Name="CirFlow" Model="{Binding CirFlowTrend}" Background="Transparent"/>
+                    </Grid>
+                </Grid>
             </TabItem>
 
         </dragablz:TabablzControl>

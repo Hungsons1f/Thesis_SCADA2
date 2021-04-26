@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Thesis_SCADA.ViewModel;
 
 namespace Thesis_SCADA.Pages
 {
@@ -22,10 +23,27 @@ namespace Thesis_SCADA.Pages
     /// </summary>
     public partial class Trend : Page
     {
+        public TrendViewModel ViewModel { get; set; }
         public Trend()
         {
-            InitializeComponent();
+            DataContext = ViewModel = new TrendViewModel();
+            CompositionTarget.Rendering += CompositionTargetRendering;
 
+            InitializeComponent();
+        }
+
+        private async void CompositionTargetRendering(object sender, EventArgs e)
+        {
+            //if (ViewModel.Updated)
+            //{
+            //    await Task.Run(() =>
+            //    {
+            //        //FurTemp.InvalidatePlot();
+            //        VesPress.InvalidatePlot();
+            //        VesTemp.InvalidatePlot();
+            //    }); 
+            //    ViewModel.Updated = false;
+            //}
         }
     }
 
