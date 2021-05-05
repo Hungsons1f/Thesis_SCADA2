@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -39,6 +41,12 @@ namespace Thesis_SCADA.Model
         private Parameters parameter;
         public Parameters Parameter { get => parameter; set { parameter = value; OnDataChanged(); } }
 
+        private aS_Event ipcEvent;
+        public aS_Event IpcEvent { get => ipcEvent; set { ipcEvent = value; } }
+
+        private byte ipcEventType;
+        public byte IpcEventType { get => ipcEventType; set { ipcEventType = value; } }
+
         private ProcessData dbprocessdata;
         public ProcessData DbProcessdata { get => dbprocessdata; set => dbprocessdata = value; }
 
@@ -55,8 +63,12 @@ namespace Thesis_SCADA.Model
         private event EventHandler databaseUpdated;
         public event EventHandler DatabaseUpdated { add { databaseUpdated += value; } remove { databaseUpdated -= value; } }
 
+        private event EventHandler eventOccured;
+        public event EventHandler EventOccured { add { eventOccured += value; } remove { eventOccured -= value; } }
+
         private volatile object _locker = new object();
-        private readonly Timer timer;
+        private volatile object _lockerdb = new object();
+        private readonly System.Timers.Timer timer;
         #endregion
 
         //Đặt pt khởi tạo là private để không thể tạo đối tượng bằng lớp này từ bên ngoài
@@ -67,22 +79,71 @@ namespace Thesis_SCADA.Model
             ProcessState = new AutoCtrlCmds();
             Parameter = new Parameters();
             DbProcessdata = new ProcessData();
+            IpcEvent = new aS_Event();
             OnIpcDataRefreshed(null, null);
             ipcDataService.ValuesRefreshed += OnIpcDataRefreshed;
+            ipcDataService.EventOccured += OnIpcEventOccured;
 
             if (ipcDataService.Connect("", 851))//"5.57.208.6.1.1"
             {
-                timer = new Timer();
+                timer = new System.Timers.Timer();
                 timer.Interval = 500;
                 timer.Elapsed -= OnTimerElapsed;
                 timer.Elapsed += OnTimerElapsed;
                 timer.Start();
+
+                try
+                {
+                    FirstUpdate();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Không có SQL server của cơ sở dữ liệu: " + e.ToString(), "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
+        }
+
+        private async void FirstUpdate()
+        {
+            await Task.Run(() =>
+            {
+                Thread.Sleep(1000);
+                var le = ipcDataService.GetAllEvents();
+                if (!le.Any()) return;
+
+                var max = DataProvider.Ins.DB.ProcessEvent.Max(x => x.TimeRaised);
+                var cur = DataProvider.Ins.DB.ProcessEvent.FirstOrDefault(p => p.TimeRaised == max);
+                if (cur == null) return;
+
+                for (int i = 0; i < le.Count; i++)
+                {
+                    if (le[i].TimeRaised > cur.TimeRaised)
+                    {
+                        var e = new ProcessEvent();
+                        e.EventClass = le[i].EventClass;
+                        e.EventID = (int)le[i].EventID;
+                        e.SeverityLevel = (int)le[i].SeverityLevel;
+                        e.SourceName = le[i].SourceName;
+                        e.TimeCleared = le[i].TimeCleared;
+                        e.TimeConfirmed = le[i].TimeConfirmed;
+                        e.TimeRaised = le[i].TimeRaised;
+                        DataProvider.Ins.DB.ProcessEvent.Add(e);
+                    }
+                    else break;
+                }
+
+                DataProvider.Ins.DB.SaveChanges();
+            });
         }
 
         public async void WriteData<T> (string varname, T value)
         {
             await ipcDataService.Write<T>(varname, value);
+        }
+
+        public void AckAllAlarms()
+        {
+            ipcDataService.AckAllAlarms();
         }
 
         private async void OnTimerElapsed(object sender, ElapsedEventArgs e)
@@ -146,6 +207,80 @@ namespace Thesis_SCADA.Model
             ScanTime = ipcDataService.ScanTime;
         }
 
+        private async void OnIpcEventOccured(object sender, IPCDataService.EventPropEventArgs e)
+        {
+            IpcEvent = e.Event;
+            IpcEventType = e.EventType;
+            await UpdateDBEvent(e.EventType, e.Event);
+            OnEventOccured();
+        }
+
+        private Task UpdateDBEvent(byte eventType, aS_Event _event)
+        {
+            return Task.Run(() =>
+            {
+                lock (_locker)
+                {
+                    try
+                    {
+                        var processevent = new ProcessEvent();
+                        processevent.EventClass = _event.EventClass;
+                        processevent.EventID = (int)_event.EventID;
+                        processevent.SeverityLevel = (int)_event.SeverityLevel;
+                        processevent.SourceName = _event.SourceName;
+                        processevent.TimeRaised = _event.TimeRaised;
+
+                        switch (eventType)
+                        {
+                            case 1:
+                            case 2:
+                                processevent.TimeConfirmed = null;
+                                processevent.TimeCleared = null;
+                                try
+                                {
+                                    DataProvider.Ins.DB.ProcessEvent.Add(processevent);
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("Không thể thêm dữ liệu: " + e.ToString(), "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
+                                break;
+                            case 3:
+                                try
+                                {
+                                    var d = DataProvider.Ins.DB.ProcessEvent.Where(x => (x.SourceName == processevent.SourceName && x.EventClass == processevent.EventClass
+                                                && x.EventID == processevent.EventID && x.TimeRaised == processevent.TimeRaised)).SingleOrDefault();
+                                    d.TimeConfirmed = _event.TimeConfirmed;
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("Không thể thêm thời gian xác nhận: " + e.ToString(), "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
+                                break;
+                            case 4:
+                                try
+                                {
+                                    var dd = DataProvider.Ins.DB.ProcessEvent.Where(x => (x.SourceName == processevent.SourceName && x.EventClass == processevent.EventClass
+                                                && x.EventID == processevent.EventID && x.TimeRaised == processevent.TimeRaised)).SingleOrDefault();
+                                    dd.TimeCleared = _event.TimeCleared;
+                                }
+                                catch (Exception e)
+                                {
+                                    MessageBox.Show("Không thể thêm thời gian xóa: " + e.ToString(), "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
+                                break;
+                        }
+
+                        DataProvider.Ins.DB.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show("Không có SQL server của cơ sở dữ liệu: " + e.ToString(), "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            });
+        }
+
         void OnDataChanged()
         {
             if (dataChanged != null)
@@ -159,6 +294,14 @@ namespace Thesis_SCADA.Model
             if (databaseUpdated != null)
             {
                 databaseUpdated(this, new EventArgs());
+            }
+        }
+
+        void OnEventOccured()
+        {
+            if (eventOccured != null)
+            {
+                eventOccured(this, new EventArgs());
             }
         }
 

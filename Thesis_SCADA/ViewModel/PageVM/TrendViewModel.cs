@@ -99,13 +99,13 @@ namespace Thesis_SCADA.ViewModel
         private LineSeries turLPress = new LineSeries() { Title = "Tuabin HA" };
         public LineSeries TurLPress { get => turLPress; set { turLPress = value; } }
 
-        private LineSeries turSpeed = new LineSeries() { };
+        private LineSeries turSpeed = new LineSeries() { Color = OxyColor.FromAColor(255, OxyColors.Red)};
         public LineSeries TurSpeed { get => turSpeed; set { turSpeed = value; } }
 
-        private LineSeries conTemp = new LineSeries() { };
+        private LineSeries conTemp = new LineSeries() { Color = OxyColor.FromAColor(255, OxyColors.DarkMagenta)};
         public LineSeries ConTemp { get => conTemp; set { conTemp = value; } }
 
-        private LineSeries cirFlow = new LineSeries() { };
+        private LineSeries cirFlow = new LineSeries() { Color = OxyColor.FromAColor(255, OxyColors.OrangeRed)};
         public LineSeries CirFlow { get => cirFlow; set { cirFlow = value; } }
 
         #endregion
@@ -166,7 +166,8 @@ namespace Thesis_SCADA.ViewModel
             #endregion
 
             #region Initialize Data
-            var init = new ObservableCollection<ProcessData>(DataProvider.Ins.DB.ProcessData.OrderByDescending(p => p.Timestamp).Take(120));
+            var last = DateTime.Now - TimeSpan.FromMinutes(2);
+            var init = new ObservableCollection<ProcessData>(DataProvider.Ins.DB.ProcessData.Where(x => x.Timestamp > last).OrderByDescending(p => p.Timestamp) );
             for (var i = init.Count - 1; i >= 0; i--)
             {
                 FurTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(init[i].Timestamp), (double)init[i].TurbineL_Press));

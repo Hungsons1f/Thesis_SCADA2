@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Timers;
 using System.Runtime.InteropServices;
 using System.Windows;
+using TcEventLoggerAdsProxyLib;
 
 namespace Thesis_SCADA.Model
 {
@@ -45,6 +46,18 @@ namespace Thesis_SCADA.Model
 
             public int SampleTime;
         }
+
+        public class EventPropEventArgs : EventArgs
+        {
+            public byte EventType { get; set; }
+            public aS_Event Event { get; set; }
+            public EventPropEventArgs(byte eventType, aS_Event _event)
+            {
+                EventType = eventType;
+                Event = _event;
+            }
+
+        }
         #endregion
 
         #region Properties
@@ -54,6 +67,9 @@ namespace Thesis_SCADA.Model
         public Parameters Parameter;
         private NotificationHandler notificationHandler;
 
+        private TcEventLogger logger;
+        private int langID = 1033;
+
         private readonly System.Timers.Timer _timer;
         private DateTime _lastScanTime;
         public TimeSpan ScanTime { get; private set; }
@@ -61,6 +77,7 @@ namespace Thesis_SCADA.Model
 
         private volatile object _locker = new object();
         public event EventHandler ValuesRefreshed;
+        public event EventHandler<EventPropEventArgs> EventOccured;
 
         public ConnectionStatus ConnectStatus { get; private set; }
         #endregion
@@ -72,6 +89,12 @@ namespace Thesis_SCADA.Model
             ReadData = new MainInterface();
             ProcessState = new AutoCtrlCmds();
             Parameter = new Parameters();
+
+            logger = new TcEventLogger();
+            logger.MessageSent += OnMessageSent;
+            logger.AlarmRaised += OnAlarmRaised;
+            logger.AlarmCleared += OnAlarmCleared;
+            logger.AlarmConfirmed += OnAlarmConfirmed;
 
             _timer = new System.Timers.Timer();
             _timer.Interval = 200;
@@ -105,6 +128,8 @@ namespace Thesis_SCADA.Model
                 }
                 else
                 {
+                    logger.Connect(netid);
+                    col = logger.GetLoggedEvents(1000);
                     _timer.Start();
 
                     ProcessState = client.ReadSymbol("Interfacex.AutoCtrlCmds", typeof(AutoCtrlCmds), false) as AutoCtrlCmds;
@@ -153,8 +178,8 @@ namespace Thesis_SCADA.Model
             }
             return result;
         }
-
         private bool showConnectMsg = false;
+        public TcLoggedEventCollection col;
 
         public void Disconnect()
         {
@@ -290,6 +315,82 @@ namespace Thesis_SCADA.Model
             OnValuesRefreshed();
         }
 
+        private void OnAlarmConfirmed(TcAlarm message, bool bRemove)
+        {
+            var e = ProcessAlarm(message);
+            OnEventOccured(3, e);
+        }
+
+        private void OnAlarmCleared(TcAlarm message, bool bRemove)
+        {
+            var e = ProcessAlarm(message);
+            OnEventOccured(4, e);
+        }
+
+        private void OnAlarmRaised(TcAlarm message)
+        {
+            var e = ProcessAlarm(message);
+            OnEventOccured(2, e);
+        }
+
+        private void OnMessageSent(TcMessage message)
+        {
+            aS_Event EvMessage = new aS_Event();
+            EvMessage.EventClass = message.GetEventClassName(langID);
+            EvMessage.EventID = message.EventId;
+            EvMessage.SeverityLevel = message.SeverityLevel;
+            EvMessage.SourceName = message.SourceName;
+            EvMessage.TimeRaised = message.TimeRaised;
+
+            OnEventOccured(1, EvMessage);
+        }
+
+        private aS_Event ProcessAlarm (TcAlarm message)
+        {
+            aS_Event EvAlarm = new aS_Event();
+            EvAlarm.EventClass = message.GetEventClassName(langID);
+            EvAlarm.EventID = message.EventId;
+            EvAlarm.IsConfirmed = message.ConfirmationState;
+            EvAlarm.IsRaised = message.IsRaised;
+            EvAlarm.SeverityLevel = message.SeverityLevel;
+            EvAlarm.SourceName = message.SourceName;
+            EvAlarm.TimeRaised = message.TimeRaised;
+            EvAlarm.TimeConfirmed = message.TimeConfirmed;
+            EvAlarm.TimeCleared = message.TimeCleared;
+            return EvAlarm;
+        }
+
+        private void OnEventOccured(byte eventtype, aS_Event _event)
+        {
+            EventOccured?.Invoke(this, new EventPropEventArgs(eventtype, _event));
+        }
+
+        public void AckAllAlarms ()
+        {
+            logger.ConfirmAllAlarms();
+
+        }
+
+        public List<aS_Event> GetAllEvents()
+        {
+            List<aS_Event> le = new List<aS_Event>();
+
+            var logged = col;//logger.GetLoggedEvents(10);
+
+            for (uint i = 0; i< logged.Count; i++)
+            {
+                aS_Event temp = new aS_Event();
+                temp.EventClass = logged[i].GetEventClassName(langID);
+                temp.EventID = logged[i].EventId;
+                temp.SeverityLevel = logged[i].SeverityLevel;
+                temp.SourceName = logged[i].SourceName;
+                temp.TimeRaised = logged[i].TimeRaised;
+                temp.TimeConfirmed = logged[i].TimeConfirmed;
+                temp.TimeCleared = logged[i].TimeCleared;
+                le.Add(temp);
+            }
+            return le;
+        }
     }
 
 
@@ -370,6 +471,31 @@ namespace Thesis_SCADA.Model
         public float MaxSpeed_ForceFan3 { get => maxSpeed_ForceFan3; set => maxSpeed_ForceFan3 = value; }
         public float SampleTime { get => sampleTime; set => sampleTime = value; }
     }
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
+    public class aS_Event
+    {
+        private string eventClass;
+        private uint eventID;
+        private SeverityLevelEnum severityLevel;
+        private string sourceName;
+        private bool isRaised;
+        private ConfirmationStateEnum isConfirmed;
+        private DateTime timeRaised;
+        private DateTime timeConfirmed;
+        private DateTime timeCleared;
+
+        public string EventClass { get => eventClass; set => eventClass = value; }
+        public uint EventID { get => eventID; set => eventID = value; }
+        public SeverityLevelEnum SeverityLevel { get => severityLevel; set => severityLevel = value; }
+        public string SourceName { get => sourceName; set => sourceName = value; }
+        public DateTime TimeRaised { get => timeRaised; set => timeRaised = value; }
+        public bool IsRaised { get => isRaised; set => isRaised = value; }
+        public ConfirmationStateEnum IsConfirmed { get => isConfirmed; set => isConfirmed = value; }
+        public DateTime TimeConfirmed { get => timeConfirmed; set => timeConfirmed = value; }
+        public DateTime TimeCleared { get => timeCleared; set => timeCleared = value; }
+    }
+
 
     [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
     public class aFb_Motor

@@ -54,8 +54,18 @@ CREATE TABLE ProcessData
 )
 GO
 
-
-
+CREATE TABLE ProcessEvent
+(
+	Id INT IDENTITY(1,1) PRIMARY KEY,
+	EventClass nvarchar(30),
+	EventID int,
+	SeverityLevel int,
+	SourceName nvarchar(30),
+	TimeRaised datetime,
+	TimeConfirmed datetime,
+	TimeCleared datetime,
+)
+GO
 
 ----------------------------------------------------------------------
 
@@ -96,4 +106,7 @@ VALUES
 GO
 
 DELETE FROM dbo.ProcessData
+Go
+
+DELETE FROM dbo.ProcessEvent
 Go

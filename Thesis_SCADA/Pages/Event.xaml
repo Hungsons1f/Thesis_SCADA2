@@ -4,12 +4,217 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Thesis_SCADA.Pages"
+      xmlns:cvt="clr-namespace:Thesis_SCADA.Converters"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Event">
+      d:DesignHeight="670" d:DesignWidth="1366"
+      Title="Event"
+      
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        
+        Name="alarmPage"
+        DataContext="{StaticResource EventViewModel}">
+
+    <Page.Resources>
+        <cvt:EvIconTypeConverter x:Key="EvIconTypeConverter"/>
+        <cvt:EvIconColorConverter x:Key="EvIconColorConverter"/>
+        <cvt:EvClassConverter x:Key="EvClassConverter"/>
+        <cvt:EvContentConverter x:Key="EvContentConverter"/>
+        <cvt:EvSourceConverter x:Key="EvSourceConverter"/>
+        <cvt:EvTimeConverter x:Key="EvTimeConverter"/>
+    </Page.Resources>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}"
+                                   CommandParameter="{Binding ElementName=lvMain}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="286,178,0,0" TextWrapping="Wrap" Text="Event" VerticalAlignment="Top"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <materialDesign:Card Margin="6" Grid.Row="0">
+            <StackPanel Margin="5" Orientation="Horizontal">
+                <Button Width="32" Height="32" Margin="5 0"
+                        Style="{StaticResource MaterialDesignFloatingActionButton}"
+                        Command="{Binding RefreshCommand}"
+                        CommandParameter="{Binding ElementName=lvMain}"
+                        ToolTip="Làm mới">
+                    <materialDesign:PackIcon Kind="Refresh" Width="22" Height="22"/>
+                </Button>
+                <Rectangle Width="1" Fill="#ff9e9e9e" Margin="5 0"/>
+                <ToggleButton Width="32" Height="32" Margin="5 0" 
+                              Background="{Binding Source={StaticResource GlobalColor}, Path=ClBlue}"
+                              BorderBrush="{Binding Source={StaticResource GlobalColor}, Path=ClBlue}"
+                              Foreground="#ffffff"
+                              IsChecked="{Binding IsFilterInfo, Mode=TwoWay}"
+                              Command="{Binding RefreshViewCommand}"
+                              CommandParameter="{Binding ElementName=lvMain}"
+                    Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
+                    ToolTip="Lọc thông báo">
+                    <materialDesign:PackIcon Kind="InfoOutline" Width="22" Height="22"/>
+                </ToggleButton>
+                <ToggleButton Width="32" Height="32" Margin="5 0" 
+                              Background="{Binding Source={StaticResource GlobalColor}, Path=ClYellow}"
+                              BorderBrush="{Binding Source={StaticResource GlobalColor}, Path=ClYellow}"
+                              Foreground="#ffffff"
+                              IsChecked="{Binding IsFilterAlarm, Mode=TwoWay}"
+                              Command="{Binding RefreshViewCommand}"
+                              CommandParameter="{Binding ElementName=lvMain}"
+                    Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
+                    ToolTip="Lọc cảnh báo">
+                    <materialDesign:PackIcon Kind="WarningOutline" Width="22" Height="22"/>
+                </ToggleButton>
+                <ToggleButton Width="32" Height="32" Margin="5 0" 
+                              Background="{Binding Source={StaticResource GlobalColor}, Path=ClRed}"
+                              BorderBrush="{Binding Source={StaticResource GlobalColor}, Path=ClRed}"
+                              Foreground="#ffffff"                              
+                              IsChecked="{Binding IsFilterError, Mode=TwoWay}"
+                              Command="{Binding RefreshViewCommand}"
+                              CommandParameter="{Binding ElementName=lvMain}"                              
+                    Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
+                    ToolTip="Lọc lỗi">
+                    <materialDesign:PackIcon Kind="CloseOctagonOutline" Width="22" Height="22"/>
+                </ToggleButton>
+                <Rectangle Width="1" Fill="#ff9e9e9e" Margin="5 0"/>
+                <!--<DatePicker Width="100" Margin="5 0"
+                                materialDesign:HintAssist.Hint="Ngày bắt đầu" 
+                                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" HorizontalAlignment="Left" />
+                <DatePicker Width="100" Margin="5 0"
+                                materialDesign:HintAssist.Hint="Ngày kết thúc" 
+                                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" HorizontalAlignment="Left" />
+                <Button Width="60" Margin="5 0"
+                        Style="{StaticResource MaterialDesignRaisedButton}"  
+                        ToolTip="Lọc"  
+                        Content="_LỌC" />
+                <Rectangle Width="1" Fill="#ff9e9e9e" Margin="5 0"/>-->
+                <Button Width="160" Margin="5 0"
+                        Style="{StaticResource MaterialDesignRaisedButton}"  
+                        ToolTip="Xác nhận tất cả"  
+                        Content="_XÁC NHẬN TẤT CẢ" 
+                        Command="{Binding AckAllCommand}"/>
+            </StackPanel>
+        </materialDesign:Card>
 
+        <materialDesign:Card Margin="6 0 6 6" Grid.Row="1">
+            <ListView x:Name="lvMain" ItemsSource="{Binding EventList}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Id}" Width="60">
+                            <GridViewColumnHeader x:Name="gvchId" Padding="0 10 0 10" HorizontalAlignment="Stretch">
+                                <TextBlock Text="ID" Width="auto" Margin="14 0 0 0"></TextBlock>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction Command="{Binding SortCommand}"
+                                                               CommandParameter="{Binding ElementName=gvchId}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </GridViewColumnHeader>
+                        </GridViewColumn>
+                        <GridViewColumn Width="80">
+                            <GridViewColumnHeader x:Name="gvchType" Padding="0 10 0 10" HorizontalAlignment="Stretch">
+                                <TextBlock Text="Loại" Width="auto" Margin="14 0 0 0"></TextBlock>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction Command="{Binding SortCommand}"
+                                                               CommandParameter="{Binding ElementName=gvchType}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </GridViewColumnHeader>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <materialDesign:PackIcon Height="16" Width="16"
+                                                             Kind="{Binding SeverityLevel, Converter={StaticResource EvIconTypeConverter}}"
+                                                             Foreground="{Binding SeverityLevel, Converter={StaticResource EvIconColorConverter}}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding EventClass, Converter={StaticResource EvClassConverter}}" Width="150">
+                            <GridViewColumnHeader x:Name="gvchGroup" Padding="0 10 0 10" HorizontalAlignment="Stretch">
+                                <TextBlock Text="Nhóm" Width="auto" Margin="14 0 0 0"></TextBlock>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction Command="{Binding SortCommand}"
+                                                               CommandParameter="{Binding ElementName=gvchGroup}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </GridViewColumnHeader>
+                        </GridViewColumn>
+                        <GridViewColumn Width="300">
+                            <GridViewColumnHeader x:Name="gvchContent" Padding="0 10 0 10" HorizontalAlignment="Stretch">
+                                <TextBlock Text="Nội dung" Width="auto" Margin="14 0 0 0"></TextBlock>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction Command="{Binding SortCommand}"
+                                                               CommandParameter="{Binding ElementName=gvchContent}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </GridViewColumnHeader>
+                            <GridViewColumn.DisplayMemberBinding>
+                                <MultiBinding Converter="{StaticResource EvContentConverter}">
+                                    <Binding Path="EventClass"/>
+                                    <Binding Path="EventID"/>
+                                </MultiBinding>
+                            </GridViewColumn.DisplayMemberBinding>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding SourceName, Converter={StaticResource EvSourceConverter}}" Width="250">
+                            <GridViewColumnHeader x:Name="gvchSource" Padding="0 10 0 10" HorizontalAlignment="Stretch">
+                                <TextBlock Text="Đối tượng" Width="auto" Margin="14 0 0 0"></TextBlock>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction Command="{Binding SortCommand}"
+                                                               CommandParameter="{Binding ElementName=gvchSource}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </GridViewColumnHeader>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding TimeRaised, Converter={StaticResource EvTimeConverter}}">
+                            <GridViewColumnHeader x:Name="gvchRaised" Padding="0 10 0 10" HorizontalAlignment="Stretch">
+                                <TextBlock Text="Thời gian xảy ra" Width="auto" Margin="14 0 0 0"></TextBlock>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction Command="{Binding SortCommand}"
+                                                               CommandParameter="{Binding ElementName=gvchRaised}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </GridViewColumnHeader>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding TimeConfirmed, Converter={StaticResource EvTimeConverter}}">
+                            <GridViewColumnHeader x:Name="gvchConfirmed" Padding="0 10 0 10" HorizontalAlignment="Stretch">
+                                <TextBlock Text="Thời gian xác nhận" Width="auto" Margin="14 0 0 0"></TextBlock>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction Command="{Binding SortCommand}"
+                                                               CommandParameter="{Binding ElementName=gvchConfirmed}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </GridViewColumnHeader>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding TimeCleared, Converter={StaticResource EvTimeConverter}}">
+                            <GridViewColumnHeader x:Name="gvchCleared" Padding="0 10 0 10" HorizontalAlignment="Stretch">
+                                <TextBlock Text="Thời gian vô hiệu" Width="auto" Margin="14 0 0 0"></TextBlock>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction Command="{Binding SortCommand}"
+                                                               CommandParameter="{Binding ElementName=gvchCleared}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </GridViewColumnHeader>
+                        </GridViewColumn>
+
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </materialDesign:Card>
     </Grid>
 </Page>

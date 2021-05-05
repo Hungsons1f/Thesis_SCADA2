@@ -28,5 +28,6 @@ namespace Thesis_SCADA.Model
         public virtual DbSet<UserRole> UserRole { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<ProcessData> ProcessData { get; set; }
+        public virtual DbSet<ProcessEvent> ProcessEvent { get; set; }
     }
 }

@@ -6,10 +6,44 @@
       xmlns:local="clr-namespace:Thesis_SCADA.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Setting">
+      Title="Setting"
+      
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        
+        Name="settingPage"
+        DataContext="{StaticResource SettingViewModel}">
 
-    <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="326,205,0,0" TextWrapping="Wrap" Text="Setting" VerticalAlignment="Top"/>
+
+    <Grid Margin="6">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <materialDesign:Card Grid.Row="0" Padding="6" Margin="0 20 0 0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"  Style="{StaticResource MaterialDesignHeadline6TextBlock}" Margin="0 10 0 15"
+                           Text="HIỂN THỊ" FontSize="20"/>
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Margin="0 0 0 5"
+                           Text="Chủ đề: " />
+                    <materialDesign:PackIcon Kind="WeatherSunny" Width="22" Height="22" Margin="40 0 0 5"/>
+                    <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}" Margin="20 0 0 5"
+                                  IsChecked="{Binding IsDarkTheme, Mode=TwoWay}"/>
+                    <materialDesign:PackIcon Kind="WeatherNight" Width="20" Height="20" Margin="20 0 0 5"/>
+                </StackPanel>
+            </Grid>
+        </materialDesign:Card>
 
     </Grid>
 </Page>

@@ -20,7 +20,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
 
         Name="userManagementWindow"            
-        DataContext="{StaticResource UserManagementViewModel}">
+        DataContext="{StaticResource UserViewModel}">
 
     <Grid>
         <Grid.ColumnDefinitions>

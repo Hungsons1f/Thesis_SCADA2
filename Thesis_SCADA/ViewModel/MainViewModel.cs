@@ -30,7 +30,6 @@ namespace Thesis_SCADA.ViewModel
         public ICommand PageZone1BtnCommand { get; set; }
         public ICommand PageZone2BtnCommand { get; set; }
         public ICommand PageCalibBtnCommand { get; set; }
-        public ICommand PageAlarmBtnCommand { get; set; }
         public ICommand PageTrendBtnCommand { get; set; }
         public ICommand PageEventBtnCommand { get; set; }
         public ICommand PageReportBtnCommand { get; set; }
@@ -79,11 +78,6 @@ namespace Thesis_SCADA.ViewModel
 
             });
 
-            UserManagementCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
-                UserManagementWindow w = new UserManagementWindow();
-                w.ShowDialog();
-            });
-
             OpenDrawerCommand = new RelayCommand<ToggleButton>((p) => { return true; }, (p) => {
                 p.IsChecked = true;
                 DrawerHost.OpenDrawerCommand.Execute(Dock.Left, null);
@@ -115,11 +109,6 @@ namespace Thesis_SCADA.ViewModel
                 DrawerHost.CloseDrawerCommand.Execute(null, null);
             });
 
-            PageAlarmBtnCommand = new RelayCommand<Frame>((p) => { return true; }, (p) => {
-                p.Navigate(new Uri("Pages/Alarm.xaml", UriKind.RelativeOrAbsolute));
-                DrawerHost.CloseDrawerCommand.Execute(null, null);
-            });
-
             PageTrendBtnCommand = new RelayCommand<Frame>((p) => { return true; }, (p) => {
                 p.Navigate(new Uri("Pages/Trend.xaml", UriKind.RelativeOrAbsolute));
                 DrawerHost.CloseDrawerCommand.Execute(null, null);
@@ -132,11 +121,6 @@ namespace Thesis_SCADA.ViewModel
 
             PageReportBtnCommand = new RelayCommand<Frame>((p) => { return true; }, (p) => {
                 p.Navigate(new Uri("Pages/Report.xaml", UriKind.RelativeOrAbsolute));
-                DrawerHost.CloseDrawerCommand.Execute(null, null);
-            });
-
-            PageUserBtnCommand = new RelayCommand<Frame>((p) => { return true; }, (p) => {
-                p.Navigate(new Uri("Pages/User.xaml", UriKind.RelativeOrAbsolute));
                 DrawerHost.CloseDrawerCommand.Execute(null, null);
             });
 

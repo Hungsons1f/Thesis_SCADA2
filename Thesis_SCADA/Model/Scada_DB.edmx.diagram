@@ -9,6 +9,7 @@
         <EntityTypeShape EntityType="ScadaModel.Users" Width="1.5" PointX="3" PointY="0.875" />
         <AssociationConnector Association="ScadaModel.FK__Users__IdRole__267ABA7A" />
         <EntityTypeShape EntityType="ScadaModel.ProcessData" Width="1.5" PointX="5.625" PointY="0.75" />
+        <EntityTypeShape EntityType="ScadaModel.ProcessEvent" Width="1.5" PointX="8" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

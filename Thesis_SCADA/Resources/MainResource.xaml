@@ -6,10 +6,13 @@
     
     <viewmodel:MainViewModel x:Key="MainViewModel"></viewmodel:MainViewModel>
     <viewmodel:LoginViewModel x:Key="LoginViewModel"></viewmodel:LoginViewModel>
-    <viewmodel:UserManagementViewModel x:Key="UserManagementViewModel"></viewmodel:UserManagementViewModel>
     <viewmodel:OverviewViewModel x:Key="OverviewViewModel"></viewmodel:OverviewViewModel>
     <viewmodel:CalibViewModel x:Key="CalibViewModel"></viewmodel:CalibViewModel>
     <viewmodel:TrendViewModel x:Key="TrendViewModel"></viewmodel:TrendViewModel>
-    
+    <viewmodel:UserViewModel x:Key="UserViewModel"></viewmodel:UserViewModel>
+    <viewmodel:EventViewModel x:Key="EventViewModel"></viewmodel:EventViewModel>
+    <viewmodel:ReportViewModel x:Key="ReportViewModel"></viewmodel:ReportViewModel>
+    <viewmodel:SettingViewModel x:Key="SettingViewModel"></viewmodel:SettingViewModel>
+
     <globalvar:GlobalColor x:Key="GlobalColor"></globalvar:GlobalColor>
 </ResourceDictionary>   

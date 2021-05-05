@@ -5,11 +5,149 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Thesis_SCADA.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Report">
+      d:DesignHeight="670" d:DesignWidth="1366"
+      Title="Report"
+      
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        
+        Name="reportPage"
+        DataContext="{StaticResource ReportViewModel}">
 
-    <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="286,178,0,0" TextWrapping="Wrap" Text="Report" VerticalAlignment="Top"/>
+
+    <Grid Margin="6">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <materialDesign:Card Grid.Row="0" Padding="6" Margin="0 20 0 0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource MaterialDesignHeadline6TextBlock}" Margin="0 10 0 15"
+                           Text="Báo cáo Sự kiện" FontSize="25"/>
+                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+                    <TextBox materialDesign:HintAssist.Hint="Đường dẫn thư mục lưu" Width="600" 
+                             Text="{Binding FolderPath}"/>
+                    <Button Padding="12 0"
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            ToolTip="Chọn đường dẫn"
+                            Command="{Binding PathCommand}">
+                        <materialDesign:PackIcon Kind="FolderOpenOutline" Height="28" Width="28"/>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.RowSpan="2">
+                    <Button Padding="12 0" VerticalAlignment="Stretch" Height="Auto" Width="75" Margin="30 10 0 0"
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            materialDesign:ButtonAssist.CornerRadius="10"
+                            ToolTip="Xuất file CSV"
+                            Command="{Binding EventCSVCommand}" >
+                        <materialDesign:PackIcon Kind="FileCsvOutline" Height="50" Width="50"/>
+                    </Button>
+                    <Button Padding="12 0" VerticalAlignment="Stretch" Height="Auto" Width="75" Margin="30 10 0 0"
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            materialDesign:ButtonAssist.CornerRadius="10"
+                            ToolTip="Xuất file PDF"
+                            Command="{Binding EventPDFCommand}">
+                        <materialDesign:PackIcon Kind="FilePdfOutline" Height="50" Width="50"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </materialDesign:Card>
+
+        <materialDesign:Card Grid.Row="1" Padding="6" Margin="0 20 0 0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource MaterialDesignHeadline6TextBlock}" Margin="0 10 0 15"
+                           Text="Báo cáo Trạng thái quá trình" FontSize="25"/>
+                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+                    <TextBox materialDesign:HintAssist.Hint="Đường dẫn thư mục lưu" Width="490" 
+                             Text="{Binding FolderPath2}"/>
+                    <Button Padding="12 0"
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            ToolTip="Chọn đường dẫn"
+                            Command="{Binding Path2Command}">
+                        <materialDesign:PackIcon Kind="FolderOpenOutline" Height="28" Width="28"/>
+                    </Button>
+                    <DatePicker materialDesign:HintAssist.Hint="Bắt đầu từ" Width="100" Margin="10 0 0 0"
+                                Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                             SelectedDate="{Binding SampleTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" FirstDayOfWeek="Monday"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.RowSpan="2">
+                    <Button Padding="12 0" VerticalAlignment="Stretch" Height="Auto" Width="75" Margin="30 10 0 0"
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            materialDesign:ButtonAssist.CornerRadius="10"
+                            ToolTip="Xuất file CSV"
+                            Command="{Binding ProcessCSVCommand}" >
+                        <materialDesign:PackIcon Kind="FileCsvOutline" Height="50" Width="50"/>
+                    </Button>
+                    <Button Padding="12 0" VerticalAlignment="Stretch" Height="Auto" Width="75" Margin="30 10 0 0"
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            materialDesign:ButtonAssist.CornerRadius="10"
+                            ToolTip="Xuất file PDF"
+                            Command="{Binding ProcessPDFCommand}">
+                        <materialDesign:PackIcon Kind="FilePdfOutline" Height="50" Width="50"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </materialDesign:Card>
+
+        <materialDesign:Card Grid.Row="2" Padding="6" Margin="0 20 0 0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource MaterialDesignHeadline6TextBlock}" Margin="0 10 0 15"
+                           Text="Báo cáo Trạng thái thiết bị" FontSize="25"/>
+                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+                    <TextBox materialDesign:HintAssist.Hint="Đường dẫn thư mục lưu" Width="600" 
+                             Text="{Binding FolderPath3}"/>
+                    <Button Padding="12 0"
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            ToolTip="Chọn đường dẫn"
+                            Command="{Binding Path3Command}">
+                        <materialDesign:PackIcon Kind="FolderOpenOutline" Height="28" Width="28"/>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.RowSpan="2">
+                    <Button Padding="12 0" VerticalAlignment="Stretch" Height="Auto" Width="75" Margin="30 10 0 0"
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            materialDesign:ButtonAssist.CornerRadius="10"
+                            ToolTip="Xuất file PDF"
+                            Command="{Binding ComponentPDFCommand}">
+                        <materialDesign:PackIcon Kind="FilePdfOutline" Height="50" Width="50"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </materialDesign:Card>
 
     </Grid>
 </Page>

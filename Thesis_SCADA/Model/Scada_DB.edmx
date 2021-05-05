@@ -34,6 +34,19 @@
           <Property Name="HCondenser_Temp" Type="float" />
           <Property Name="PCircular_Flow" Type="float" />
         </EntityType>
+        <EntityType Name="ProcessEvent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventClass" Type="nvarchar" MaxLength="30" />
+          <Property Name="EventID" Type="int" />
+          <Property Name="SeverityLevel" Type="int" />
+          <Property Name="SourceName" Type="nvarchar" MaxLength="30" />
+          <Property Name="TimeRaised" Type="datetime" />
+          <Property Name="TimeConfirmed" Type="datetime" />
+          <Property Name="TimeCleared" Type="datetime" />
+        </EntityType>
         <EntityType Name="UserRole">
           <Key>
             <PropertyRef Name="Id" />
@@ -64,6 +77,7 @@
         </Association>
         <EntityContainer Name="ScadaModelStoreContainer">
           <EntitySet Name="ProcessData" EntityType="Self.ProcessData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProcessEvent" EntityType="Self.ProcessEvent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Users__IdRole__267ABA7A" Association="Self.FK__Users__IdRole__267ABA7A">
@@ -83,6 +97,7 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
           <EntitySet Name="ProcessData" EntityType="ScadaModel.ProcessData" />
+          <EntitySet Name="ProcessEvent" EntityType="ScadaModel.ProcessEvent" />
         </EntityContainer>
         <EntityType Name="UserRole">
           <Key>
@@ -143,6 +158,19 @@
           <Property Name="HCondenser_Temp" Type="Double" />
           <Property Name="PCircular_Flow" Type="Double" />
         </EntityType>
+        <EntityType Name="ProcessEvent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventClass" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="EventID" Type="Int32" />
+          <Property Name="SeverityLevel" Type="Int32" />
+          <Property Name="SourceName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="TimeRaised" Type="DateTime" Precision="3" />
+          <Property Name="TimeConfirmed" Type="DateTime" Precision="3" />
+          <Property Name="TimeCleared" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -193,6 +221,20 @@
                 <ScalarProperty Name="PCondense_Flow" ColumnName="PCondense_Flow" />
                 <ScalarProperty Name="Furnace_Temp" ColumnName="Furnace_Temp" />
                 <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProcessEvent">
+            <EntityTypeMapping TypeName="ScadaModel.ProcessEvent">
+              <MappingFragment StoreEntitySet="ProcessEvent">
+                <ScalarProperty Name="TimeCleared" ColumnName="TimeCleared" />
+                <ScalarProperty Name="TimeConfirmed" ColumnName="TimeConfirmed" />
+                <ScalarProperty Name="TimeRaised" ColumnName="TimeRaised" />
+                <ScalarProperty Name="SourceName" ColumnName="SourceName" />
+                <ScalarProperty Name="SeverityLevel" ColumnName="SeverityLevel" />
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="EventClass" ColumnName="EventClass" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

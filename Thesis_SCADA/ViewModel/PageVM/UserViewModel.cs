@@ -10,7 +10,7 @@ using Thesis_SCADA.Model;
 
 namespace Thesis_SCADA.ViewModel
 {
-    public class UserManagementViewModel: BaseViewModel
+    public class UserViewModel : BaseViewModel
     {
         #region Properties
         //Danh sách hiển thị trên ListView
@@ -22,7 +22,9 @@ namespace Thesis_SCADA.ViewModel
 
         //Thuộc tính để khi chọn một dòng trên ListView, dòng đó sẽ được truyền vào (dùng Mode Onewaytosource)
         private Users _SelectedItem;
-        public Users SelectedItem { get => _SelectedItem;
+        public Users SelectedItem
+        {
+            get => _SelectedItem;
             set
             {
                 _SelectedItem = value;
@@ -54,7 +56,7 @@ namespace Thesis_SCADA.ViewModel
 
         #endregion
 
-        public UserManagementViewModel()
+        public UserViewModel()
         {
             //Cập nhật danh sách vào ListView khi mở window
             List = new ObservableCollection<Users>(DataProvider.Ins.DB.Users);
@@ -62,17 +64,17 @@ namespace Thesis_SCADA.ViewModel
 
             PasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { Password = p.Password; });
 
-            AddCommand = new RelayCommand<object>((p) => 
+            AddCommand = new RelayCommand<object>((p) =>
             {
                 if (String.IsNullOrEmpty(UserName)) return false;
 
-                var displayList = DataProvider.Ins.DB.Users.Where(x=>x.UserName == UserName);
+                var displayList = DataProvider.Ins.DB.Users.Where(x => x.UserName == UserName);
                 if (displayList == null || displayList.Count() != 0) return false;
 
                 if (SelectedRole == null) return false;
 
                 return true;
-            }, (p) => 
+            }, (p) =>
             {
                 var user = new Users() { UserName = UserName, Password = "", IdRole = SelectedRole.Id };
                 if (Password != "" && Password != null)
