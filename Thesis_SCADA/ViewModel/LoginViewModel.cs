@@ -20,6 +20,7 @@ namespace Thesis_SCADA.ViewModel
         public string UserName { get => _userName; set { _userName = value; OnPropertyChanged(); } }
         public string Password { get => _password; set { _password = value; OnPropertyChanged(); } }
 
+        public Users LoginUser;
         #region commands
         public ICommand LoginCommand { get; set; }
         public ICommand CloseCommand { get; set; }
@@ -40,18 +41,33 @@ namespace Thesis_SCADA.ViewModel
             if (p == null) return;
 
             string passEncode = Encode.MD5Hash(Encode.Base64Encode(Password));
-            var countAcc = DataProvider.Ins.DB.Users.Where(x => x.UserName == UserName && x.Password == passEncode).Count();
+            //var countAcc = DataProvider.Ins.DB.Users.Where(x => x.UserName == UserName && x.Password == passEncode).Count();
 
-            if (countAcc > 0)
+            //if (countAcc > 0)
+            //{
+            //    isLogin = true;
+            //    p.Close();
+            //}
+            //else
+            //{
+            //    isLogin = false;
+            //    MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu!!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            //}
+
+            Users countAcc = DataProvider.Ins.DB.Users.Where(x => x.UserName == UserName && x.Password == passEncode).FirstOrDefault();
+
+            if (countAcc != null)
             {
                 isLogin = true;
                 p.Close();
+                LoginUser = countAcc;
             }
             else
             {
                 isLogin = false;
                 MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu!!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
     }
 }

@@ -64,8 +64,8 @@
 
                         <TextBlock Grid.Column="0" Margin="4" HorizontalAlignment="Center" VerticalAlignment="Center" Text="MENU" FontSize="28" />
                         <ToggleButton x:Name="CloseDrawerTgBtn" Grid.Column="1" Style="{DynamicResource MaterialDesignHamburgerToggleButton}"                               
-                                      Command="{Binding CloseDrawerCommand}"                         
-                                      CommandParameter="{Binding ElementName=OpenDrawerTgBtn}" 
+                                      Command="{Binding CloseDrawerCommand}"    
+                                      IsChecked="{Binding MenuToggle}"
                                       ToolTip="Close"/>
                     </Grid>
                     <Separator Margin="0 15 0 15"/>
@@ -82,7 +82,7 @@
                                 <TextBlock Grid.Column="1" Margin="10 0 0 0" Text="TỔNG QUAN" FontSize="18" VerticalAlignment="Center"></TextBlock>
                             </Grid>
                         </Button>
-                        <Button Command="{Binding PageZone1BtnCommand}"
+                        <!--<Button Command="{Binding PageZone1BtnCommand}"
                         CommandParameter="{Binding ElementName=MainFrame}" >
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -103,7 +103,7 @@
                                 <materialDesign:PackIcon Height="auto" Width="auto" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Kind="Twitter"></materialDesign:PackIcon>
                                 <TextBlock Grid.Column="1" Margin="10 0 0 0" Text="VÙNG 2" FontSize="18" VerticalAlignment="Center"></TextBlock>
                             </Grid>
-                        </Button>
+                        </Button>-->
                         <Button Command="{Binding PageCalibBtnCommand}"
                         CommandParameter="{Binding ElementName=MainFrame}">
                             <Grid>
@@ -191,10 +191,10 @@
                 <materialDesign:ColorZone Grid.Column="0" Mode="PrimaryMid">
                     <ToggleButton x:Name="OpenDrawerTgBtn" Width="60" Height="34" Style="{DynamicResource MaterialDesignHamburgerToggleButton}"                                                      
                                   Command="{Binding OpenDrawerCommand}"                          
-                                  CommandParameter="{Binding ElementName=CloseDrawerTgBtn}" 
+                                  IsChecked="{Binding MenuToggle}"
                                   ToolTip="Menu"/>
                 </materialDesign:ColorZone>
-                <uc:ucControlBar Grid.Column="1" Tag="{Binding Title, ElementName=mainWindow}"/>
+                <uc:ucControlBar Grid.Column="1" Tag="{Binding Source={StaticResource MainViewModel}, Path=PageName}"/>
             </Grid>
 
             <Grid Grid.Row="1">
@@ -202,61 +202,6 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-
-                <!--Menu-->
-                <!--<Grid Grid.Row="0">
-                    <StackPanel Background="Transparent" Orientation="Horizontal" >
-                        <StackPanel.Resources>
-                            <Style x:Key="BtnMenu" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
-                                <Setter Property="Height" Value="40"/>
-                                <Setter Property="Margin" Value="5"/>
-                                <Setter Property="Width" Value="87"/>
-                            </Style>
-                        </StackPanel.Resources>
-
-                        <Button ToolTip="Giám sát" Style="{StaticResource BtnMenu}">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="Giám sát"></TextBlock>
-                                <materialDesign:PackIcon Grid.Row="1" HorizontalAlignment="Center" Kind="Twitter"></materialDesign:PackIcon>
-                            </Grid>
-                        </Button>
-                        <Button ToolTip="Vùng 1" Style="{StaticResource BtnMenu}">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="Vùng 1"></TextBlock>
-                                <materialDesign:PackIcon Grid.Row="1" HorizontalAlignment="Center" Kind="Twitter"></materialDesign:PackIcon>
-                            </Grid>
-                        </Button>
-                        <Button ToolTip="Vùng 2" Style="{StaticResource BtnMenu}">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="Vùng 2"></TextBlock>
-                                <materialDesign:PackIcon Grid.Row="1" HorizontalAlignment="Center" Kind="Twitter"></materialDesign:PackIcon>
-                            </Grid>
-                        </Button>
-                        <Button Command="{Binding UserManagementCommand}" ToolTip="Người dùng" Style="{StaticResource BtnMenu}">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="Nguời dùng"></TextBlock>
-                                <materialDesign:PackIcon Grid.Row="1" HorizontalAlignment="Center" Kind="Twitter"></materialDesign:PackIcon>
-                            </Grid>
-                        </Button>
-                        --><!--<uc:ucTest NavFrame="{Binding ElementName=MainFrame}"/>--><!--
-                    </StackPanel>
-                </Grid>-->
 
                 <!--Main-->
                 <Grid Grid.Row="0">

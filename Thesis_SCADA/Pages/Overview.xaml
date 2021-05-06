@@ -31,7 +31,7 @@
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadedCommand}"
-                                   CommandParameter="{Binding ElementName=overviewPage}"/>
+                                   CommandParameter="{Binding ElementName=grExtra}"/>
         </i:EventTrigger>
         <i:EventTrigger EventName="Unloaded">
             <i:InvokeCommandAction Command="{Binding UnloadedCommand}"
@@ -410,125 +410,137 @@
             <!--#endregion-->
 
             <!--#region Control Panel-->
-            <materialDesign:PopupBox Width="40" Height="40" Canvas.Right="82" Canvas.Top="90"
+            <Grid x:Name="grExtra" Canvas.Top="10" Canvas.Left="1156">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="70"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <materialDesign:PopupBox Grid.Row="1" Grid.Column="1" Width="40" Height="40" Canvas.Right="82" Canvas.Top="90" HorizontalAlignment="Center"
                 Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
                 PlacementMode="LeftAndAlignMiddles" 
                 ToolTipService.Placement="Left" StaysOpen="True"
                 ToolTip="Bảng điều khiển quá trình" >
-                <materialDesign:Card>
-                    <Grid Margin="10 0 5 0" Width="170" Height="60">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.Resources>
-                            <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFloatingActionButton}">
-                                <Setter Property="Width" Value="48"/>
-                                <Setter Property="Height" Value="48"/>
-                                <Setter Property="Padding" Value="0"/>
-                                <Setter Property="Margin" Value="0 0 0 0"/>
-                            </Style>
-                        </Grid.Resources>
-                        <Button Grid.Column="0"
+                    <materialDesign:Card>
+                        <Grid Margin="10 0 5 0" Width="170" Height="60">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.Resources>
+                                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFloatingActionButton}">
+                                    <Setter Property="Width" Value="48"/>
+                                    <Setter Property="Height" Value="48"/>
+                                    <Setter Property="Padding" Value="0"/>
+                                    <Setter Property="Margin" Value="0 0 0 0"/>
+                                </Style>
+                            </Grid.Resources>
+                            <Button Grid.Column="0"
                                     Background="{Binding Source={StaticResource GlobalColor}, Path=ClGreen, Mode=OneWay}"
                                     BorderBrush="{Binding Source={StaticResource GlobalColor}, Path=ClGreen, Mode=OneWay}"
                                     ToolTip="Chạy">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
-                                    <i:InvokeCommandAction Command="{Binding StartReleasedCommand}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                    <i:InvokeCommandAction Command="{Binding StartPressedCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                            <materialDesign:PackIcon Width="35" Height="35" Kind="Power" />
-                        </Button>
-                        <Button Grid.Column="1"
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                                        <i:InvokeCommandAction Command="{Binding StartReleasedCommand}"/>
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                        <i:InvokeCommandAction Command="{Binding StartPressedCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <materialDesign:PackIcon Width="35" Height="35" Kind="Power" />
+                            </Button>
+                            <Button Grid.Column="1"
                                     Background="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"
                                     BorderBrush="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"
                                     ToolTip="Dừng">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
-                                    <i:InvokeCommandAction Command="{Binding StopReleasedCommand}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                    <i:InvokeCommandAction Command="{Binding StopPressedCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                            <materialDesign:PackIcon Width="35" Height="35" Kind="PowerCycle" />
-                        </Button>
-                        <Button Grid.Column="2"
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                                        <i:InvokeCommandAction Command="{Binding StopReleasedCommand}"/>
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                        <i:InvokeCommandAction Command="{Binding StopPressedCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <materialDesign:PackIcon Width="35" Height="35" Kind="PowerCycle" />
+                            </Button>
+                            <Button Grid.Column="2"
                                     Background="{Binding Source={StaticResource GlobalColor}, Path=ClYellow, Mode=OneWay}"
                                     BorderBrush="{Binding Source={StaticResource GlobalColor}, Path=ClYellow, Mode=OneWay}"
                                     ToolTip="Reset">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
-                                    <i:InvokeCommandAction Command="{Binding ResetReleasedCommand}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                    <i:InvokeCommandAction Command="{Binding ResetPressedCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                            <materialDesign:PackIcon Width="35" Height="35" Kind="Reload" />
-                        </Button>
-                    </Grid>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                                        <i:InvokeCommandAction Command="{Binding ResetReleasedCommand}"/>
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                        <i:InvokeCommandAction Command="{Binding ResetPressedCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <materialDesign:PackIcon Width="35" Height="35" Kind="Reload" />
+                            </Button>
+                        </Grid>
 
-                </materialDesign:Card>
-            </materialDesign:PopupBox>
+                    </materialDesign:Card>
+                </materialDesign:PopupBox>
 
-            <materialDesign:ColorZone Mode="Dark" Canvas.Left="1156" Canvas.Top="10" CornerRadius="8">
-                <StackPanel Orientation="Horizontal" >
-                    <Button Height="50" Width="50" Margin="10 5 0 5"
+                <materialDesign:ColorZone Mode="Dark" Grid.Row="0" Grid.ColumnSpan="3" Canvas.Left="1156" Canvas.Top="10" CornerRadius="8">
+                    <StackPanel Orientation="Horizontal" >
+                        <Button Height="50" Width="50" Margin="10 5 0 5"
                     Style="{StaticResource MaterialDesignIconButton}"
                     ToolTip="Đèn báo sẵn sàng">
-                        <uc:ucLight 
+                            <uc:ucLight 
                         OnSymbol="{StaticResource LightReady}" OffSymbol="{StaticResource LightOff}"
                         IsOn="{Binding ProcessReady}"/>
-                    </Button>
-                    <Button Height="50" Width="50" Margin="10 5 0 5"
+                        </Button>
+                        <Button Height="50" Width="50" Margin="10 5 0 5"
                     Style="{StaticResource MaterialDesignIconButton}"
                     ToolTip="Đèn báo đang chạy">
-                        <uc:ucLight 
+                            <uc:ucLight 
                         OnSymbol="{StaticResource LightRun}" OffSymbol="{StaticResource LightOff}"
                         IsOn="{Binding ProcessRun}"/>
-                    </Button>
-                    <Button Height="50" Width="50" Margin="10 5 10 5"
+                        </Button>
+                        <Button Height="50" Width="50" Margin="10 5 10 5"
                     Style="{StaticResource MaterialDesignIconButton}"
                     ToolTip="Đèn báo lỗi">
-                        <uc:ucLight 
+                            <uc:ucLight 
                         OnSymbol="{StaticResource LightFault}" OffSymbol="{StaticResource LightOff}"
                         IsOn="{Binding ProcessFault}"/>
-                    </Button>
-                </StackPanel>
-            </materialDesign:ColorZone>
+                        </Button>
+                    </StackPanel>
+                </materialDesign:ColorZone>
 
-            <ToggleButton x:Name="btnEmergency" Height="52" Canvas.Right="20" Canvas.Top="84" Width="50"
+                <ToggleButton x:Name="btnEmergency" Grid.Row="1" Grid.Column="2" Height="52" Canvas.Right="20" Canvas.Top="84" Width="50" 
                     Style="{StaticResource MaterialDesignIconButton}"
                     ToolTip="Nút dừng khẩn cấp">
-                <ContentControl Background="Transparent">
-                    <ContentControl.Style>
-                        <Style TargetType="ContentControl">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding ElementName=btnEmergency, Path=IsChecked}" Value="true">
-                                    <Setter Property="ContentTemplate" Value="{StaticResource EmergencyButtonOff}" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding ElementName=btnEmergency, Path=IsChecked}" Value="false">
-                                    <Setter Property="ContentTemplate" Value="{StaticResource EmergencyButtonOn}" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ContentControl.Style>
-                </ContentControl>
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Unchecked">
-                        <i:InvokeCommandAction Command="{Binding EmergencyReleasedCommand}"/>
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding EmergencyPressedCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </ToggleButton>
+                    <ContentControl Background="Transparent">
+                        <ContentControl.Style>
+                            <Style TargetType="ContentControl">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=btnEmergency, Path=IsChecked}" Value="true">
+                                        <Setter Property="ContentTemplate" Value="{StaticResource EmergencyButtonOff}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=btnEmergency, Path=IsChecked}" Value="false">
+                                        <Setter Property="ContentTemplate" Value="{StaticResource EmergencyButtonOn}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ContentControl.Style>
+                    </ContentControl>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Unchecked">
+                            <i:InvokeCommandAction Command="{Binding EmergencyReleasedCommand}"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding EmergencyPressedCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>
+            </Grid>
             <!--#endregion-->
         </Canvas>
     </Grid>

@@ -51,7 +51,7 @@ namespace Thesis_SCADA.ViewModel
         {
             CurrentTime = DateTime.Now;
             ConnectionStatus = GlobalVar.Ins.ConnectStatus;
-            ScanTime = GlobalVar.Ins.ScanTime.Milliseconds;
+            ScanTime = (int)GlobalVar.Ins.ScanTime.TotalMilliseconds;
         }
     }
 }

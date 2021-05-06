@@ -80,6 +80,22 @@ namespace Thesis_SCADA.Model
         public event EventHandler<EventPropEventArgs> EventOccured;
 
         public ConnectionStatus ConnectStatus { get; private set; }
+
+        private int scanCycle = 200;
+        public int ScanCycle { get => scanCycle; set
+            {
+                scanCycle = value;
+                try
+                {
+                    _timer.Stop();
+                    _timer.Interval = scanCycle;
+                }
+                finally
+                {
+                    _timer.Start();
+                }
+            }
+        }
         #endregion
 
 
@@ -97,7 +113,7 @@ namespace Thesis_SCADA.Model
             logger.AlarmConfirmed += OnAlarmConfirmed;
 
             _timer = new System.Timers.Timer();
-            _timer.Interval = 200;
+            _timer.Interval = ScanCycle;
             _timer.Elapsed -= OnTimerElapsed;
             _timer.Elapsed += OnTimerElapsed;
         }
@@ -107,7 +123,7 @@ namespace Thesis_SCADA.Model
             _timer.Stop();
         }
 
-        public bool Connect(string netid, int port)
+        public bool Connect(string netid, int port, bool showmsg)
         {
             bool result = false;
             try
@@ -122,7 +138,7 @@ namespace Thesis_SCADA.Model
                     {
                         MessageBox.Show("Chưa kết nối được IPC.\n Lỗi: AdsState: " + state.AdsState + ", DeviceState: " + state.DeviceState,
                                         "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                        showConnectMsg = true;
+                        showConnectMsg = true & !showmsg;
                     }
                     ConnectStatus = ConnectionStatus.Offline;
                 }
@@ -173,7 +189,7 @@ namespace Thesis_SCADA.Model
                 {
                     MessageBox.Show("Chưa kết nối được IPC.\n Lỗi: " + e.ToString(), "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     ConnectStatus = ConnectionStatus.Offline;
-                    showConnectMsg = true;
+                    showConnectMsg = true & !showmsg;
                 }
             }
             return result;
@@ -185,29 +201,30 @@ namespace Thesis_SCADA.Model
         {
             _timer.Stop();
 
-            client.DeleteVariableHandle(notificationHandler.ProcessReady);
-            client.DeleteVariableHandle(notificationHandler.ProcessRun);
-            client.DeleteVariableHandle(notificationHandler.ProcessFault);
+            client.DeleteDeviceNotification(notificationHandler.ProcessReady);
+            client.DeleteDeviceNotification(notificationHandler.ProcessRun);
+            client.DeleteDeviceNotification(notificationHandler.ProcessFault);
 
-            client.DeleteVariableHandle(notificationHandler.CondensePumpPress);
-            client.DeleteVariableHandle(notificationHandler.SupplyPumpPress);
-            client.DeleteVariableHandle(notificationHandler.CondenserTemp);
-            client.DeleteVariableHandle(notificationHandler.LPHeaterTemp);
-            client.DeleteVariableHandle(notificationHandler.DeaeratorTemp);
-            client.DeleteVariableHandle(notificationHandler.HPHeaterTemp);
-            client.DeleteVariableHandle(notificationHandler.TurbineSpeed);
-            client.DeleteVariableHandle(notificationHandler.BoilerTemp);
+            client.DeleteDeviceNotification(notificationHandler.CondensePumpPress);
+            client.DeleteDeviceNotification(notificationHandler.SupplyPumpPress);
+            client.DeleteDeviceNotification(notificationHandler.CondenserTemp);
+            client.DeleteDeviceNotification(notificationHandler.LPHeaterTemp);
+            client.DeleteDeviceNotification(notificationHandler.DeaeratorTemp);
+            client.DeleteDeviceNotification(notificationHandler.HPHeaterTemp);
+            client.DeleteDeviceNotification(notificationHandler.TurbineSpeed);
+            client.DeleteDeviceNotification(notificationHandler.BoilerTemp);
 
-            client.DeleteVariableHandle(notificationHandler.MaxSpeed_CondensePump);
-            client.DeleteVariableHandle(notificationHandler.MaxSpeed_SupplyPump);
-            client.DeleteVariableHandle(notificationHandler.MaxSpeed_CircularPump);
-            client.DeleteVariableHandle(notificationHandler.MaxSpeed_ForceFan1);
-            client.DeleteVariableHandle(notificationHandler.MaxSpeed_ForceFan2);
-            client.DeleteVariableHandle(notificationHandler.MaxSpeed_ForceFan3);
-            client.DeleteVariableHandle(notificationHandler.SampleTime);
+            client.DeleteDeviceNotification(notificationHandler.MaxSpeed_CondensePump);
+            client.DeleteDeviceNotification(notificationHandler.MaxSpeed_SupplyPump);
+            client.DeleteDeviceNotification(notificationHandler.MaxSpeed_CircularPump);
+            client.DeleteDeviceNotification(notificationHandler.MaxSpeed_ForceFan1);
+            client.DeleteDeviceNotification(notificationHandler.MaxSpeed_ForceFan2);
+            client.DeleteDeviceNotification(notificationHandler.MaxSpeed_ForceFan3);
+            client.DeleteDeviceNotification(notificationHandler.SampleTime);
 
             client.AdsNotificationEx -= OnAdsNotificationEx;
-            client.Disconnect();
+            //client.Disconnect();
+            logger.Disconnect();
 
             ConnectStatus = ConnectionStatus.Offline;
             OnValuesRefreshed();
@@ -373,23 +390,30 @@ namespace Thesis_SCADA.Model
 
         public List<aS_Event> GetAllEvents()
         {
-            List<aS_Event> le = new List<aS_Event>();
-
-            var logged = col;//logger.GetLoggedEvents(10);
-
-            for (uint i = 0; i< logged.Count; i++)
+            try
             {
-                aS_Event temp = new aS_Event();
-                temp.EventClass = logged[i].GetEventClassName(langID);
-                temp.EventID = logged[i].EventId;
-                temp.SeverityLevel = logged[i].SeverityLevel;
-                temp.SourceName = logged[i].SourceName;
-                temp.TimeRaised = logged[i].TimeRaised;
-                temp.TimeConfirmed = logged[i].TimeConfirmed;
-                temp.TimeCleared = logged[i].TimeCleared;
-                le.Add(temp);
+                List<aS_Event> le = new List<aS_Event>();
+
+                var logged = col;//logger.GetLoggedEvents(10);
+
+                for (uint i = 0; i < logged.Count; i++)
+                {
+                    aS_Event temp = new aS_Event();
+                    temp.EventClass = logged[i].GetEventClassName(langID);
+                    temp.EventID = logged[i].EventId;
+                    temp.SeverityLevel = logged[i].SeverityLevel;
+                    temp.SourceName = logged[i].SourceName;
+                    temp.TimeRaised = logged[i].TimeRaised;
+                    temp.TimeConfirmed = logged[i].TimeConfirmed;
+                    temp.TimeCleared = logged[i].TimeCleared;
+                    le.Add(temp);
+                }
+                return le;
             }
-            return le;
+            catch (Exception e)
+            {
+                return null;
+            }
         }
     }
 

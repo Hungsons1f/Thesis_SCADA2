@@ -11,6 +11,7 @@ namespace Thesis_SCADA.ViewModel
 {
     public class ucControlBarViewModel: BaseViewModel
     {
+        private bool ismaximize = true;
         #region commands 
         public ICommand CloseWindowCommand { get; set; }
         public ICommand MaximizeWindowCommand { get; set; }
@@ -49,8 +50,21 @@ namespace Thesis_SCADA.ViewModel
                 if (w != null)
                 {
                     if (w.WindowState == WindowState.Normal)
+                    {
                         w.WindowState = WindowState.Minimized;
-                    else w.WindowState = WindowState.Normal;
+                        ismaximize = false;
+                    }
+                    else if (w.WindowState == WindowState.Maximized)
+                    {
+                        w.WindowState = WindowState.Minimized;
+                        ismaximize = true;
+                    }
+                    else
+                    {
+                        if (ismaximize)
+                            w.WindowState = WindowState.Maximized;
+                        else w.WindowState = WindowState.Normal;
+                    }
                 }
             });
 

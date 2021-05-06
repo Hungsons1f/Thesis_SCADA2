@@ -22,13 +22,77 @@
         Name="userManagementWindow"            
         DataContext="{StaticResource UserViewModel}">
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding AdminLoadedCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <materialDesign:Card Grid.Row="0" Margin="5" VerticalAlignment="Top" Padding="6">
+                <DockPanel Margin="0 10">
+                    <Button Style="{StaticResource MaterialDesignRaisedButton}" ToolTip="Đăng xuất"
+                        DockPanel.Dock="Right" Command="{Binding LogoutCommand}"
+                            CommandParameter="{Binding ElementName=userManagementWindow}">
+                        <materialDesign:PackIcon Kind="Logout" Height="25" Width="25"/>
+                    </Button>
+                    <StackPanel  Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}" Text="Người dùng: " VerticalAlignment="Center"/>
+                        <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}" Margin="6 0 0 0" VerticalAlignment="Center"
+                           Text="{Binding CurrentUser}"/>
+                    </StackPanel>
+                </DockPanel>
+            </materialDesign:Card>
+
+            <materialDesign:Card Grid.Row="1" Margin="5" VerticalAlignment="Top" Padding="6">
+                <StackPanel Margin="0 10">
+                    <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}" Text="Đổi mật khẩu " VerticalAlignment="Center"/>
+                    <DockPanel Margin="0 6 0 0">
+                        <Button Style="{StaticResource MaterialDesignRaisedButton}" ToolTip="Đổi mật khẩu"
+                        DockPanel.Dock="Right" Command="{Binding ChangePasswordCommand}">
+                            <materialDesign:PackIcon Kind="KeyChange" Height="25" Width="25"/>
+                        </Button>
+                        <StackPanel  Orientation="Horizontal">
+                            <PasswordBox Width="250"
+                                x:Name="pwOld" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                                materialDesign:HintAssist.Hint="Mật khẩu cũ"
+                                materialDesign:TextFieldAssist.HasClearButton="True">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PasswordChanged">
+                                        <i:InvokeCommandAction Command="{Binding OldPassChangedCommand}"
+                                                               CommandParameter="{Binding ElementName=pwOld}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </PasswordBox>
+                            <PasswordBox Width="250" Margin="10 0 0 0"
+                                x:Name="pwNew" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                                materialDesign:HintAssist.Hint="Mật khẩu mới"
+                                materialDesign:TextFieldAssist.HasClearButton="True">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PasswordChanged">
+                                        <i:InvokeCommandAction Command="{Binding NewPassChangedCommand}"
+                                                               CommandParameter="{Binding ElementName=pwNew}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </PasswordBox>
+                        </StackPanel>
+                    </DockPanel>
+                </StackPanel>
+            </materialDesign:Card>
+
+        </Grid>
         
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" x:Name="grAdmin" Visibility="{Binding AdminExtra}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -44,7 +108,7 @@
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"  
                         VerticalAlignment="Center" 
                         Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                    <ComboBox Margin="5 5 20 -5" Width="150"
+                    <ComboBox Margin="5 5 20 -5" Width="150" 
                               materialDesign:HintAssist.Hint="Quyền"
                               ItemsSource="{Binding Role}"
                               DisplayMemberPath="DisplayName"
@@ -53,8 +117,6 @@
                         x:Name="UserPassword" 
                         materialDesign:HintAssist.Hint="Mật khẩu" 
                         materialDesign:TextFieldAssist.HasClearButton="True" 
-                        materialDesign:HintAssist.Foreground="Green" 
-                        materialDesign:TextFieldAssist.UnderlineBrush="Green" 
                         Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
                         VerticalAlignment="Center" >
                         <i:Interaction.Triggers>

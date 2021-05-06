@@ -190,8 +190,9 @@ namespace Thesis_SCADA.ViewModel
             GlobalVar.Ins.DataChanged -= OnModelChanged;
             GlobalVar.Ins.DataChanged += OnModelChanged;
 
-            LoadedCommand = new RelayCommand<object>((p) => { return true; }, (p) => {
-                //GlobalVar.Ins.DataChanged += OnModelChanged;
+            LoadedCommand = new RelayCommand<Grid>((p) => { return true; }, (p) => {
+                var role = GlobalVar.Ins.User.UserRole.Id;
+                if (role == 5) p.Visibility = Visibility.Collapsed;
             });
 
             UnloadedCommand = new RelayCommand<object>((p) => { return true; }, (p) => {

@@ -4,8 +4,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Thesis_SCADA.Pages"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="670" d:DesignWidth="1366"
       Title="Setting"
       
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -19,14 +20,14 @@
         Name="settingPage"
         DataContext="{StaticResource SettingViewModel}">
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
-    <Grid Margin="6">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        
-        <materialDesign:Card Grid.Row="0" Padding="6" Margin="0 20 0 0">
+    <WrapPanel Margin="6 20 6 6" Orientation="Vertical">
+        <materialDesign:Card Padding="6" Margin="6 0 5 10" Width="666">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -45,5 +46,91 @@
             </Grid>
         </materialDesign:Card>
 
-    </Grid>
+        <materialDesign:Card Grid.Row="0" Grid.Column="1" Padding="6" Margin="6 0 5 10" Width="666">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"  Style="{StaticResource MaterialDesignHeadline6TextBlock}" Margin="0 10 0 15"
+                           Text="KẾT NỐI IPC" FontSize="20"/>
+                <Grid Grid.Row="1" Height="30">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Margin="0 0 0 5"
+                           Text="Địa chỉ AMS NetID: " VerticalAlignment="Bottom" />
+                    <TextBox Grid.Column="1" Margin="15 0 0 0" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left"
+                             Text="{Binding ConNetId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                </Grid>
+                <Grid Grid.Row="2" Height="30">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Margin="0 0 0 5"
+                           Text="Cổng: " VerticalAlignment="Bottom" />
+                    <TextBox Grid.Column="1" Margin="15 0 0 0" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left"
+                             Text="{Binding ConPort, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                </Grid>
+                <Grid Grid.Row="4" Height="30" Margin="0 6 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Style="{StaticResource MaterialDesignRaisedButton}"
+                        ToolTip="Kết nối" Content="_KẾT NỐI" Width="100" HorizontalAlignment="Right" Margin="0 0"
+                        Command="{Binding ConnectCommand}"/>
+                    <Button Grid.Column="1" Style="{StaticResource MaterialDesignRaisedButton}"
+                        ToolTip="Ngắt kết nối" Content="_NGẮT" Width="100" HorizontalAlignment="Left" Margin="15 0"
+                        Command="{Binding DisconnectCommand}"/>
+                </Grid>
+            </Grid>
+        </materialDesign:Card>
+
+        <materialDesign:Card Grid.Row="0" Grid.Column="1" Padding="6" Margin="6 0 5 10" Width="666">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"  Style="{StaticResource MaterialDesignHeadline6TextBlock}" Margin="0 10 0 15"
+                           Text="CHU KỲ QUÉT (s)" FontSize="20"/>
+                <Grid Grid.Row="2" Height="30" Margin="0 5 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Margin="0 0 0 5"
+                           Text="Chu kỳ lưu trữ CSDL: " VerticalAlignment="Bottom" />
+                    <TextBox Grid.Column="1" Margin="15 0 0 0" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left"
+                             Text="{Binding DbCycle, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <Button Grid.Column="2" Style="{StaticResource MaterialDesignRaisedButton}"
+                        ToolTip="Đặt" Content="ĐẶ_T" Width="80" HorizontalAlignment="Left" Margin="15 0 0 0"
+                        Command="{Binding SetDBCycleCommand}"/>
+                </Grid>
+                <Grid Grid.Row="1" Height="30" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Margin="0 0 0 5"
+                           Text="Chu kỳ quét IPC: " VerticalAlignment="Bottom" />
+                    <TextBox Grid.Column="1" Margin="15 0 0 0" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left"
+                             Text="{Binding ConCycle, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <Button Grid.Column="2" Style="{StaticResource MaterialDesignRaisedButton}"
+                        ToolTip="Đặt" Content="ĐẶ_T" Width="80" HorizontalAlignment="Left" Margin="15 0 0 0"
+                        Command="{Binding SetConCycleCommand}"/>
+                </Grid>
+            </Grid>
+        </materialDesign:Card>
+    </WrapPanel>
 </Page>

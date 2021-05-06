@@ -31,6 +31,37 @@ namespace Thesis_SCADA.Model
 
         private IPCDataService ipcDataService;
 
+        #region Settings
+        private string netID = "";
+        public string NetID { get => netID; set { netID = value;  } }
+
+        private int port = 851;
+        public int Port { get => port; set { port = value;  } }
+
+        private int ipcCycle;
+        public int IpcCycle { get => (ipcCycle = ipcDataService.ScanCycle); set { ipcCycle = value; ipcDataService.ScanCycle = ipcCycle; } }
+
+        private int dbCycle = 1000;
+        public int DbCycle { get => dbCycle; set
+            {
+                dbCycle = value;
+                try
+                {
+                    timer.Stop();
+                    timer.Interval = dbCycle;
+                }
+                finally
+                {
+                    timer.Start();
+                }
+            }
+        }
+
+        private Users user;
+        public Users User { get => (user); set { user = value; } }
+
+        #endregion
+
         #region Data
         private MainInterface ipcData;
         public MainInterface IpcData { get => ipcData; set {ipcData = value; OnDataChanged(); } }
@@ -84,12 +115,18 @@ namespace Thesis_SCADA.Model
             ipcDataService.ValuesRefreshed += OnIpcDataRefreshed;
             ipcDataService.EventOccured += OnIpcEventOccured;
 
-            if (ipcDataService.Connect("", 851))//"5.57.208.6.1.1"
+            timer = new System.Timers.Timer();
+            timer.Interval = DbCycle;
+            timer.Elapsed -= OnTimerElapsed;
+            timer.Elapsed += OnTimerElapsed;
+
+            Connect(NetID, Port, false);
+        }
+
+        public bool Connect(string netid, int port, bool showmsg)
+        {
+            if (ipcDataService.Connect(netid, port, showmsg))//"5.57.208.6.1.1"
             {
-                timer = new System.Timers.Timer();
-                timer.Interval = 500;
-                timer.Elapsed -= OnTimerElapsed;
-                timer.Elapsed += OnTimerElapsed;
                 timer.Start();
 
                 try
@@ -100,7 +137,9 @@ namespace Thesis_SCADA.Model
                 {
                     MessageBox.Show("Không có SQL server của cơ sở dữ liệu: " + e.ToString(), "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+                return true;
             }
+            else return false;
         }
 
         private async void FirstUpdate()
@@ -109,6 +148,7 @@ namespace Thesis_SCADA.Model
             {
                 Thread.Sleep(1000);
                 var le = ipcDataService.GetAllEvents();
+                if (le == null) return;
                 if (!le.Any()) return;
 
                 var max = DataProvider.Ins.DB.ProcessEvent.Max(x => x.TimeRaised);
@@ -134,6 +174,12 @@ namespace Thesis_SCADA.Model
 
                 DataProvider.Ins.DB.SaveChanges();
             });
+        }
+
+        public void Disconnect()
+        {
+            ipcDataService.Disconnect();
+            timer.Stop();
         }
 
         public async void WriteData<T> (string varname, T value)
