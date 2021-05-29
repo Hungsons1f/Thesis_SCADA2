@@ -33,6 +33,7 @@ namespace Thesis_SCADA.ViewModel
                             CondensePumpObj = componentModel?.Components?.CondensePump;
                             SupplyPumpObj = componentModel?.Components?.SupplyPump;
                             CircularPumpObj = componentModel?.Components?.CircularPump;
+                            InterPumpObj = componentModel?.Components?.InterPump;
                             ForceFan1Obj = componentModel?.Components?.ForceFan1;
                             ForceFan2Obj = componentModel?.Components?.ForceFan2;
                             ForceFan3Obj = componentModel?.Components?.ForceFan3;
@@ -48,6 +49,7 @@ namespace Thesis_SCADA.ViewModel
                             Condenser = componentModel?.Components?.Condenser;
                             Turbine = componentModel?.Components?.Turbine;
                             Furnace = componentModel?.Components?.Furnace;
+                            InterTank = componentModel?.Components?.InterTank;
                         });
                     };
 
@@ -101,6 +103,12 @@ namespace Thesis_SCADA.ViewModel
 
         private string circularPumpTag = "PnID.CircularPump";
         public string CircularPumpTag { get => circularPumpTag; }
+
+        private aFb_Motor interPumpObj = new aFb_Motor();
+        public aFb_Motor InterPumpObj { get => interPumpObj; set { interPumpObj = value; OnPropertyChanged(); } }
+
+        private string interPumpTag = "PnID.InterPump";
+        public string InterPumpTag { get => interPumpTag; }
 
         private aFb_Motor forceFan1Obj = new aFb_Motor();
         public aFb_Motor ForceFan1Obj { get => forceFan1Obj; set { forceFan1Obj = value; OnPropertyChanged(); } }
@@ -164,6 +172,9 @@ namespace Thesis_SCADA.ViewModel
 
         private aT_Turbine turbine = new aT_Turbine();
         public aT_Turbine Turbine { get => turbine; set { turbine = value; OnPropertyChanged(); } }
+
+        private aT_Tank interTank = new aT_Tank();
+        public aT_Tank InterTank { get => interTank; set { interTank = value; OnPropertyChanged(); } }
 
         #endregion
         #endregion

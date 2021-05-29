@@ -28,7 +28,7 @@ namespace Thesis_SCADA.ViewModel
                         {
                             CondensePumpPress = model?.CondensePumpPress;
                             SupplyPumpPress = model?.SupplyPumpPress;
-                            CondenserTemp = model?.CondenserTemp;
+                            //CondenserTemp = model?.CondenserTemp;
                             LPHeaterTemp = model?.LPHeaterTemp;
                             DeaeratorTemp = model?.DeaeratorTemp;
                             HPHeaterTemp = model?.HPHeaterTemp;
@@ -38,9 +38,12 @@ namespace Thesis_SCADA.ViewModel
                             MaxSpeed_CondensePump = (float)model?.MaxSpeed_CondensePump;
                             MaxSpeed_SupplyPump = (float)model?.MaxSpeed_SupplyPump;
                             MaxSpeed_CircularPump = (float)model?.MaxSpeed_CircularPump;
+                            MaxSpeed_InterPump = (float)model?.MaxSpeed_InterPump;
                             MaxSpeed_ForceFan1 = (float)model?.MaxSpeed_ForceFan1;
                             MaxSpeed_ForceFan2 = (float)model?.MaxSpeed_ForceFan2;
                             MaxSpeed_ForceFan3 = (float)model?.MaxSpeed_ForceFan3;
+                            Condenser_Htemp = (float)model?.Condenser_Htemp;
+                            Condenser_Ltemp = (float)model?.Condenser_Ltemp;
                             SampleTime = (float)model?.SampleTime;
                         });
                     };
@@ -57,8 +60,8 @@ namespace Thesis_SCADA.ViewModel
         private aS_PidParameter supplyPumpPress = new aS_PidParameter();
         public aS_PidParameter SupplyPumpPress { get => supplyPumpPress; set { supplyPumpPress = value; OnPropertyChanged(); } }
 
-        private aS_PidParameter condenserTemp = new aS_PidParameter();
-        public aS_PidParameter CondenserTemp { get => condenserTemp; set { condenserTemp = value; OnPropertyChanged(); } }
+        //private aS_PidParameter condenserTemp = new aS_PidParameter();
+        //public aS_PidParameter CondenserTemp { get => condenserTemp; set { condenserTemp = value; OnPropertyChanged(); } }
 
         private aS_PidParameter lPHeaterTemp = new aS_PidParameter();
         public aS_PidParameter LPHeaterTemp { get => lPHeaterTemp; set { lPHeaterTemp = value; OnPropertyChanged(); } }
@@ -84,6 +87,9 @@ namespace Thesis_SCADA.ViewModel
         private float maxSpeed_CircularPump = 0;
         public float MaxSpeed_CircularPump { get => maxSpeed_CircularPump; set { maxSpeed_CircularPump = value; OnPropertyChanged(); } }
 
+        private float maxSpeed_InterPump = 0;
+        public float MaxSpeed_InterPump { get => maxSpeed_InterPump; set { maxSpeed_InterPump = value; OnPropertyChanged(); } }
+
         private float maxSpeed_ForceFan1 = 0;
         public float MaxSpeed_ForceFan1 { get => maxSpeed_ForceFan1; set { maxSpeed_ForceFan1 = value; OnPropertyChanged(); } }
 
@@ -92,6 +98,12 @@ namespace Thesis_SCADA.ViewModel
 
         private float maxSpeed_ForceFan3 = 0;
         public float MaxSpeed_ForceFan3 { get => maxSpeed_ForceFan3; set { maxSpeed_ForceFan3 = value; OnPropertyChanged(); } }
+
+        private float condenser_Htemp = 0;
+        public float Condenser_Htemp { get => condenser_Htemp; set { condenser_Htemp = value; OnPropertyChanged(); } }
+
+        private float condenser_Ltemp = 0;
+        public float Condenser_Ltemp { get => condenser_Ltemp; set { condenser_Ltemp = value; OnPropertyChanged(); } }
 
         private float sampleTime = 0;
         public float SampleTime { get => sampleTime; set { sampleTime = value; OnPropertyChanged(); } }
@@ -118,10 +130,9 @@ namespace Thesis_SCADA.ViewModel
         public ICommand TnSupplyPumpCommand { get; set; }
 
         public ICommand MaxSpeedCircularPumpCommand { get; set; }
-        public ICommand KpCircularPumpCommand { get; set; }
-        public ICommand TiCircularPumpCommand { get; set; }
-        public ICommand TdCircularPumpCommand { get; set; }
-        public ICommand TnCircularPumpCommand { get; set; }
+        public ICommand HICircularPumpCommand { get; set; }
+        public ICommand LOCircularPumpCommand { get; set; }
+        public ICommand MaxSpeedInterPumpCommand { get; set; }
 
         public ICommand MaxSpeedForceFan1Command { get; set; }
         public ICommand MaxSpeedForceFan2Command { get; set; }
@@ -229,24 +240,19 @@ namespace Thesis_SCADA.ViewModel
                 GlobalVar.Ins.WriteData<double>("Interfacex.Parameters.MaxSpeed_CircularPump", double.Parse(p, CultureInfo.InvariantCulture));
             });
 
-            KpCircularPumpCommand = new RelayCommand<string>((p) => { return true; }, (p) => {
+            HICircularPumpCommand = new RelayCommand<string>((p) => { return true; }, (p) => {
                 if (p == null || p == "") return;
-                GlobalVar.Ins.WriteData<double>("Interfacex.Parameters.PID_Condenser_Temp.Kp", double.Parse(p, CultureInfo.InvariantCulture));
+                GlobalVar.Ins.WriteData<double>("Interfacex.Parameters.Condenser_Htemp", double.Parse(p, CultureInfo.InvariantCulture));
             });
 
-            TiCircularPumpCommand = new RelayCommand<string>((p) => { return true; }, (p) => {
+            LOCircularPumpCommand = new RelayCommand<string>((p) => { return true; }, (p) => {
                 if (p == null || p == "") return;
-                GlobalVar.Ins.WriteData<double>("Interfacex.Parameters.PID_Condenser_Temp.Ti", double.Parse(p, CultureInfo.InvariantCulture));
+                GlobalVar.Ins.WriteData<double>("Interfacex.Parameters.Condenser_Ltemp", double.Parse(p, CultureInfo.InvariantCulture));
             });
 
-            TdCircularPumpCommand = new RelayCommand<string>((p) => { return true; }, (p) => {
+            MaxSpeedInterPumpCommand = new RelayCommand<string>((p) => { return true; }, (p) => {
                 if (p == null || p == "") return;
-                GlobalVar.Ins.WriteData<double>("Interfacex.Parameters.PID_Condenser_Temp.Td", double.Parse(p, CultureInfo.InvariantCulture));
-            });
-
-            TnCircularPumpCommand = new RelayCommand<string>((p) => { return true; }, (p) => {
-                if (p == null || p == "") return;
-                GlobalVar.Ins.WriteData<double>("Interfacex.Parameters.PID_Condenser_Temp.Tn", double.Parse(p, CultureInfo.InvariantCulture));
+                GlobalVar.Ins.WriteData<double>("Interfacex.Parameters.MaxSpeed_InterPump", double.Parse(p, CultureInfo.InvariantCulture));
             });
 
             MaxSpeedForceFan1Command = new RelayCommand<string>((p) => { return true; }, (p) => {

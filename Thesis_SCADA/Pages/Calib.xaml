@@ -84,10 +84,11 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
                     <!--Condense Pump-->
-                    <materialDesign:Card Grid.Column="0" Margin="50 30 20 105" >
+                    <materialDesign:Card Grid.Column="0" Margin="30 30 15 105" >
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
@@ -104,7 +105,7 @@
                             <StackPanel Grid.Row="1">
                                 <uc:ucComponent Height="100" Width="100" Margin="0 20 0 0" NormalSymbol="{StaticResource Pump}"/>
                                 <materialDesign:ColorZone Mode="Standard" Background="{x:Null}">
-                                    <TextBlock HorizontalAlignment="Center" Margin="0 20 0 0"
+                                    <TextBlock HorizontalAlignment="Center" Margin="20 15 20 0" TextWrapping="Wrap" TextAlignment="Center"
                                            Style="{StaticResource MaterialDesignBody2TextBlock}"
                                            Text="Điều khiển áp suất Bình gia nhiệt hạ áp và Bình khử khí"/>
                                 </materialDesign:ColorZone>
@@ -118,7 +119,7 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tốc độ tối đa" VerticalAlignment="Center" />
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tốc độ max" VerticalAlignment="Center"/>
                                     <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
                                              Text="{Binding MaxSpeed_CondensePump}" FontSize="16" IsReadOnly="True"/>
                                     <TextBox x:Name="tConPumpMS" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
@@ -207,7 +208,7 @@
                     </materialDesign:Card>
 
                     <!--Supply Pump-->
-                    <materialDesign:Card Grid.Column="1" Margin="30 30 20 105" >
+                    <materialDesign:Card Grid.Column="1" Margin="15 30 15 105" >
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
@@ -224,7 +225,7 @@
                             <StackPanel Grid.Row="1">
                                 <uc:ucComponent Height="100" Width="100" Margin="0 20 0 0" NormalSymbol="{StaticResource Pump}"/>
                                 <materialDesign:ColorZone Mode="Standard" Background="{x:Null}">
-                                    <TextBlock HorizontalAlignment="Center" Margin="0 20 0 0"
+                                    <TextBlock HorizontalAlignment="Center" Margin="30 15 30 0" TextWrapping="Wrap" TextAlignment="Center"
                                            Style="{StaticResource MaterialDesignBody2TextBlock}"
                                            Text="Điều khiển áp suất Bình gia nhiệt cao áp và Lò hơi"/>
                                 </materialDesign:ColorZone>
@@ -238,7 +239,7 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tốc độ tối đa" VerticalAlignment="Center" />
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tốc độ max" VerticalAlignment="Center" />
                                     <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
                                              Text="{Binding MaxSpeed_SupplyPump}" FontSize="16" IsReadOnly="True"/>
                                     <TextBox x:Name="tSupPumpMS" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
@@ -327,7 +328,7 @@
                     </materialDesign:Card>
 
                     <!--Circular Pump-->
-                    <materialDesign:Card Grid.Column="2" Margin="30 30 50 105" >
+                    <materialDesign:Card Grid.Column="2" Margin="15 30 15 105" >
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
@@ -358,7 +359,7 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tốc độ tối đa" VerticalAlignment="Center" />
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tốc độ max" VerticalAlignment="Center" />
                                     <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
                                              Text="{Binding MaxSpeed_CircularPump}" FontSize="16" IsReadOnly="True"/>
                                     <TextBox x:Name="tCirPumpMS" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
@@ -376,14 +377,14 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Kp" VerticalAlignment="Center" />
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="HI" VerticalAlignment="Center" />
                                     <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
-                                             Text="{Binding CondenserTemp.Kp}" FontSize="16" IsReadOnly="True"/>
-                                    <TextBox x:Name="tCirPumpKp" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding Condenser_Htemp}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tCirPumpHI" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
                                              Text="" FontSize="16">
                                         <TextBox.InputBindings>
-                                            <KeyBinding Key="Return" Command="{Binding KpCircularPumpCommand}"                                                     
-                                                        CommandParameter="{Binding ElementName=tCirPumpKp, Path=Text}"/>
+                                            <KeyBinding Key="Return" Command="{Binding HICircularPumpCommand}"                                                     
+                                                        CommandParameter="{Binding ElementName=tCirPumpHI, Path=Text}"/>
                                         </TextBox.InputBindings>
                                     </TextBox>
                                 </Grid>
@@ -394,17 +395,48 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Ti" VerticalAlignment="Center" />
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="LO" VerticalAlignment="Center" />
                                     <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
-                                             Text="{Binding CondenserTemp.Ti}" FontSize="16" IsReadOnly="True"/>
-                                    <TextBox x:Name="tCirPumpTi" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding Condenser_Ltemp}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tCirPumpLO" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
                                              Text="" FontSize="16">
                                         <TextBox.InputBindings>
-                                            <KeyBinding Key="Return" Command="{Binding TiCircularPumpCommand}"                                          
-                                                        CommandParameter="{Binding ElementName=tCirPumpTi, Path=Text}"/>
+                                            <KeyBinding Key="Return" Command="{Binding LOCircularPumpCommand}"                                          
+                                                        CommandParameter="{Binding ElementName=tCirPumpLO, Path=Text}"/>
                                         </TextBox.InputBindings>
                                     </TextBox>
                                 </Grid>
+                                <Separator Margin="10"/>
+                                
+                            </StackPanel>
+                        </Grid>
+                    </materialDesign:Card>
+
+                    <!--Intermediate Pump-->
+                    <materialDesign:Card Grid.Column="3" Margin="15 30 30 105" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition />
+                                <RowDefinition Height="280"/>
+                            </Grid.RowDefinitions>
+
+                            <materialDesign:ColorZone Mode="SecondaryMid" Grid.Row="0" Background="{Binding Source={StaticResource GlobalColor}, Path=ClGreen}">
+                                <TextBlock HorizontalAlignment="Center" Margin="10" 
+                                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                       Text="BƠM TRUNG GIAN" />
+                            </materialDesign:ColorZone>
+
+                            <StackPanel Grid.Row="1">
+                                <uc:ucComponent Height="100" Width="100" Margin="0 20 0 0" NormalSymbol="{StaticResource Pump}"/>
+                                <materialDesign:ColorZone Mode="Standard" Background="{x:Null}">
+                                    <TextBlock HorizontalAlignment="Center" Margin="0 20 0 0"
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                           Text="Điều khiển mức Bồn trung gian"/>
+                                </materialDesign:ColorZone>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="2" Background="#aae6ee9c">
                                 <Separator Margin="10"/>
                                 <Grid Margin="20 0">
                                     <Grid.ColumnDefinitions>
@@ -412,36 +444,17 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Td" VerticalAlignment="Center" />
+                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tốc độ max" VerticalAlignment="Center" />
                                     <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
-                                             Text="{Binding CondenserTemp.Td}" FontSize="16" IsReadOnly="True"/>
-                                    <TextBox x:Name="tCirPumpTd" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
+                                             Text="{Binding MaxSpeed_InterPump}" FontSize="16" IsReadOnly="True"/>
+                                    <TextBox x:Name="tIntPumpMS" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
                                              Text="" FontSize="16">
                                         <TextBox.InputBindings>
-                                            <KeyBinding Key="Return" Command="{Binding TdCircularPumpCommand}"                                                     
-                                                        CommandParameter="{Binding ElementName=tCirPumpTd, Path=Text}"/>
+                                            <KeyBinding Key="Return" Command="{Binding MaxSpeedInterPumpCommand}"                                                     
+                                                        CommandParameter="{Binding ElementName=tIntPumpMS, Path=Text}"/>
                                         </TextBox.InputBindings>
                                     </TextBox>
                                 </Grid>
-                                <Separator Margin="10"/>
-                                <Grid Margin="20 0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Tn" VerticalAlignment="Center" />
-                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
-                                             Text="{Binding CondenserTemp.Tn}" FontSize="16" IsReadOnly="True"/>
-                                    <TextBox x:Name="tCirPumpTn" Grid.Column="2" Style="{StaticResource MaterialDesignOutlinedTextBox}"  Padding="8 5" Margin="5 0"
-                                             Text="" FontSize="16">
-                                        <TextBox.InputBindings>
-                                            <KeyBinding Key="Return" Command="{Binding TnCircularPumpCommand}"                                                 
-                                                        CommandParameter="{Binding ElementName=tCirPumpTn, Path=Text}"/>
-                                        </TextBox.InputBindings>
-                                    </TextBox>
-                                </Grid>
-                                <Separator Margin="10"/>
                             </StackPanel>
                         </Grid>
                     </materialDesign:Card>

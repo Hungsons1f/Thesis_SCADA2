@@ -294,35 +294,35 @@ namespace Thesis_SCADA.ViewModel
                     CirFlow.Points.RemoveAt(0);
                 }
 
-                FurTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press));
+                FurTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.Furnace_Temp));
 
-                LPHeaterTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press+1));
-                DeaeratorTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press+2));
-                HPHeaterTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press+3));
+                LPHeaterTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.HLPHeater_Temp));
+                DeaeratorTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.HDeaerator_Temp));
+                HPHeaterTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.HHPHeater_Temp));
 
-                LPHeaterPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press+1));
-                HPHeaterPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press+2));
-                DeaeratorPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press+3));
+                LPHeaterPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.HLPHeater_Press));
+                HPHeaterPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.HDeaerator_Press));
+                DeaeratorPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.HHPHeater_Press));
 
-                ConPumpFlow.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 2));
-                SupPumpFlow.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 3));
+                ConPumpFlow.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.PCondense_Flow));
+                SupPumpFlow.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.PSupply_Flow));
 
-                ConPumpPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 2));
-                SupPumpPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 3));
+                ConPumpPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.PCondense_Press));
+                SupPumpPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.PSupply_Press));
 
-                BoiTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 0));
-                TurHTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 1));
-                TurITemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 2));
-                TurLTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 3));
+                BoiTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.HBoiler_Temp));
+                TurHTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineH_Temp));
+                TurITemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineI_Temp));
+                TurLTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Temp));
 
-                BoiPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 0));
-                TurHPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 1));
-                TurIPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 2));
-                TurLPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 3));
+                BoiPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.HBoiler_Press + 0));
+                TurHPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineH_Press));
+                TurIPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineI_Press));
+                TurLPress.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press));
 
-                TurSpeed.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 3));
-                ConTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 3));
-                CirFlow.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.TurbineL_Press + 3));
+                TurSpeed.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.Turbine_Freq));
+                ConTemp.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.HCondenser_Temp));
+                CirFlow.Points.Add(new DataPoint(DateTimeAxis.ToDouble(GlobalVar.Ins.DbProcessdata.Timestamp), (double)GlobalVar.Ins.DbProcessdata.PCircular_Flow));
 
                 Updated = true;
 

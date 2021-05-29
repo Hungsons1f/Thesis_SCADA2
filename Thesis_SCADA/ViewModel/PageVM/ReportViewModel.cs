@@ -275,6 +275,8 @@ namespace Thesis_SCADA.ViewModel
                     FormatComponentInPDF(GlobalVar.Ins.IpcData.Components.SupplyPump).ForEach(i => table.AddCell(new PdfPCell(new Phrase(i, myfont12))));
                     table.AddCell(new PdfPCell(new Phrase("Bơm tuần hoàn", myfont12)));
                     FormatComponentInPDF(GlobalVar.Ins.IpcData.Components.CircularPump).ForEach(i => table.AddCell(new PdfPCell(new Phrase(i, myfont12))));
+                    table.AddCell(new PdfPCell(new Phrase("Bơm trung gian", myfont12)));
+                    FormatComponentInPDF(GlobalVar.Ins.IpcData.Components.InterPump).ForEach(i => table.AddCell(new PdfPCell(new Phrase(i, myfont12))));
                     table.AddCell(new PdfPCell(new Phrase("Van GNHA", myfont12)));
                     FormatComponentInPDF(GlobalVar.Ins.IpcData.Components.LPHValve).ForEach(i => table.AddCell(new PdfPCell(new Phrase(i, myfont12))));
                     table.AddCell(new PdfPCell(new Phrase("Van BKK", myfont12)));

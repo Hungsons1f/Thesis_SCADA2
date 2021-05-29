@@ -47,7 +47,7 @@
             <ContentControl Height="91" Width="125" ContentTemplate="{StaticResource Coal-feeder}" Canvas.Left="55" Canvas.Top="444" />
             <ContentControl Height="74" Width="132" ContentTemplate="{StaticResource Condenser}" Canvas.Left="695" Canvas.Top="451" />
             <ContentControl Height="90" Width="84" ContentTemplate="{StaticResource Cooling-tower}" Canvas.Left="1097" Canvas.Top="435" />
-            <ContentControl Height="78" Width="146" ContentTemplate="{StaticResource Water-tank}" Canvas.Left="1063" Canvas.Top="572" />
+            <ContentControl Height="105" Width="100" ContentTemplate="{StaticResource Water-tank}" Canvas.Left="980" Canvas.Top="555" />
             <ContentControl Height="239" Width="139" ContentTemplate="{StaticResource Boiler}" Canvas.Left="655" Canvas.Top="51" />
             <ContentControl Height="50" Width="80" ContentTemplate="{StaticResource Heater}" Canvas.Left="485" Canvas.Top="65" />
             <ContentControl Height="50" Width="80" ContentTemplate="{StaticResource Heater}" Canvas.Left="120" Canvas.Top="205" />
@@ -74,7 +74,7 @@
             </uc:ucComponent>
             <uc:ucComponent Height="55" Width="60" NormalSymbol="{StaticResource Pump}" 
                             RunSymbol="{StaticResource PumpActive}" FaultSymbol="{StaticResource PumpFault}" 
-                            Faceplate="{Binding ElementName=CircularPump}" Canvas.Left="895" Canvas.Top="540" RenderTransformOrigin="0.5,0.5">
+                            Faceplate="{Binding ElementName=CircularPump}" Canvas.Left="870" Canvas.Top="540" RenderTransformOrigin="0.5,0.5">
                 <ContentControl.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleY="1" ScaleX="-1"/>
@@ -87,6 +87,24 @@
                     <MultiBinding Converter="{StaticResource ComponentStatusConverter}">
                         <Binding Source="{StaticResource OverviewViewModel}" Path="CircularPumpObj.RunFeedback"/>
                         <Binding Source="{StaticResource OverviewViewModel}" Path="CircularPumpObj.Fault"/>
+                    </MultiBinding>
+                </uc:ucComponent.Data>
+            </uc:ucComponent>
+            <uc:ucComponent Height="55" Width="60" NormalSymbol="{StaticResource Pump}" 
+                            RunSymbol="{StaticResource PumpActive}" FaultSymbol="{StaticResource PumpFault}" 
+                            Faceplate="{Binding ElementName=InterPump}" Canvas.Left="1135" Canvas.Top="590" RenderTransformOrigin="0.5,0.5">
+                <ContentControl.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="1" ScaleX="-1"/>
+                        <SkewTransform AngleY="0" AngleX="0"/>
+                        <RotateTransform Angle="0"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </ContentControl.RenderTransform>
+                <uc:ucComponent.Data>
+                    <MultiBinding Converter="{StaticResource ComponentStatusConverter}">
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="InterPumpObj.RunFeedback"/>
+                        <Binding Source="{StaticResource OverviewViewModel}" Path="InterPumpObj.Fault"/>
                     </MultiBinding>
                 </uc:ucComponent.Data>
             </uc:ucComponent>
@@ -192,11 +210,12 @@
             <ar:ArrowPolyline Points="1105 265 1105 310" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
             <ar:ArrowPolyline Points="1210 265 1210 300 1240 300" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
 
-            <ar:ArrowPolyline Points="1060 615 930 615 930 590" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
-            <ar:ArrowPolyline Points="900 555 900 515 830 515 " StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="980 615 905 615 905 590" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="875 555 875 515 830 515 " StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
             <ar:ArrowPolyline Points="830 475 1105 475 " StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
             <ar:ArrowPolyline Points="1165 475 1250 475 " StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
-            <ar:ArrowPolyline Points="1250 615 1210 615 " StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="1250 615 1190 615 " StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
+            <ar:ArrowPolyline Points="1140 605 1080 605 " StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClBlue, Mode=OneWay}"/>
 
             <ar:ArrowPolyline Points="40 100 40 175 80 175" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
             <ar:ArrowPolyline Points="120 175 145 175 145 200" StrokeThickness="2" Stroke="{Binding Source={StaticResource GlobalColor}, Path=ClRed, Mode=OneWay}"/>
@@ -358,8 +377,8 @@
             <uc:ucWatchBox Width="75" Canvas.Left="507" Canvas.Top="425" Tag="oC"
                            Data="{Binding Condenser.Temperature}"/>
 
-            <uc:ucWatchBoxRod Canvas.Left="896" Canvas.Top="517" Width="30"/>
-            <uc:ucWatchBox Width="75" Canvas.Left="926" Canvas.Top="507" Tag="m3/h"
+            <uc:ucWatchBoxRod Canvas.Left="871" Canvas.Top="517" Width="30"/>
+            <uc:ucWatchBox Width="75" Canvas.Left="901" Canvas.Top="507" Tag="m3/h"
                            Data="{Binding Condenser.InFlow}"/>
 
             <uc:ucWatchBoxRod Canvas.Left="429" Canvas.Top="539" Width="20" RenderTransformOrigin="0,0.5">
@@ -386,6 +405,9 @@
             <uc:ucPopupPump x:Name="CircularPump" Tag="Bơm tuần hoàn"  Visibility="Collapsed" Canvas.Left="953" Canvas.Top="370"
                             MotorObject="{Binding Source={StaticResource OverviewViewModel}, Path=CircularPumpObj}"
                             Prefix="{Binding Source={StaticResource OverviewViewModel}, Path=CircularPumpTag}"/>
+            <uc:ucPopupPump x:Name="InterPump" Tag="Bơm trung gian"  Visibility="Collapsed" Canvas.Left="1022" Canvas.Top="304"
+                            MotorObject="{Binding Source={StaticResource OverviewViewModel}, Path=InterPumpObj}"
+                            Prefix="{Binding Source={StaticResource OverviewViewModel}, Path=InterPumpTag}"/>
             <uc:ucPopupFan x:Name="ForceFan1" Tag="Bơm cấp 1"  Visibility="Collapsed" Canvas.Left="360" Canvas.Top="300"
                             MotorObject="{Binding Source={StaticResource OverviewViewModel}, Path=ForceFan1Obj}"
                             Prefix="{Binding Source={StaticResource OverviewViewModel}, Path=ForceFan1Tag}"/>
@@ -420,7 +442,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                
+
                 <materialDesign:PopupBox Grid.Row="1" Grid.Column="1" Width="40" Height="40" Canvas.Right="82" Canvas.Top="90" HorizontalAlignment="Center"
                 Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
                 PlacementMode="LeftAndAlignMiddles" 

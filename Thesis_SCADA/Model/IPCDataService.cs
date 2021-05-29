@@ -30,7 +30,7 @@ namespace Thesis_SCADA.Model
 
             public int CondensePumpPress;
             public int SupplyPumpPress;
-            public int CondenserTemp;
+            //public int CondenserTemp;
             public int LPHeaterTemp;
             public int DeaeratorTemp;
             public int HPHeaterTemp;
@@ -40,9 +40,13 @@ namespace Thesis_SCADA.Model
             public int MaxSpeed_CondensePump;
             public int MaxSpeed_SupplyPump;
             public int MaxSpeed_CircularPump;
+            public int MaxSpeed_InterPump;
             public int MaxSpeed_ForceFan1;
             public int MaxSpeed_ForceFan2;
             public int MaxSpeed_ForceFan3;
+
+            public int Condenser_Htemp;
+            public int Condenser_Ltemp;
 
             public int SampleTime;
         }
@@ -157,7 +161,7 @@ namespace Thesis_SCADA.Model
 
                     notificationHandler.CondensePumpPress = client.AddDeviceNotificationEx("Interfacex.Parameters.PID_CondensePump_Press", AdsTransMode.OnChange, 200, 0, null, typeof(aS_PidParameter));
                     notificationHandler.SupplyPumpPress = client.AddDeviceNotificationEx("Interfacex.Parameters.PID_SupplyPump_Press", AdsTransMode.OnChange, 200, 0, null, typeof(aS_PidParameter));
-                    notificationHandler.CondenserTemp = client.AddDeviceNotificationEx("Interfacex.Parameters.PID_Condenser_Temp", AdsTransMode.OnChange, 200, 0, null, typeof(aS_PidParameter));
+                    //notificationHandler.CondenserTemp = client.AddDeviceNotificationEx("Interfacex.Parameters.PID_Condenser_Temp", AdsTransMode.OnChange, 200, 0, null, typeof(aS_PidParameter));
                     notificationHandler.LPHeaterTemp = client.AddDeviceNotificationEx("Interfacex.Parameters.PID_LPHeater_Temp", AdsTransMode.OnChange, 200, 0, null, typeof(aS_PidParameter));
                     notificationHandler.DeaeratorTemp = client.AddDeviceNotificationEx("Interfacex.Parameters.PID_AirEjector_Temp", AdsTransMode.OnChange, 200, 0, null, typeof(aS_PidParameter));
                     notificationHandler.HPHeaterTemp = client.AddDeviceNotificationEx("Interfacex.Parameters.PID_HPHeater_Temp", AdsTransMode.OnChange, 200, 0, null, typeof(aS_PidParameter));
@@ -167,9 +171,13 @@ namespace Thesis_SCADA.Model
                     notificationHandler.MaxSpeed_CondensePump = client.AddDeviceNotificationEx("Interfacex.Parameters.MaxSpeed_CondensePump", AdsTransMode.OnChange, 200, 0, null, typeof(float));
                     notificationHandler.MaxSpeed_SupplyPump = client.AddDeviceNotificationEx("Interfacex.Parameters.MaxSpeed_SupplyPump", AdsTransMode.OnChange, 200, 0, null, typeof(float));
                     notificationHandler.MaxSpeed_CircularPump = client.AddDeviceNotificationEx("Interfacex.Parameters.MaxSpeed_CircularPump", AdsTransMode.OnChange, 200, 0, null, typeof(float));
+                    notificationHandler.MaxSpeed_InterPump = client.AddDeviceNotificationEx("Interfacex.Parameters.MaxSpeed_InterPump", AdsTransMode.OnChange, 200, 0, null, typeof(float));
                     notificationHandler.MaxSpeed_ForceFan1 = client.AddDeviceNotificationEx("Interfacex.Parameters.MaxSpeed_ForceFan1", AdsTransMode.OnChange, 200, 0, null, typeof(float));
                     notificationHandler.MaxSpeed_ForceFan2 = client.AddDeviceNotificationEx("Interfacex.Parameters.MaxSpeed_ForceFan2", AdsTransMode.OnChange, 200, 0, null, typeof(float));
                     notificationHandler.MaxSpeed_ForceFan3 = client.AddDeviceNotificationEx("Interfacex.Parameters.MaxSpeed_ForceFan3", AdsTransMode.OnChange, 200, 0, null, typeof(float));
+
+                    notificationHandler.Condenser_Htemp = client.AddDeviceNotificationEx("Interfacex.Parameters.Condenser_Htemp", AdsTransMode.OnChange, 200, 0, null, typeof(float));
+                    notificationHandler.Condenser_Ltemp = client.AddDeviceNotificationEx("Interfacex.Parameters.Condenser_Ltemp", AdsTransMode.OnChange, 200, 0, null, typeof(float));
 
                     notificationHandler.SampleTime = client.AddDeviceNotificationEx("Interfacex.Parameters.SampleTime", AdsTransMode.OnChange, 200, 0, null, typeof(float));
 
@@ -207,7 +215,7 @@ namespace Thesis_SCADA.Model
 
             client.DeleteDeviceNotification(notificationHandler.CondensePumpPress);
             client.DeleteDeviceNotification(notificationHandler.SupplyPumpPress);
-            client.DeleteDeviceNotification(notificationHandler.CondenserTemp);
+            //client.DeleteDeviceNotification(notificationHandler.CondenserTemp);
             client.DeleteDeviceNotification(notificationHandler.LPHeaterTemp);
             client.DeleteDeviceNotification(notificationHandler.DeaeratorTemp);
             client.DeleteDeviceNotification(notificationHandler.HPHeaterTemp);
@@ -217,9 +225,12 @@ namespace Thesis_SCADA.Model
             client.DeleteDeviceNotification(notificationHandler.MaxSpeed_CondensePump);
             client.DeleteDeviceNotification(notificationHandler.MaxSpeed_SupplyPump);
             client.DeleteDeviceNotification(notificationHandler.MaxSpeed_CircularPump);
+            client.DeleteDeviceNotification(notificationHandler.MaxSpeed_InterPump);
             client.DeleteDeviceNotification(notificationHandler.MaxSpeed_ForceFan1);
             client.DeleteDeviceNotification(notificationHandler.MaxSpeed_ForceFan2);
             client.DeleteDeviceNotification(notificationHandler.MaxSpeed_ForceFan3);
+            client.DeleteDeviceNotification(notificationHandler.Condenser_Htemp);
+            client.DeleteDeviceNotification(notificationHandler.Condenser_Ltemp);
             client.DeleteDeviceNotification(notificationHandler.SampleTime);
 
             client.AdsNotificationEx -= OnAdsNotificationEx;
@@ -301,8 +312,8 @@ namespace Thesis_SCADA.Model
                 Parameter.CondensePumpPress = e.Value as aS_PidParameter ;
             else if (e.NotificationHandle == notificationHandler.SupplyPumpPress)
                 Parameter.SupplyPumpPress = e.Value as aS_PidParameter;
-            else if (e.NotificationHandle == notificationHandler.CondenserTemp)
-                Parameter.CondenserTemp = e.Value as aS_PidParameter;
+            //else if (e.NotificationHandle == notificationHandler.CondenserTemp)
+            //    Parameter.CondenserTemp = e.Value as aS_PidParameter;
             else if (e.NotificationHandle == notificationHandler.LPHeaterTemp)
                 Parameter.LPHeaterTemp = e.Value as aS_PidParameter;
             else if (e.NotificationHandle == notificationHandler.DeaeratorTemp)
@@ -320,12 +331,18 @@ namespace Thesis_SCADA.Model
                 Parameter.MaxSpeed_SupplyPump = (float)e.Value ;
             else if (e.NotificationHandle == notificationHandler.MaxSpeed_CircularPump)
                 Parameter.MaxSpeed_CircularPump = (float)e.Value ;
+            else if (e.NotificationHandle == notificationHandler.MaxSpeed_InterPump)
+                Parameter.MaxSpeed_InterPump = (float)e.Value;
             else if (e.NotificationHandle == notificationHandler.MaxSpeed_ForceFan1)
                 Parameter.MaxSpeed_ForceFan1 = (float)e.Value ;
             else if (e.NotificationHandle == notificationHandler.MaxSpeed_ForceFan2)
                 Parameter.MaxSpeed_ForceFan2 = (float)e.Value ;
             else if (e.NotificationHandle == notificationHandler.MaxSpeed_ForceFan3)
                 Parameter.MaxSpeed_ForceFan3 = (float)e.Value ;
+            else if (e.NotificationHandle == notificationHandler.Condenser_Htemp)
+                Parameter.Condenser_Htemp = (float)e.Value;
+            else if (e.NotificationHandle == notificationHandler.Condenser_Ltemp)
+                Parameter.Condenser_Ltemp = (float)e.Value;
             else if (e.NotificationHandle == notificationHandler.SampleTime)
                 Parameter.SampleTime = (float)e.Value ;
 
@@ -435,6 +452,7 @@ namespace Thesis_SCADA.Model
         public aFb_Motor CondensePump;
         public aFb_Motor SupplyPump;
         public aFb_Motor CircularPump;
+        public aFb_Motor InterPump;
 
         public aFb_Valve LPHValve;
         public aFb_Valve AirEjValve;
@@ -448,6 +466,8 @@ namespace Thesis_SCADA.Model
         public aT_Heater Boiler;
         public aT_Turbine Turbine;
         public aT_Heater Condenser;
+
+        public aT_Tank InterTank;
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
@@ -471,7 +491,7 @@ namespace Thesis_SCADA.Model
     {
         public aS_PidParameter CondensePumpPress;
         public aS_PidParameter SupplyPumpPress;
-        public aS_PidParameter CondenserTemp;
+        //public aS_PidParameter CondenserTemp;
         public aS_PidParameter LPHeaterTemp;
         public aS_PidParameter DeaeratorTemp;
         public aS_PidParameter HPHeaterTemp;
@@ -481,18 +501,25 @@ namespace Thesis_SCADA.Model
         public float maxSpeed_CondensePump;
         public float maxSpeed_SupplyPump;
         public float maxSpeed_CircularPump;
+        public float maxSpeed_InterPump;
         public float maxSpeed_ForceFan1;
         public float maxSpeed_ForceFan2;
         public float maxSpeed_ForceFan3;
+
+        public float condenser_Htemp;
+        public float condenser_Ltemp;
 
         public float sampleTime;
 
         public float MaxSpeed_CondensePump { get => maxSpeed_CondensePump; set => maxSpeed_CondensePump = value; }
         public float MaxSpeed_SupplyPump { get => maxSpeed_SupplyPump; set => maxSpeed_SupplyPump = value; }
         public float MaxSpeed_CircularPump { get => maxSpeed_CircularPump; set => maxSpeed_CircularPump = value; }
+        public float MaxSpeed_InterPump { get => maxSpeed_InterPump; set => maxSpeed_InterPump = value; }
         public float MaxSpeed_ForceFan1 { get => maxSpeed_ForceFan1; set => maxSpeed_ForceFan1 = value; }
         public float MaxSpeed_ForceFan2 { get => maxSpeed_ForceFan2; set => maxSpeed_ForceFan2 = value; }
         public float MaxSpeed_ForceFan3 { get => maxSpeed_ForceFan3; set => maxSpeed_ForceFan3 = value; }
+        public float Condenser_Htemp { get => condenser_Htemp; set => condenser_Htemp = value; }
+        public float Condenser_Ltemp { get => condenser_Ltemp; set => condenser_Ltemp = value; }
         public float SampleTime { get => sampleTime; set => sampleTime = value; }
     }
 
@@ -652,6 +679,19 @@ namespace Thesis_SCADA.Model
         public float ImmediateTemperature { get => immediateTemperature; set => immediateTemperature = value; }
         public float OutTemperature { get => outTemperature; set => outTemperature = value; }
     }
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
+    public class aT_Tank
+    {
+        public bool hI;
+        public bool lO;
+        public float level;
+
+        public bool HI { get => hI; set => hI = value; }
+        public bool LO { get => lO; set => lO = value; }
+        public float Level { get => level; set => level = value; }
+    }
+
 
     [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Ansi)]
     public class aS_PidParameter
